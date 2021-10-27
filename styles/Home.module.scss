@@ -1,4 +1,59 @@
 // 모바일
+.mainOverlay {
+  background-image: url("../public/image/jeremy-thomas-E0AHdsENmDg-unsplash.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  div {
+    text-align: center;
+    color: white;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba($color: #000000, $alpha: 0.6);
+    h1 {
+      margin: 5px;
+      font-size: 30px;
+      position: relative;
+      animation-name: goingUp;
+      animation-duration: 1s;
+      opacity: 1;
+      @keyframes goingUp {
+        0% {
+          top: 50px;
+          opacity: 0;
+        }
+        100% {
+          top: 0px;
+          opacity: 1;
+        }
+      }
+    }
+    h2 {
+      font-size: 17px;
+      margin: 5px;
+      position: relative;
+      animation-name: goingUp;
+      animation-duration: 2s;
+      opacity: 1;
+      @keyframes goingUp {
+        0% {
+          top: 50px;
+          opacity: 0;
+        }
+        50% {
+          top: 50px;
+          opacity: 0;
+        }
+        100% {
+          top: 0px;
+          opacity: 1;
+        }
+      }
+    }
+  }
+}
 
 @media only screen and (min-width: 600px) {
   // 패드

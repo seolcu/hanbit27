@@ -18,7 +18,7 @@ const Home = () => {
         />
       </Head>
       <HeaderComponent />
-      <div className={styles.bgWrapper}>
+      <div className={styles.mainOverlay}>
         <Image
           alt="space"
           src={spaceImg}
@@ -26,17 +26,15 @@ const Home = () => {
           objectFit="cover"
           quality={100}
         />
-      </div>
-      <div className={styles.mainOverlay}>
         <h1>To the Big Dipper.</h1>
         <Link href="/product">
           <a>
-            <h2>한빛마켓</h2>
+            <h2>대파마켓 & 굿즈</h2>
           </a>
         </Link>
         <Link href="/vieworder">
           <a>
-            <h2>주문 조회하기</h2>
+            <h2>주문 조회</h2>
           </a>
         </Link>
         <Link href="/video">

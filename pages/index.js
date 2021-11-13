@@ -48,7 +48,6 @@ const Home = () => {
           </a>
         </Link>
       </div>
-      asdf
     </>
   );
 };

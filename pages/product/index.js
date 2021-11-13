@@ -20,24 +20,30 @@ export const getServerSideProps = async () => {
   const productCol = collection(db, "ProductList");
   const productSnapshot = await getDocs(productCol);
   const productList = productSnapshot.docs.map((doc) => doc.data());
-  console.log(productList);
   return { props: { productList } };
 };
 
 const ProductList = ({ productList }) => {
   console.log(productList);
   return (
-    <div>
+    <>
       <Head>
         <title>한빛마켓</title>
         <meta name="description" content="제 27회 한빛제 굿즈마켓" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <HeaderComponent />
-      <h1 className={styles}>한빛마켓</h1>
+      <h1>한빛마켓</h1>
       <h2>상품목록</h2>
-      <ul></ul>
-    </div>
+      {productList.map((product, index) => {
+        return (
+          <div key={index}>
+            <h2>{product.이름}</h2>
+            <div>{product.가격}</div>
+          </div>
+        );
+      })}
+    </>
   );
 };
 

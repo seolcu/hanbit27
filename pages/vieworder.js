@@ -6,7 +6,7 @@ import HeaderComponent from "../components/HeaderComponent";
 
 const ViewOrder = () => {
   return (
-    <div>
+    <>
       <Head>
         <title>주문조회</title>
         <meta name="description" content="주문 조회하기" />
@@ -20,7 +20,7 @@ const ViewOrder = () => {
         <input type="text" placeholder="전화번호"></input>
       </form>
       <button>조회하기</button>
-    </div>
+    </>
   );
 };
 

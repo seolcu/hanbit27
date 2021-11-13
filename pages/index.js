@@ -3,6 +3,7 @@ import styles from "../styles/Home.module.scss";
 import Link from "next/link";
 import HeaderComponent from "../components/HeaderComponent";
 import Image from "next/image";
+import spaceImg from "../public/image/spaceBackgroundImage.webp";
 
 const Home = () => {
   return (
@@ -20,7 +21,7 @@ const Home = () => {
       <div className={styles.bgWrapper}>
         <Image
           alt="space"
-          src="/public/image/spaceBackgroundImage.webp"
+          src={spaceImg}
           layout="fill"
           objectFit="cover"
           quality={100}

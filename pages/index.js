@@ -4,6 +4,7 @@ import Link from "next/link";
 import HeaderComponent from "../components/HeaderComponent";
 import Image from "next/image";
 import spaceImg from "../public/image/spaceBackgroundImage.webp";
+import bigDipperImg from "../public/image/big_dipper.png";
 
 const Home = () => {
   return (
@@ -26,7 +27,9 @@ const Home = () => {
           objectFit="cover"
           quality={100}
         />
-        <h1>To the Big Dipper.</h1>
+        <Image alt="Big Dipper" src={bigDipperImg} width={300} height={300} />
+        <h1>To the Big Dipper,</h1>
+        <h1>북두칠성으로.</h1>
         <Link href="/product">
           <a>
             <h2>대파마켓 & 굿즈</h2>
@@ -45,6 +48,14 @@ const Home = () => {
         <Link href="/feedback">
           <a>
             <h2>고객센터</h2>
+          </a>
+        </Link>
+      </div>
+      <div className={styles.marketOverlay}>
+        <h2>대파마켓 & 굿즈</h2>
+        <Link href="/product">
+          <a>
+            <h2>대파마켓 & 굿즈</h2>
           </a>
         </Link>
       </div>

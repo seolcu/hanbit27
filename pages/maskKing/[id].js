@@ -6,7 +6,16 @@ import { useRouter } from "next/router";
 import maskKingInfoList from "../../public/data/maskKingInfoList";
 import HeaderComponent from "../../components/HeaderComponent";
 import db from "../../fireStoreInit";
-import { doc, getDoc } from "firebase/firestore";
+import {
+  collection,
+  onSnapshot,
+  query,
+  orderBy,
+  limit,
+  addDoc,
+  serverTimestamp,
+} from "firebase/firestore";
+import { useEffect, useState } from "react";
 
 export const getStaticPaths = async () => {
   const paths = maskKingInfoList.map((maskKingInfo) => ({
@@ -17,14 +26,41 @@ export const getStaticPaths = async () => {
 
 export const getStaticProps = async ({ params }) => {
   const id = params.id;
-  const chatDoc = doc(db, "VideoChat", params.id);
-  const chatSnapshot = await getDoc(chatDoc);
-  const chatData = chatSnapshot.data();
-  return { props: { id, chatData } };
+  return { props: { id } };
 };
 
-const MaskKingSpecificPage = ({ id, chatData }) => {
+const MaskKingSpecificPage = ({ id }) => {
   const maskKingInfo = maskKingInfoList[parseInt(id) - 1];
+
+  const [messages, setMessages] = useState([]);
+  const [newMessage, setNewMessage] = useState("");
+
+  const chatCol = collection(db, `VideoChat${id}`);
+  const chatQuery = query(chatCol, orderBy("createdAt"), limit(100));
+
+  useEffect(() => {
+    const unsub = onSnapshot(chatQuery, (querySnapshot) => {
+      const data = querySnapshot.docs.map((doc) => ({
+        ...doc.data(),
+        id: doc.id,
+      }));
+      setMessages(data);
+    });
+
+    return unsub;
+  }, [chatQuery]);
+
+  const handleOnSubmit = async (e) => {
+    e.preventDefault();
+    const trimmedMessage = newMessage.trim();
+    if (trimmedMessage) {
+      await addDoc(chatCol, {
+        text: trimmedMessage,
+        createdAt: serverTimestamp(),
+      });
+      setNewMessage("");
+    }
+  };
 
   return (
     <>
@@ -36,12 +72,29 @@ const MaskKingSpecificPage = ({ id, chatData }) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <HeaderComponent />
-      <div className="container-fluid p-0">
+      <div className="container-fluid m-5">
         <div className={`row ${styles.outerContainer}`}>
-          <video controls className="col-lg-8 p-0 m-5">
+          <video controls className="col-lg-8 p-0">
             <source src={maskKingInfo.videoSrc} type="video/mp4" />
           </video>
-          <div className="col-lg-4 p-0">댓글</div>
+          <div className="col-lg-4 p-0">
+            <ul className="fs-3">
+              {messages.map((message) => (
+                <li key={message.id}>{message.text}</li>
+              ))}
+            </ul>
+            <form onSubmit={handleOnSubmit}>
+              <input
+                type="text"
+                value={newMessage}
+                onChange={(e) => setNewMessage(e.target.value)}
+                placeholder="댓글을 입력하세요"
+              />
+              <button type="submit" disabled={!newMessage}>
+                Send
+              </button>
+            </form>
+          </div>
         </div>
         <div className={`${styles.recommendBar}`}>추천영상</div>
       </div>

@@ -28,7 +28,7 @@ const MaskKing = () => {
         </div>
       </div>
       <div className="container">
-        <div className={styles.gridContainer}>
+        <div className={`mt-4 ${styles.gridContainer}`}>
           {maskKingInfoList.map((maskKingInfo, index) => {
             return (
               <MaskKingCard

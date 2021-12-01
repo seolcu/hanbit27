@@ -59,6 +59,11 @@ const Home = () => {
             <h2>주문 조회</h2>
           </a>
         </Link>
+        <Link href="/support">
+          <a>
+            <h2>고객센터</h2>
+          </a>
+        </Link>
       </div>
       <SubOverlay
         BGColor="#012326"

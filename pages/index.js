@@ -27,8 +27,8 @@ const Home = () => {
           objectFit="cover"
           quality={100}
         />
-        <Image alt="Big Dipper" src={bigDipperImg} width={300} height={300} />
-        <h1>To the Big Dipper,</h1>
+        <Image alt="Big Dipper" src={bigDipperImg} width={200} height={170} />
+        <h1 style={{ marginTop: "2.5rem" }}>To the Big Dipper,</h1>
         <h1>북두칠성으로.</h1>
         <Link href="/product">
           <a>

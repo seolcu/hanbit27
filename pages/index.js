@@ -3,6 +3,7 @@ import Image from "next/image";
 import styles from "../styles/Home.module.scss";
 import Link from "next/link";
 import HeaderComponent from "../components/HeaderComponent";
+import StarImage from "../public/image/jeremy-thomas-E0AHdsENmDg-unsplash.jpg";
 
 const Home = () => {
   return (
@@ -13,21 +14,34 @@ const Home = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <HeaderComponent />
-      <Link href="/product">
-        <a>한빛마켓 바로가기</a>
-      </Link>
+      <div className={styles.mainOverlay}>
+        <div>
+          <h1>제 27회 한빛제</h1>
+          <Link href="/product">
+            <a>
+              <h2>한빛마켓 {">"}</h2>
+            </a>
+          </Link>
+          <Link href="/vieworder">
+            <a>
+              <h2>주문 조회하기 {">"}</h2>
+            </a>
+          </Link>
+          <Link href="/video">
+            <a>
+              <h2>공연 영상 {">"}</h2>
+            </a>
+          </Link>
+          <Link href="/feedback">
+            <a>
+              <h2>고객센터 {">"}</h2>
+            </a>
+          </Link>
+        </div>
+      </div>
       <br />
-      <Link href="/vieworder">
-        <a>주문조회하기</a>
-      </Link>
       <br />
-      <Link href="/video">
-        <a>공연 영상 보러가기</a>
-      </Link>
       <br />
-      <Link href="/feedback">
-        <a>고객센터</a>
-      </Link>
     </div>
   );
 };

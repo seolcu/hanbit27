@@ -34,7 +34,7 @@ const ProductList = ({ productList }) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <HeaderComponent />
-      <h1>한빛마켓</h1>
+      <h1 className={styles}>한빛마켓</h1>
       <h2>상품목록</h2>
       <ul></ul>
     </div>

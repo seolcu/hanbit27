@@ -1,0 +1,21 @@
+// 모바일
+html,
+body {
+  padding: 0;
+  margin: 0;
+  background: white;
+  color: black;
+}
+
+a {
+  color: inherit;
+  text-decoration: inherit;
+}
+
+@media only screen and (min-width: 600px) {
+  // 패드
+}
+
+@media only screen and (min-width: 768px) {
+  // PC
+}

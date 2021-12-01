@@ -3,7 +3,7 @@ import Image from "next/image";
 import styles from "../../styles/ProductUpload.module.scss";
 import Link from "next/link";
 import HeaderComponent from "../../components/HeaderComponent";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { collection, addDoc } from "firebase/firestore";
 import { useRouter } from "next/dist/client/router";
@@ -22,13 +22,13 @@ const ProductUpload = () => {
   const [optionPlusMinus, setOptionPlusMinus] = useState("+");
 
   // 리스트 아님
-  const [selectedThumbnail, setSelectedThumbnail] = useState("");
+  const [thumbUrl, setThumbUrl] = useState("/image/noImagePlaceHolder.png");
 
   // 리스트
-  const [selectedDescImage, setSelectedDescImage] = useState("");
-  const [imageUrlList, setImageUrlList] = useState([]);
+  const [descImageUrlList, setDescImageUrlList] = useState([]);
 
-  const [uploadingState, setUploadingState] = useState(false);
+  const [thumbUploadingState, setThumbUploadingState] = useState(false);
+  const [descImageUploadingState, setDescImageUploadingState] = useState(false);
 
   // 페이지이동
   const router = useRouter();
@@ -69,12 +69,6 @@ const ProductUpload = () => {
     });
   };
 
-  useEffect(() => {
-    const url = uploadImage(selectedDescImage);
-    let snapshot = [...imageUrlList];
-    snapshot = snapshot.push(url);
-    setImageUrlList(snapshot);
-  }, [selectedDescImage, imageUrlList]);
   return (
     <>
       <Head>
@@ -105,6 +99,7 @@ const ProductUpload = () => {
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
+
         <div className="mt-3">
           <h3>상품명</h3>
           <input
@@ -116,6 +111,7 @@ const ProductUpload = () => {
             onChange={(e) => setName(e.target.value)}
           />
         </div>
+
         <div className="mt-3">
           <h3>기본 가격</h3>
           <input
@@ -127,6 +123,7 @@ const ProductUpload = () => {
             onChange={(e) => setDefaultPrice(parseInt(e.target.value))}
           />
         </div>
+
         <div className="mt-3">
           <h3>카테고리</h3>
           <select
@@ -137,33 +134,84 @@ const ProductUpload = () => {
             <option value="대파마켓">대파마켓</option>
             <option value="온라인부스">온라인부스</option>
             <option value="굿즈">굿즈</option>
-            <option value="미정">미정</option>
             <option value="기타">기타</option>
           </select>
         </div>
+
         <div className="mt-3">
-          <h3>썸네일 추가하기 (한 장)</h3>
+          <h3>썸네일 (한장, 사진 누르면 삭제)</h3>
+          <h4>{thumbUploadingState && "업로드 중..."}</h4>
+          <Image
+            onClick={() => {
+              // 기본 이미지로 변경
+              setThumbUrl("/image/noImagePlaceHolder.png");
+            }}
+            alt={`썸네일`}
+            src={thumbUrl}
+            width={150}
+            height={150}
+            // 강제 리렌더링
+            key={Math.random()}
+          />
           <input
             className="form-control"
             type="file"
-            id="formFile"
             accept="image/*"
-            onChange={(e) => setSelectedThumbnail(e.target.files[0])}
+            onChange={async (e) => {
+              setThumbUploadingState(true);
+              e.target.files[0] &&
+                setThumbUrl(await uploadImage(e.target.files[0]));
+              setThumbUploadingState(false);
+            }}
+            disabled={thumbUploadingState}
           />
         </div>
+
         <div className="mt-3">
-          <h3>상품 설명 사진들</h3>
+          <h3>
+            상품 설명 사진 (여러 장 가능, 순서대로 들어감, 사진 누르면 삭제)
+          </h3>
+          <h4>{descImageUploadingState && "업로드 중..."}</h4>
+          <div className="d-flex">
+            {descImageUrlList.map((url, index) => {
+              return (
+                <div key={Math.random()}>
+                  <Image
+                    onClick={() => {
+                      // 이미지 삭제
+                      const snapshot = [...descImageUrlList];
+                      snapshot.splice(index, 1);
+                      setDescImageUrlList(snapshot);
+                    }}
+                    alt={`사진${index}`}
+                    src={url}
+                    width={150}
+                    height={150}
+                    objectFit="contain"
+                    // 강제 리렌더링
+                    key={Math.random()}
+                  />
+                </div>
+              );
+            })}
+          </div>
           <input
             className="form-control"
             type="file"
-            id="formFileMultiple"
             accept="image/*"
-            onChange={(e) => setSelectedDescImage(e.target.files[0])}
+            onChange={async (e) => {
+              if (e.target.files[0].name) {
+                setDescImageUploadingState(true);
+                const url = await uploadImage(e.target.files[0]);
+                const snapshot = [...descImageUrlList, url];
+                setDescImageUrlList(snapshot);
+                setDescImageUploadingState(false);
+              }
+            }}
+            disabled={descImageUploadingState}
           />
-          {imageUrlList.map((url, index) => {
-            <Image alt={`사진${index}`} src={url} width={100} height={100} />;
-          })}
         </div>
+
         <div className="mt-3">
           <h3>옵션 추가하기</h3>
           <div className="container bg-secondary text-light border rounded p-3">
@@ -184,25 +232,21 @@ const ProductUpload = () => {
             <div className="mt-3">
               <div className="d-flex">
                 <h4>가격변동</h4>
-                <form
-                  className="fs-5 ms-2"
-                  value={optionPlusMinus}
-                  onChange={(e) => setOptionPlusMinus(e.target.value)}
-                >
+                <form className="fs-5 ms-2">
                   <input
                     className="form-check-input"
                     type="radio"
                     name="optionPrice"
-                    value="+"
                     checked={optionPlusMinus == "+"}
+                    onChange={(e) => setOptionPlusMinus("+")}
                   />
                   <label className="form-check-label">증가</label>
                   <input
                     className="form-check-input"
                     type="radio"
                     name="optionPrice"
-                    value="-"
                     checked={optionPlusMinus == "-"}
+                    onChange={(e) => setOptionPlusMinus("-")}
                   />
                   <label className="form-check-label">감소</label>
                 </form>
@@ -218,6 +262,7 @@ const ProductUpload = () => {
                 min={0}
               />
             </div>
+
             <div className="mt-3">
               <h4>현재 재고</h4>
               <input
@@ -296,7 +341,10 @@ const ProductUpload = () => {
         <div className="d-flex mb-5 gap-2 justify-content-end">
           <Link href="/product">
             <a>
-              <button className="btn btn-danger" disabled={uploadingState}>
+              <button
+                className="btn btn-danger"
+                disabled={thumbUploadingState || descImageUploadingState}
+              >
                 취소하기
               </button>
             </a>
@@ -304,19 +352,14 @@ const ProductUpload = () => {
 
           <button
             className="btn btn-primary"
-            disabled={uploadingState}
+            disabled={thumbUploadingState || descImageUploadingState}
             onClick={async (e) => {
-              setUploadingState(true);
-              let thumbUrl = "/image/noImagePlaceHolder.png";
-              if (selectedDescImage) {
-                thumbUrl = await uploadImage(selectedThumbnail);
-              }
               const resultData = {
                 name: name,
                 defaultPrice: defaultPrice,
                 category: category,
                 thumbUrl: thumbUrl,
-                imageUrlList: imageUrlList,
+                descImageUrlList: descImageUrlList,
                 optionList: optionList,
               };
               console.log("resultData:", resultData);
@@ -329,7 +372,9 @@ const ProductUpload = () => {
               router.push("/product");
             }}
           >
-            {uploadingState == true ? "업로드 중..." : "업로드"}
+            {thumbUploadingState || descImageUploadingState
+              ? "사진 업로드 중..."
+              : "업로드"}
           </button>
         </div>
       </div>

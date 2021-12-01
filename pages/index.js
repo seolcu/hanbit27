@@ -25,7 +25,7 @@ const Home = () => {
           src={spaceImg}
           layout="fill"
           objectFit="cover"
-          quality={60}
+          quality={90}
         />
         <Image alt="Big Dipper" src={bigDipperImg} width={300} height={260} />
         <h1 style={{ marginTop: "2.5rem" }}>To the Big Dipper.</h1>

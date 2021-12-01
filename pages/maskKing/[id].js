@@ -37,9 +37,10 @@ const MaskKingSpecificPage = ({ id }) => {
 
   // 값 동기화
   onValue(chatRef, (snapshot) => {
-    const data = snapshot.val();
-    if (data == null) {
-      setMessages(data);
+    if (snapshot.exists()) {
+      if (snapshot.val() !== null) {
+        setMessages(snapshot.val());
+      }
     }
   });
 

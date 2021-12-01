@@ -134,6 +134,7 @@ const ProductList = ({ productList }) => {
             {CategoryBtn("대파마켓")}
             {CategoryBtn("온라인부스")}
             {CategoryBtn("굿즈")}
+            {CategoryBtn("미정")}
             {CategoryBtn("기타")}
           </div>
         </div>

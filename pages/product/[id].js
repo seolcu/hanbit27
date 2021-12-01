@@ -17,7 +17,6 @@ import HeaderComponent from "../../components/HeaderComponent";
 import { useEffect, useState } from "react";
 import firestore from "../../firebase/firestoreInit";
 import { useRouter } from "next/router";
-import PurchaseModal from "../../components/purchaseModal";
 import Cookies from "js-cookie";
 
 const productCol = collection(firestore, "ProductList");
@@ -183,17 +182,6 @@ const Product = ({ preProductData }) => {
           <link rel="icon" href="/favicon.ico" />
         </Head>
         <HeaderComponent />
-        <PurchaseModal
-          studentId={studentId}
-          setStudentId={setStudentId}
-          studentName={studentName}
-          setStudentName={setStudentName}
-          studentPhone={studentPhone}
-          setStudentPhone={setStudentPhone}
-          depositorName={depositorName}
-          setDepositorName={setDepositorName}
-          onClickHandler={purchaseModalOnClickHandler}
-        />
         <div className={`container py-4 px-0 ${styles.mainContainer}`}>
           <div className="container">
             <img
@@ -339,17 +327,8 @@ const Product = ({ preProductData }) => {
                   </button>
                 </a>
               </Link>
-              <button
-                className="btn btn-primary fs-4 fw-bold"
-                data-bs-toggle="modal"
-                data-bs-target="#purchaseModal"
-                disabled={
-                  orderedProductList.length == 0 || uploadingState
-                    ? true
-                    : false
-                }
-              >
-                {uploadingState ? "주문 진행중..." : "구매하기"}
+              <button className="btn btn-primary fs-4 fw-bold" disabled={true}>
+                마감되었습니다.
               </button>
             </div>
           </div>

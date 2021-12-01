@@ -14,7 +14,6 @@ import {
   setDoc,
 } from "firebase/firestore";
 import firestore from "../firebase/firestoreInit";
-import LoginModal from "../components/LoginModal";
 import { useRouter } from "next/dist/client/router";
 
 const orderCol = collection(firestore, "OrderList");

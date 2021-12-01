@@ -13,7 +13,7 @@ const productCol = collection(firestore, "ProductList");
 
 export const getStaticProps = async () => {
   const productList = (await getDocs(productCol)).docs.map((doc) => doc.data());
-  return { props: { productList }, revalidate: 1 };
+  return { props: { productList }, revalidate: 30 };
 };
 
 const ProductList = ({ productList }) => {

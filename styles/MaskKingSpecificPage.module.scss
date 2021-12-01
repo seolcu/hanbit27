@@ -1,0 +1,27 @@
+// 모바일
+.outerContainer {
+  video {
+  }
+}
+
+.mainContainer {
+}
+
+.recommendBar {
+  display: none;
+}
+
+@media only screen and (min-width: 768px) {
+  // 패드
+}
+
+@media only screen and (min-width: 1024px) {
+  // PC
+  .outerContainer {
+    display: flex;
+    flex-direction: row;
+  }
+  .recommendBar {
+    display: block;
+  }
+}

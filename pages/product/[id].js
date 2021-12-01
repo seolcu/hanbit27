@@ -7,7 +7,6 @@ import { collection, getDocs } from "firebase/firestore";
 import HeaderComponent from "../../components/HeaderComponent";
 import { useEffect, useState } from "react";
 import firestore from "../../firebase/firestoreInit";
-import MarketHeader from "../../components/MarketHeader";
 import { useRouter } from "next/router";
 
 const productCol = collection(firestore, "ProductList");
@@ -114,7 +113,7 @@ const Product = ({ preProductData }) => {
           <meta name="description" content="제 27회 한빛제 대파마켓 & 굿즈" />
           <link rel="icon" href="/favicon.ico" />
         </Head>
-        <MarketHeader />
+        <HeaderComponent />
         <div className={`container py-4 ${styles.mainContainer}`}>
           <div className="container">
             <img

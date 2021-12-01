@@ -7,7 +7,6 @@ import { useState } from "react";
 import { collection, addDoc } from "firebase/firestore";
 import { useRouter } from "next/dist/client/router";
 import firestore from "../../firebase/firestoreInit";
-import MarketHeader from "../../components/MarketHeader";
 import axios from "axios";
 
 const ProductUpload = () => {
@@ -32,42 +31,6 @@ const ProductUpload = () => {
 
   // 페이지이동
   const router = useRouter();
-
-  // // 참조: https://firebase.google.com/docs/storage/web/upload-files
-  // const uploadImage = (image) => {
-  //   return new Promise((resolve, reject) => {
-  //     const storageRef = ref(storage, `images/${image.name}`);
-  //     const uploadTask = uploadBytesResumable(storageRef, image);
-  //     uploadTask.on(
-  //       "state_changed",
-  //       (snapshot) => {
-  //         const progress =
-  //           (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-  //         console.log("Upload is " + progress + "% done");
-  //         switch (snapshot.state) {
-  //           case "paused":
-  //             console.log("Upload is paused");
-  //             break;
-  //           case "running":
-  //             console.log("Upload is running");
-  //             break;
-  //         }
-  //       },
-  //       (error) => {
-  //         // Handle unsuccessful uploads
-  //         console.log(`Error uploading file ${image.name}: ${error}`);
-  //       },
-  //       () => {
-  //         // Handle successful uploads on complete
-  //         // For instance, get the download URL: https://firebasestorage.googleapis.com/...
-  //         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-  //           console.log(`File ${image.name} available at`, downloadURL);
-  //           resolve(downloadURL);
-  //         });
-  //       },
-  //     );
-  //   });
-  // };
 
   const uploadImage = async (image) => {
     let body = new FormData();
@@ -95,7 +58,7 @@ const ProductUpload = () => {
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <MarketHeader />
+      <HeaderComponent />
       <div className="container-fluid p-5 bg-secondary text-light">
         <div className="container">
           <h1 className="display-1 fw-bold">상품 업로드</h1>

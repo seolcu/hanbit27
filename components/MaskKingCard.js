@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { MdMusicNote } from "react-icons/md";
 import styles from "./MaskKingCard.module.scss";
 
 const MaskKingCard = ({ num, name, music, artist, thumbSrc }) => {
@@ -27,6 +28,7 @@ const MaskKingCard = ({ num, name, music, artist, thumbSrc }) => {
             </u>
           </h1>
           <h2>
+            <MdMusicNote />
             {music} - {artist}
           </h2>
         </div>

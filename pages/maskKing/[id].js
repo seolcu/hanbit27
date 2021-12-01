@@ -135,15 +135,15 @@ const MaskKingSpecificPage = ({ id }) => {
                 await setDoc(voteDoc, {
                   count: voteCount + 1,
                 });
-                Cookies.set(voteCookieName, "true");
-                setVoteState("true");
+                Cookies.set(voteCookieName, id);
+                setVoteState(id);
               } else {
                 router.push("/maskKing/voteResult");
               }
             }}
           >
-            {voteState == "true"
-              ? "투표 현황"
+            {voteState
+              ? `#${voteState} 투표함`
               : `#${maskKingInfo.num} 투표하기`}
           </button>
         </div>

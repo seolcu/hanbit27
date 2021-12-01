@@ -3,7 +3,7 @@ import Image from "next/image";
 import styles from "../../styles/ProductUpload.module.scss";
 import Link from "next/link";
 import HeaderComponent from "../../components/HeaderComponent";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { collection, addDoc } from "firebase/firestore";
 import { useRouter } from "next/dist/client/router";
@@ -25,7 +25,8 @@ const ProductUpload = () => {
   const [selectedThumbnail, setSelectedThumbnail] = useState("");
 
   // 리스트
-  const [selectedFileList, setSelectedFileList] = useState("");
+  const [selectedDescImage, setSelectedDescImage] = useState("");
+  const [imageUrlList, setImageUrlList] = useState([]);
 
   const [uploadingState, setUploadingState] = useState(false);
 
@@ -67,6 +68,13 @@ const ProductUpload = () => {
       );
     });
   };
+
+  useEffect(() => {
+    const url = uploadImage(selectedDescImage);
+    let snapshot = [...imageUrlList];
+    snapshot = snapshot.push(url);
+    setImageUrlList(snapshot);
+  }, [selectedDescImage, imageUrlList]);
   return (
     <>
       <Head>
@@ -144,15 +152,17 @@ const ProductUpload = () => {
           />
         </div>
         <div className="mt-3">
-          <h3>상품 설명 사진들 (여러장, ctrl 누른채로 순서대로 선택하기)</h3>
+          <h3>상품 설명 사진들</h3>
           <input
             className="form-control"
             type="file"
             id="formFileMultiple"
             accept="image/*"
-            multiple
-            onChange={(e) => setSelectedFileList(e.target.files)}
+            onChange={(e) => setSelectedDescImage(e.target.files[0])}
           />
+          {imageUrlList.map((url, index) => {
+            <Image alt={`사진${index}`} src={url} width={100} height={100} />;
+          })}
         </div>
         <div className="mt-3">
           <h3>옵션 추가하기</h3>
@@ -298,15 +308,9 @@ const ProductUpload = () => {
             onClick={async (e) => {
               setUploadingState(true);
               let thumbUrl = "/image/noImagePlaceHolder.png";
-              if (selectedFileList) {
+              if (selectedDescImage) {
                 thumbUrl = await uploadImage(selectedThumbnail);
               }
-              let imageUrlList = [];
-              for (let i = 0; i < selectedFileList.length; i++) {
-                const imageUrlRes = await uploadImage(selectedFileList[i]);
-                imageUrlList.push(imageUrlRes);
-              }
-              console.log("imageUrlList:", imageUrlList);
               const resultData = {
                 name: name,
                 defaultPrice: defaultPrice,

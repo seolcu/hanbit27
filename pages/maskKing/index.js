@@ -46,11 +46,9 @@ const MaskKing = () => {
       <div className="container">
         {voteCountList.map((data, index) => {
           return (
-            <>
-              <h3>
-                #{index + 1} {maskKingInfoList[index].name} {data.count}
-              </h3>
-            </>
+            <h3 key={index}>
+              #{index + 1} {maskKingInfoList[index].name} {data.count}
+            </h3>
           );
         })}
       </div>

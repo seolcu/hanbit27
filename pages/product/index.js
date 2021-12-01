@@ -156,9 +156,7 @@ const ProductList = ({ productList }) => {
               >
                 <Image
                   className="card-img-top"
-                  src={
-                    "https://firebasestorage.googleapis.com/v0/b/hanbit27-b2a04.appspot.com/o/821b92d616639ecfda49526554e9d693.jpg?alt=media&token=f0df3cf4-4bb6-49bf-9eef-9722c23b82b8"
-                  }
+                  src={product.imageUrlList[0] || "/favicon.ico"}
                   alt="상품사진"
                   width={500}
                   height={500}

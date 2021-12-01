@@ -6,11 +6,13 @@ import HeaderComponent from "../../components/HeaderComponent";
 import { useState } from "react";
 import { initializeApp } from "firebase/app";
 import {
-  getFirestore,
-  collection,
-  getDocs,
-  addDoc,
-} from "firebase/firestore/lite";
+  getStorage,
+  ref,
+  uploadBytesResumable,
+  getDownloadURL,
+} from "firebase/storage";
+import { getFirestore, collection, addDoc } from "firebase/firestore/lite";
+import { useRouter } from "next/dist/client/router";
 
 const ProductUpload = () => {
   const [password, setPassword] = useState("");
@@ -21,6 +23,10 @@ const ProductUpload = () => {
   const [optionPrice, setOptionPrice] = useState(0);
   const [optionStock, setOptionStock] = useState(1);
   const [optionList, setOptionList] = useState([]);
+  const [selectedFileList, setSelectedFileList] = useState("");
+  const [uploadingState, setUploadingState] = useState(false);
+
+  const router = useRouter();
 
   // firebase 설정
   const firebaseConfig = {
@@ -33,6 +39,47 @@ const ProductUpload = () => {
   };
   const app = initializeApp(firebaseConfig);
   const db = getFirestore(app);
+  const storage = getStorage(app);
+
+  // 참조: https://firebase.google.com/docs/storage/web/upload-files
+  const uploadImage = (i) => {
+    return new Promise((resolve, reject) => {
+      const storageRef = ref(storage, `images/${selectedFileList[i].name}`);
+      const uploadTask = uploadBytesResumable(storageRef, selectedFileList[i]);
+      uploadTask.on(
+        "state_changed",
+        (snapshot) => {
+          const progress =
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          console.log("Upload is " + progress + "% done");
+          switch (snapshot.state) {
+            case "paused":
+              console.log("Upload is paused");
+              break;
+            case "running":
+              console.log("Upload is running");
+              break;
+          }
+        },
+        (error) => {
+          // Handle unsuccessful uploads
+          console.log(`Error uploading file ${i}: ${error}`);
+        },
+        () => {
+          // Handle successful uploads on complete
+          // For instance, get the download URL: https://firebasestorage.googleapis.com/...
+          getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+            console.log(`File ${i} available at`, downloadURL);
+            // let newImageUrlList = [...imageUrlList];
+            // newImageUrlList.push(downloadURL);
+            // setImageUrlList(newImageUrlList);
+            // console.log("imageUrlList:", imageUrlList);
+            resolve(downloadURL);
+          });
+        },
+      );
+    });
+  };
   return (
     <>
       <Head>
@@ -100,13 +147,14 @@ const ProductUpload = () => {
           </select>
         </div>
         <div className="mt-3">
-          <h3>사진 추가하기 (여러장 선택 가능)</h3>
+          <h3>사진 추가하기(여러장 선택 가능)</h3>
           <input
             className="form-control"
             type="file"
             id="formFileMultiple"
             accept="image/*"
             multiple
+            onChange={(e) => setSelectedFileList(e.target.files)}
           />
         </div>
 
@@ -214,27 +262,42 @@ const ProductUpload = () => {
         <div className="d-flex mb-5 gap-2 justify-content-end">
           <Link href="/product">
             <a>
-              <button className="btn btn-danger">취소하기</button>
-            </a>
-          </Link>
-          <Link href="/product">
-            <a>
-              <button
-                className="btn btn-primary"
-                onClick={async () => {
-                  const res = await addDoc(collection(db, "ProductList"), {
-                    name: name,
-                    defaultPrice: defaultPrice,
-                    category: category,
-                    optionList: optionList,
-                  });
-                  console.log(res);
-                }}
-              >
-                업로드하기
+              <button className="btn btn-danger" disabled={uploadingState}>
+                취소하기
               </button>
             </a>
           </Link>
+
+          <button
+            className="btn btn-primary"
+            disabled={uploadingState}
+            onClick={async (e) => {
+              setUploadingState(true);
+              let imageUrlList = [];
+              for (let i = 0; i < selectedFileList.length; i++) {
+                const res = await uploadImage(i);
+                imageUrlList.push(res);
+              }
+              console.log("imageUrlList:", imageUrlList);
+              const resultData = {
+                name: name,
+                defaultPrice: defaultPrice,
+                category: category,
+                optionList: optionList,
+                imageUrlList: imageUrlList,
+              };
+              console.log("resultData:", resultData);
+              const res = await addDoc(
+                collection(db, "ProductList"),
+                resultData,
+              );
+              console.log(res);
+              e.preventDefault();
+              router.push("/product");
+            }}
+          >
+            {uploadingState == true ? "로딩중..." : "업로드하기"}
+          </button>
         </div>
       </div>
     </>

@@ -5,11 +5,12 @@ const MaskKingCard = ({ num, name, music, artist, thumbSrc }) => {
   return (
     <Link href={`/maskKing/${num}`}>
       <a>
-        <div className="card p-0 mt-2 mx-5">
-          <div className="card-img-top">
+        <div className="">
+          <div>
             <Image
               src={thumbSrc}
               alt={name}
+              className="img-thumbnail"
               width={1600}
               height={900}
               layout="responsive"
@@ -17,14 +18,14 @@ const MaskKingCard = ({ num, name, music, artist, thumbSrc }) => {
               quality={100}
             />
           </div>
-          <div className="card-body text-center">
-            <h1 className="display-4 fw-bold">
-              #{num} {name}
-            </h1>
-            <h3>
-              {music} - {artist}
-            </h3>
-          </div>
+        </div>
+        <div className="text-start">
+          <h1 className="display-4 fw-bold">
+            #{num} {name}
+          </h1>
+          <h3>
+            {music} - {artist}
+          </h3>
         </div>
       </a>
     </Link>

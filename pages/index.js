@@ -2,6 +2,7 @@ import Head from "next/head";
 import styles from "../styles/Home.module.scss";
 import Link from "next/link";
 import HeaderComponent from "../components/HeaderComponent";
+import Image from "next/image";
 
 const Home = () => {
   return (
@@ -16,6 +17,15 @@ const Home = () => {
         />
       </Head>
       <HeaderComponent />
+      <div className={styles.bgWrapper}>
+        <Image
+          alt="space"
+          src="/public/image/spaceBackgroundImage.webp"
+          layout="fill"
+          objectFit="cover"
+          quality={100}
+        />
+      </div>
       <div className={styles.mainOverlay}>
         <h1>To the Big Dipper.</h1>
         <Link href="/product">

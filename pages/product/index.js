@@ -52,24 +52,27 @@ const ProductList = ({ productList }) => {
       <HeaderComponent />
       <div className="p-5 bg-primary text-light">
         <div className="container">
-          <p className="display-1 fw-bold">한빛마켓</p>
+          <div className="d-flex gap-3 justify-content-between">
+            <p className="display-1 fw-bold">한빛마켓</p>
+            <Link href="/product/upload">
+              <a>
+                <button className="mt-2 btn btn-light">
+                  상품 업로드(관리자)
+                </button>
+              </a>
+            </Link>
+          </div>
           <h3>
             제고의 중고장터, 대파마켓
             <br />& 다양한 온라인부스
             <br />& 제 27회 한빛제만의 아름다운 굿즈들
           </h3>
-          <div className="d-flex justify-content-between">
-            <div className="d-flex gap-1">
-              {CategoryBtn("모두")}
-              {CategoryBtn("대파마켓")}
-              {CategoryBtn("온라인부스")}
-              {CategoryBtn("굿즈")}
-            </div>
-            <Link href="/product/upload">
-              <a>
-                <button className="btn btn-light">업로드(관리자)</button>
-              </a>
-            </Link>
+          <div className="btn-group" role="group">
+            {CategoryBtn("모두")}
+            {CategoryBtn("대파마켓")}
+            {CategoryBtn("온라인부스")}
+            {CategoryBtn("굿즈")}
+            {CategoryBtn("기타")}
           </div>
         </div>
       </div>

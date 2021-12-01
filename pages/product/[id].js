@@ -33,7 +33,29 @@ export const getStaticProps = async ({ params }) => {
 
 const Product = ({ id, preProductData }) => {
   const [productData, setProductInfo] = useState(preProductData);
-  const [selectedOptionId, setSelectedOptionId] = useState(0);
+  const snapshot = [];
+  for (let i = 0; i < productData.optionList.length; i++) snapshot.push(0);
+  const [selectedOptionList, setSelectedOptionList] = useState(snapshot);
+
+  const increaseOption = (index) => {
+    const snapshot = [...selectedOptionList];
+    const preValue = selectedOptionList[index];
+    snapshot.splice(index, 1, preValue + 1);
+    setSelectedOptionList(snapshot);
+  };
+
+  const decreaseOption = (index) => {
+    const snapshot = [...selectedOptionList];
+    const preValue = selectedOptionList[index];
+    snapshot.splice(index, 1, preValue - 1);
+    setSelectedOptionList(snapshot);
+  };
+
+  const removeOption = (index) => {
+    const snapshot = [...selectedOptionList];
+    snapshot.splice(index, 1, 0);
+    setSelectedOptionList(snapshot);
+  };
 
   return (
     <>
@@ -61,8 +83,7 @@ const Product = ({ id, preProductData }) => {
           <h2 className="text-primary">{productData.defaultPrice}원</h2>
           <select
             className="form-select"
-            value={selectedOptionId}
-            onChange={(e) => setSelectedOptionId(e.target.value)}
+            onChange={(e) => increaseOption(e.target.value)}
           >
             {productData.optionList.map((oneOption, index) => {
               return (
@@ -78,8 +99,31 @@ const Product = ({ id, preProductData }) => {
               );
             })}
           </select>
+          {selectedOptionList}
+          <table className="table border table-secondary fs-5 fw-normal mt-3">
+            <thead>
+              <tr>
+                <th scope="col">옵션명</th>
+                <th scope="col">개수</th>
+                <th scope="col">가격</th>
+              </tr>
+            </thead>
+          </table>
+          <div className="d-flex justify-content-between">
+            <h3 className="fw-bold">총 상품 금액</h3>
+            <h3 className="fw-bold">~원</h3>
+          </div>
+          <div className="d-flex gap-2">
+            <button className="btn btn-secondary fs-4 fw-bold">나가기</button>
+            <button className="btn btn-primary fs-4 fw-bold">구매하기</button>
+          </div>
         </div>
       </div>
+      {productData.descImageUrlList.map((url, index) => {
+        <div className="container" style={{ position: "relative" }}>
+          <Image src={url} alt="세부사진" layout="fill" />
+        </div>;
+      })}
     </>
   );
 };

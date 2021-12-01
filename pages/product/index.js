@@ -144,17 +144,16 @@ const ProductList = ({ productList }) => {
           {productList.map((product, index) => {
             return (
               <Link href={`/product/${index}`} key={index}>
-                <a>
-                  <div
-                    className="card p-0"
-                    style={
-                      selectedCategory == "모두"
-                        ? { display: "block" }
-                        : selectedCategory == product.category
-                        ? { display: "block" }
-                        : { display: "none" }
-                    }
-                  >
+                <a
+                  style={
+                    selectedCategory == "모두"
+                      ? { display: "block" }
+                      : selectedCategory == product.category
+                      ? { display: "block" }
+                      : { display: "none" }
+                  }
+                >
+                  <div className="card p-0">
                     <Image
                       className="card-img-top"
                       src={

@@ -4,7 +4,7 @@ import styles from "../../styles/ProductUpload.module.scss";
 import Link from "next/link";
 import HeaderComponent from "../../components/HeaderComponent";
 import { useState } from "react";
-import { collection, addDoc } from "firebase/firestore";
+import { collection, addDoc, setDoc, doc } from "firebase/firestore";
 import { useRouter } from "next/dist/client/router";
 import firestore from "../../firebase/firestoreInit";
 import axios from "axios";
@@ -329,7 +329,8 @@ const ProductUpload = () => {
             className="btn btn-primary"
             disabled={thumbUploadingState || descImageUploadingState}
             onClick={async (e) => {
-              const resultData = {
+              let resultData = {
+                id: "",
                 name: name,
                 defaultPrice: defaultPrice,
                 category: category,
@@ -337,12 +338,14 @@ const ProductUpload = () => {
                 descImageUrlList: descImageUrlList,
                 optionList: optionList,
               };
-              console.log("resultData:", resultData);
-              const res = await addDoc(
+              // 상품아이디 얻기
+              const docId = await addDoc(
                 collection(firestore, "ProductList"),
                 resultData,
-              );
-              console.log(res);
+              ).then((docRef) => docRef.id);
+              resultData.id = docId;
+              console.log(resultData);
+              await setDoc(doc(firestore, "ProductList", docId), resultData);
               e.preventDefault();
               router.push("/product");
             }}

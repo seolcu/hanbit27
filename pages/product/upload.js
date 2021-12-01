@@ -326,7 +326,11 @@ const ProductUpload = () => {
 
           <button
             className="btn btn-primary"
-            disabled={thumbUploadingState || descImageUploadingState}
+            disabled={
+              thumbUploadingState ||
+              descImageUploadingState ||
+              password !== "hanbit27auth"
+            }
             onClick={async (e) => {
               let resultData = {
                 id: "",

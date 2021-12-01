@@ -14,30 +14,6 @@ const ProductUpload = () => {
   const [optionList, setOptionList] = useState([
     { optionName: "기본옵션", optionPrice: 0 },
   ]);
-
-  const TableBody = () => {
-    const result = [];
-    for (let i = 0; i < optionList.length; i++) {
-      result.push(
-        <tr key={i}>
-          <th scope="col">{i}</th>
-          <th scope="col">{optionList[i].optionName}</th>
-          <th scope="col">{optionList[i].optionPrice}</th>
-          <th
-            scope="col"
-            onClick={() => {
-              console.log(optionList);
-              setOptionList([...optionList].splice(i, 1));
-            }}
-          >
-            ❌
-          </th>
-        </tr>,
-      );
-    }
-    return result;
-  };
-
   return (
     <>
       <Head>
@@ -95,7 +71,10 @@ const ProductUpload = () => {
           <h3>옵션 추가하기</h3>
           <div className="container bg-secondary text-light border rounded p-3">
             <div>
-              <h4>옵션명</h4>
+              <h4>
+                옵션명 (구매시 꼭 옵션 한개를 선택해야 하며, 여러개 선택은
+                불가능합니다.)
+              </h4>
               <input
                 type="text"
                 className="form-control form-control-lg"
@@ -106,7 +85,7 @@ const ProductUpload = () => {
               />
             </div>
             <div className="mt-3">
-              <h4>가격 변동</h4>
+              <h4>가격변동 (음수값도 가능)</h4>
               <input
                 type="number"
                 className="form-control form-control-lg"
@@ -119,10 +98,12 @@ const ProductUpload = () => {
             <button
               className="mt-3 btn btn-primary"
               onClick={() => {
-                setOptionList([
-                  ...optionList,
-                  { optionName: optionName, optionPrice: optionPrice },
-                ]);
+                let newOptionList = [...optionList];
+                newOptionList.push({
+                  optionName: optionName,
+                  optionPrice: optionPrice,
+                });
+                setOptionList(newOptionList);
                 setOptionName("");
                 setOptionPrice(0);
               }}
@@ -133,16 +114,42 @@ const ProductUpload = () => {
         </div>
 
         <h3 className="mt-3">현재 옵션들</h3>
-        <table className="table h4 border table-secondary">
+        <table className="table border table-secondary fs-5 fw-normal">
           <thead>
             <tr>
               <th scope="col">#</th>
               <th scope="col">옵션명</th>
-              <th scope="col">가격변동(음수도 가능)</th>
+              <th scope="col">가격변동</th>
+              <th scope="col">선택시 합계</th>
+              <th scope="col">삭제</th>
             </tr>
           </thead>
           <tbody>
-            <TableBody />
+            {optionList.map((oneOption, index) => {
+              return (
+                <tr key={index}>
+                  <th scope="col">{index}</th>
+                  <th scope="col">{oneOption.optionName}</th>
+                  <th scope="col">{oneOption.optionPrice}</th>
+                  <th scope="col">
+                    {parseInt(defaultPrice) + parseInt(oneOption.optionPrice)}
+                  </th>
+                  <th scope="col">
+                    <span
+                      style={{ color: "red" }}
+                      onClick={() => {
+                        let newOptionList = [...optionList];
+                        newOptionList.splice(index, 1);
+                        console.log(newOptionList);
+                        setOptionList(newOptionList);
+                      }}
+                    >
+                      ❌
+                    </span>
+                  </th>
+                </tr>
+              );
+            })}
           </tbody>
         </table>
       </div>

@@ -23,6 +23,7 @@ const ProductUpload = () => {
   const [optionPrice, setOptionPrice] = useState(0);
   const [optionStock, setOptionStock] = useState(1);
   const [optionList, setOptionList] = useState([]);
+  const [optionPlusMinus, setOptionPlusMinus] = useState("+");
   const [selectedFileList, setSelectedFileList] = useState("");
   const [uploadingState, setUploadingState] = useState(false);
 
@@ -125,7 +126,7 @@ const ProductUpload = () => {
             id="기본 가격"
             placeholder="기본 가격"
             value={defaultPrice}
-            onChange={(e) => setDefaultPrice(e.target.value)}
+            onChange={(e) => setDefaultPrice(parseInt(e.target.value))}
           />
         </div>
         <div className="mt-3">
@@ -172,14 +173,39 @@ const ProductUpload = () => {
               />
             </div>
             <div className="mt-3">
-              <h4>가격변동 (음수값도 가능)</h4>
+              <div className="d-flex">
+                <h4>가격변동</h4>
+                <form
+                  className="fs-5 ms-2"
+                  value={optionPlusMinus}
+                  onChange={(e) => setOptionPlusMinus(e.target.value)}
+                >
+                  <input
+                    className="form-check-input"
+                    type="radio"
+                    name="optionPrice"
+                    value="+"
+                    checked={optionPlusMinus == "+"}
+                  />
+                  <label className="form-check-label">증가</label>
+                  <input
+                    className="form-check-input"
+                    type="radio"
+                    name="optionPrice"
+                    value="-"
+                    checked={optionPlusMinus == "-"}
+                  />
+                  <label className="form-check-label">감소</label>
+                </form>
+              </div>
               <input
                 type="number"
                 className="form-control form-control-lg"
                 id="가격 변동"
                 placeholder="가격 변동"
                 value={optionPrice}
-                onChange={(e) => setOptionPrice(e.target.value)}
+                onChange={(e) => setOptionPrice(parseInt(e.target.value))}
+                min={0}
               />
             </div>
             <div className="mt-3">
@@ -190,7 +216,8 @@ const ProductUpload = () => {
                 id="현재 재고"
                 placeholder="현재 재고"
                 value={optionStock}
-                onChange={(e) => setOptionStock(e.target.value)}
+                onChange={(e) => setOptionStock(parseInt(e.target.value))}
+                min={0}
               />
             </div>
             <button
@@ -199,7 +226,8 @@ const ProductUpload = () => {
                 let newOptionList = [...optionList];
                 newOptionList.push({
                   optionName: optionName,
-                  optionPrice: optionPrice,
+                  optionPrice:
+                    optionPlusMinus == "+" ? optionPrice : -optionPrice,
                   optionStock: optionStock,
                 });
                 setOptionList(newOptionList);
@@ -231,10 +259,16 @@ const ProductUpload = () => {
                 <tr key={index}>
                   <th scope="col">{index}</th>
                   <th scope="col">{oneOption.optionName}</th>
-                  <th scope="col">{oneOption.optionPrice}</th>
+                  <th scope="col">
+                    {optionPlusMinus == "+"
+                      ? oneOption.optionPrice
+                      : -oneOption.optionPrice}
+                  </th>
                   <th scope="col">{oneOption.optionStock}</th>
                   <th scope="col">
-                    {parseInt(defaultPrice) + parseInt(oneOption.optionPrice)}
+                    {optionPlusMinus == "+"
+                      ? defaultPrice + oneOption.optionPrice
+                      : defaultPrice - oneOption.optionPrice}
                   </th>
                   <th scope="col">
                     <span

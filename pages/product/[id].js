@@ -67,25 +67,26 @@ const Product = ({ productList }) => {
       <div className={`container py-4 ${styles.mainContainer}`}>
         <div className="container">
           <Image
-            className="rounded"
+            className="img-thumbnail"
             src={productInfo.thumbUrl}
             alt="상품 썸네일"
             width={1000}
             height={1000}
+            layout="responsive"
+            objectFit={"cover"}
             quality={100}
           />
         </div>
-        <div className={`container m-5 ${styles.rightContainer}`}>
+        <div className={`container py-3 ${styles.rightContainer}`}>
           <h1 className="display-3 fw-bold">{productInfo.name}</h1>
           <h2 className="text-primary">{productInfo.defaultPrice}원</h2>
           <select
             className="form-select"
-            value={selectedOption}
             onChange={(e) => setSelectedOption(e.target.value)}
           >
             {productInfo.optionList.map((oneOption, index) => {
               return (
-                <option key={index} value={oneOption}>
+                <option key={index} value={oneOption} defaultValue={index == 0}>
                   {oneOption.optionName}{" "}
                   {oneOption.optionPrice > 0
                     ? `(+${oneOption.optionPrice})`

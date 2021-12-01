@@ -9,6 +9,7 @@ import { MdThumbUpOffAlt, MdMusicNote, MdThumbUpAlt } from "react-icons/md";
 import { useEffect, useState } from "react";
 import { doc, getDoc, setDoc } from "firebase/firestore";
 import Cookies from "js-cookie";
+import { useRouter } from "next/dist/client/router";
 
 export const getStaticPaths = async () => {
   const paths = maskKingInfoList.map((maskKingInfo) => ({
@@ -23,6 +24,8 @@ export const getStaticProps = async ({ params }) => {
 };
 
 const MaskKingSpecificPage = ({ id }) => {
+  const router = useRouter();
+
   // 좋아요 쿠키설정
   let likeCookieName = `like${id}`;
   const maskKingInfo = maskKingInfoList[parseInt(id) - 1];
@@ -47,9 +50,11 @@ const MaskKingSpecificPage = ({ id }) => {
     getLike();
   };
 
+  // 투표수
+  const [voteCount, setVoteCount] = useState(0);
+
   // 투표 쿠키설정
   const voteCookieName = "voted";
-  const [voteCount, setVoteCount] = useState(0);
   const [voteState, setVoteState] = useState(Cookies.get(voteCookieName));
 
   // 투표 Firestore 설정
@@ -120,23 +125,26 @@ const MaskKingSpecificPage = ({ id }) => {
         <div className="mt-1 d-flex justify-content-center gap-2">
           <Link href="/maskKing">
             <a>
-              <button className="btn btn-secondary fs-3">더 둘러보기</button>
+              <button className="btn btn-secondary fs-3">둘러보기</button>
             </a>
           </Link>
           <button
             className="btn btn-primary fs-3"
-            disabled={voteState == "true" ? true : false}
             onClick={async () => {
               if (voteState !== "true") {
                 await setDoc(voteDoc, {
                   count: voteCount + 1,
                 });
+                Cookies.set(voteCookieName, "true");
+                setVoteState("true");
+              } else {
+                router.push("/maskKing/voteResult");
               }
-              setVoteState("true");
-              Cookies.set(voteCookieName, "true");
             }}
           >
-            {voteState == "true" ? "투표함" : `#${maskKingInfo.num} 투표하기`}
+            {voteState == "true"
+              ? "투표 현황"
+              : `#${maskKingInfo.num} 투표하기`}
           </button>
         </div>
       </div>

@@ -1,65 +1,8 @@
 // 모바일
-.titleOverlay {
-  margin: 0;
-  padding: 1rem;
-  text-align: center;
-  position: relative;
-  background: #fff;
-}
-.title {
-  margin: 1rem;
-  font-size: 3rem;
-  font-weight: 900;
-}
-.subtitle {
-  margin: 1rem;
-  font-size: 2rem;
-  font-weight: 400;
-}
-.category {
-  display: flex;
-  flex-direction: row;
-  gap: 0.5rem;
-  button {
-    font-size: 1.5rem;
-  }
-}
-.gridContainer {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 1rem;
-  margin: 1rem 1rem;
-}
-.productCard {
-  min-width: 120px;
-  padding: 1rem 1rem;
-  font-size: 1.5rem;
-  min-height: 10rem;
-  background: #fff;
-  h2 {
-    margin: 0;
-    margin-top: 0.5rem;
-    font-size: 2rem;
-  }
-  h3 {
-    margin: 0;
-    font-weight: 600;
-    color: midnightblue;
-  }
-}
-
 @media only screen and (min-width: 768px) {
   // 패드
-  .gridContainer {
-    grid-template-columns: 1fr 1fr 1fr;
-    margin: 1rem 8rem;
-  }
 }
 
 @media only screen and (min-width: 1024px) {
   // PC
-  .gridContainer {
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-    margin: 1rem 10rem;
-  }
 }

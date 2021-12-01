@@ -325,18 +325,14 @@ const ProductEditModal = ({ productData }) => {
           </div>
 
           <div className="modal-footer">
-            <Link href="/product">
-              <a>
-                <button
-                  type="button"
-                  className="btn btn-secondary"
-                  data-bs-dismiss="modal"
-                  disabled={thumbUploadingState || descImageUploadingState}
-                >
-                  취소하기
-                </button>
-              </a>
-            </Link>
+            <button
+              type="button"
+              className="btn btn-secondary"
+              data-bs-dismiss="modal"
+              disabled={thumbUploadingState || descImageUploadingState}
+            >
+              취소하기
+            </button>
             <button
               type="button"
               data-bs-dismiss="modal"

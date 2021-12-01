@@ -3,59 +3,59 @@
   background-image: url("../public/image/spaceBackgroundImage.webp");
   background-repeat: no-repeat;
   background-size: cover;
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  div {
-    text-align: center;
-    color: white;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    background-color: rgba($color: #000000, $alpha: 0.6);
-    h1 {
-      margin: 5px;
-      font-size: 30px;
-      position: relative;
-      animation-name: goingUp;
-      animation-duration: 1s;
-      opacity: 1;
-      @keyframes goingUp {
-        0% {
-          top: 50px;
-          opacity: 0;
-        }
-        100% {
-          top: 0px;
-          opacity: 1;
-        }
+  position: relative;
+  top: -40px;
+  text-align: center;
+  color: white;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  h1 {
+    margin: 5px;
+    font-size: 30px;
+    position: relative;
+    animation-name: goingUp;
+    animation-duration: 1s;
+    opacity: 1;
+    @keyframes goingUp {
+      0% {
+        top: 50px;
+        opacity: 0;
+      }
+      100% {
+        top: 0px;
+        opacity: 1;
       }
     }
-    h2 {
-      font-size: 17px;
-      margin: 5px;
-      position: relative;
-      animation-name: goingUp;
-      animation-duration: 2s;
-      opacity: 1;
-      @keyframes goingUp {
-        0% {
-          top: 50px;
-          opacity: 0;
-        }
-        50% {
-          top: 50px;
-          opacity: 0;
-        }
-        100% {
-          top: 0px;
-          opacity: 1;
-        }
+  }
+  h2 {
+    font-size: 18px;
+    font-weight: 400;
+    margin: 5px;
+    position: relative;
+    animation-name: goingUp;
+    animation-duration: 2s;
+    opacity: 1;
+    @keyframes goingUp {
+      0% {
+        top: 50px;
+        opacity: 0;
+      }
+      50% {
+        top: 50px;
+        opacity: 0;
+      }
+      100% {
+        top: 0px;
+        opacity: 1;
       }
     }
+  }
+  h2:hover {
+    transform: scale(1.1);
+    transition: 0.1s;
   }
 }
 

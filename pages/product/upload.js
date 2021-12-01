@@ -67,6 +67,14 @@ const ProductUpload = () => {
           />
         </div>
         <div className="mt-3">
+          <h3>카테고리</h3>
+          <select className="form-select" aria-label="Default select example">
+            <option value="대파마켓">대파마켓</option>
+            <option value="온라인부스">온라인부스</option>
+            <option value="굿즈">굿즈</option>
+          </select>
+        </div>
+        <div className="mt-3">
           <h3>사진 추가하기 (여러장 선택 가능)</h3>
           <input
             className="form-control"

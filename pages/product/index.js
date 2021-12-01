@@ -156,10 +156,7 @@ const ProductList = ({ productList }) => {
                   <div className="card p-0">
                     <Image
                       className="card-img-top"
-                      src={
-                        product.imageUrlList[0] ||
-                        "/image/noImagePlaceHolder.png"
-                      }
+                      src={product.thumbUrl || "/image/noImagePlaceHolder.png"}
                       alt="상품사진"
                       width={1000}
                       height={1000}

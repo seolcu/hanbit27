@@ -24,8 +24,10 @@ const ProductUpload = () => {
   const [optionStock, setOptionStock] = useState(1);
   const [optionList, setOptionList] = useState([]);
   const [optionPlusMinus, setOptionPlusMinus] = useState("+");
+  const [selectedThumbnail, setSelectedThumbnail] = useState("");
   const [selectedFileList, setSelectedFileList] = useState("");
   const [uploadingState, setUploadingState] = useState(false);
+  const [discState, setDiscState] = useState("");
 
   const router = useRouter();
 
@@ -145,7 +147,17 @@ const ProductUpload = () => {
           </select>
         </div>
         <div className="mt-3">
-          <h3>사진 추가하기(여러장 선택 가능)</h3>
+          <h3>썸네일 추가하기 (한 장)</h3>
+          <input
+            className="form-control"
+            type="file"
+            id="formFile"
+            accept="image/*"
+            onChange={(e) => setSelectedThumbnail(e.target.files)}
+          />
+        </div>
+        <div className="mt-3">
+          <h3>상품 설명 사진들 (여러장, ctrl 누른채로 순서대로 선택하기)</h3>
           <input
             className="form-control"
             type="file"
@@ -155,7 +167,6 @@ const ProductUpload = () => {
             onChange={(e) => setSelectedFileList(e.target.files)}
           />
         </div>
-
         <div className="mt-3">
           <h3>옵션 추가하기</h3>
           <div className="container bg-secondary text-light border rounded p-3">
@@ -283,6 +294,7 @@ const ProductUpload = () => {
             })}
           </tbody>
         </table>
+
         <hr />
         <div className="d-flex mb-5 gap-2 justify-content-end">
           <Link href="/product">
@@ -298,18 +310,20 @@ const ProductUpload = () => {
             disabled={uploadingState}
             onClick={async (e) => {
               setUploadingState(true);
+              const thumbUrl = await uploadImage(0);
               let imageUrlList = [];
               for (let i = 0; i < selectedFileList.length; i++) {
-                const res = await uploadImage(i);
-                imageUrlList.push(res);
+                const imageUrlRes = await uploadImage(i);
+                imageUrlList.push(imageUrlRes);
               }
               console.log("imageUrlList:", imageUrlList);
               const resultData = {
                 name: name,
                 defaultPrice: defaultPrice,
                 category: category,
-                optionList: optionList,
+                thumbUrl: thumbUrl,
                 imageUrlList: imageUrlList,
+                optionList: optionList,
               };
               console.log("resultData:", resultData);
               const res = await addDoc(

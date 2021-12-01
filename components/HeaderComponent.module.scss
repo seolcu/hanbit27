@@ -1,25 +1,4 @@
 // 모바일
-.header {
-  position: fixed;
-  width: 100vw;
-  top: 0;
-  display: flex;
-  color: #fff;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  font-weight: 400;
-  z-index: 1;
-  background: #00010d;
-  font-size: 1.5rem;
-  font-weight: 700;
-  height: 4rem;
-}
-
-.gap {
-  height: 4rem;
-}
 
 @media only screen and (min-width: 768px) {
   // 패드

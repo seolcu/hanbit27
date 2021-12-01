@@ -9,10 +9,10 @@ const HeaderComponent = () => {
           <Link href="/">
             <a className="navbar-brand fw-bold">한빛제</a>
           </Link>
-          <ul className="navbar-nav">
+          <ul className="navbar-nav h5">
             <li className="nav-item">
               <Link href="/product">
-                <a className="nav-link active">대파마켓 & 굿즈</a>
+                <a className="nav-link active">한빛마켓</a>
               </Link>
             </li>
             <li className="nav-item">

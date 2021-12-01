@@ -62,10 +62,44 @@ const Product = ({ id, preProductData }) => {
     setSelectedOptionList(snapshot);
   };
 
+  const changeOption = (index, value) => {
+    const snapshot = [...selectedOptionList];
+    snapshot.splice(index, 1, parseInt(value));
+    setSelectedOptionList(snapshot);
+  };
+
   const removeOption = (index) => {
     const snapshot = [...selectedOptionList];
     snapshot.splice(index, 1, 0);
     setSelectedOptionList(snapshot);
+  };
+
+  const orderedProductList = [];
+  productData.optionList.map((oneOption, index) => {
+    if (selectedOptionList[index] !== 0) {
+      orderedProductList.push({
+        optionName: oneOption.optionName,
+        price:
+          parseInt(productData.defaultPrice) + parseInt(oneOption.optionPrice),
+        quantity: selectedOptionList[index],
+      });
+    }
+  });
+
+  const [finalPrice, setFinalPrice] = useState(0);
+  let finalPriceSnapshot = 0;
+  orderedProductList.map((orderedProduct) => {
+    finalPriceSnapshot += orderedProduct.price * orderedProduct.quantity;
+  });
+  if (finalPrice !== finalPriceSnapshot) {
+    setFinalPrice(finalPriceSnapshot);
+  }
+
+  const orderResult = {
+    productName: productData.name,
+    productCategory: productData.category,
+    orderedProductList: orderedProductList,
+    finalPrice: finalPrice,
   };
 
   return (
@@ -118,18 +152,75 @@ const Product = ({ id, preProductData }) => {
             })}
           </select>
           {selectedOptionList}
-          <table className="table border table-secondary fs-5 fw-normal mt-3">
+          <table
+            className="table border table-secondary fs-5 fw-normal mt-3"
+            onClick={() => refreshProductData()}
+          >
             <thead>
               <tr>
                 <th scope="col">옵션명</th>
                 <th scope="col">개수</th>
                 <th scope="col">가격</th>
+                <th scope="col">삭제</th>
               </tr>
             </thead>
+            <tbody>
+              {selectedOptionList.map((quantity, index) => {
+                const currentOption = productData.optionList[index];
+                return (
+                  <tr
+                    key={index}
+                    style={
+                      quantity == 0
+                        ? { display: "none" }
+                        : { display: undefined }
+                    }
+                  >
+                    <th scope="col">{currentOption.optionName}</th>
+                    <th scope="col">
+                      <div className="d-flex align-items-center">
+                        <button
+                          className="btn btn-light"
+                          onClick={() => {
+                            if (quantity !== 1) {
+                              decreaseOption(index);
+                            }
+                          }}
+                        >
+                          -
+                        </button>
+                        <div className="btn btn-light">{quantity}</div>
+                        <button
+                          className="btn btn-light"
+                          onClick={() => {
+                            if (quantity !== currentOption.optionStock)
+                              increaseOption(index);
+                          }}
+                        >
+                          +
+                        </button>
+                      </div>
+                    </th>
+                    <th scope="col">
+                      {(parseInt(productData.defaultPrice) +
+                        parseInt(currentOption.optionPrice)) *
+                        quantity}
+                    </th>
+                    <th
+                      scope="col"
+                      className="text-danger"
+                      onClick={() => removeOption(index)}
+                    >
+                      ❌
+                    </th>
+                  </tr>
+                );
+              })}
+            </tbody>
           </table>
           <div className="d-flex justify-content-between">
             <h3 className="fw-bold">총 상품 금액</h3>
-            <h3 className="fw-bold">~원</h3>
+            <h3 className="fw-bold">{finalPrice}원</h3>
           </div>
           <div className="d-flex gap-2">
             <button className="btn btn-secondary fs-4 fw-bold">나가기</button>

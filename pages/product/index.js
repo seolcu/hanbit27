@@ -28,21 +28,60 @@ const ProductList = ({ productList }) => {
   return (
     <>
       <Head>
-        <title>한빛마켓</title>
-        <meta name="description" content="제 27회 한빛제 굿즈마켓" />
+        <title>대파마켓 & 굿즈</title>
+        <meta name="description" content="제 27회 한빛제 대파마켓 & 굿즈" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <HeaderComponent />
-      <h1>한빛마켓</h1>
-      <h2>상품목록</h2>
-      {productList.map((product, index) => {
-        return (
-          <div key={index}>
-            <h2>{product.이름}</h2>
-            <div>{product.가격}</div>
-          </div>
-        );
-      })}
+      <div className={styles.titleOverlay}>
+        <h1 className={styles.title}>대파마켓 & 굿즈</h1>
+        <h2 className={styles.subtitle}>
+          제고의 중고장터, 대파마켓
+          <br />& 제 27회 한빛제만의 아름다운 굿즈들
+        </h2>
+      </div>
+      <div className={styles.gridContainer}>
+        {productList.map((product, index) => {
+          return (
+            <div className={styles.productCard} key={index}>
+              <h2>{product.이름}</h2>
+              <div>{product.가격}원</div>
+            </div>
+          );
+        })}
+        {productList.map((product, index) => {
+          return (
+            <div className={styles.productCard} key={index}>
+              <h2>{product.이름}</h2>
+              <div>{product.가격}원</div>
+            </div>
+          );
+        })}
+        {productList.map((product, index) => {
+          return (
+            <div className={styles.productCard} key={index}>
+              <h2>{product.이름}</h2>
+              <div>{product.가격}원</div>
+            </div>
+          );
+        })}
+        {productList.map((product, index) => {
+          return (
+            <div className={styles.productCard} key={index}>
+              <h2>{product.이름}</h2>
+              <div>{product.가격}원</div>
+            </div>
+          );
+        })}
+        {productList.map((product, index) => {
+          return (
+            <div className={styles.productCard} key={index}>
+              <h2>{product.이름}</h2>
+              <div>{product.가격}원</div>
+            </div>
+          );
+        })}
+      </div>
     </>
   );
 };

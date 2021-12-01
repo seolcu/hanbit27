@@ -36,6 +36,11 @@ const Home = () => {
             <h2>대파마켓 & 온라인부스 & 굿즈</h2>
           </a>
         </Link>
+        <Link href="/maskking">
+          <a>
+            <h2>복면가왕</h2>
+          </a>
+        </Link>
         <Link href="/video">
           <a>
             <h2>공연 영상</h2>

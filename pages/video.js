@@ -13,7 +13,7 @@ const VideoPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <HeaderComponent />
-      <div className="container-fulid p-5 bg-danger text-light">
+      <div className="container-fulid p-5 bg-info text-light">
         <div className="container">
           <h1 className="display-1 fw-bold">공연 영상</h1>
           <h3>

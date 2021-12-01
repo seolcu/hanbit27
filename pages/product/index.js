@@ -3,9 +3,9 @@ import Image from "next/image";
 import styles from "../../styles/ProductList.module.scss";
 import Link from "next/link";
 import { collection, getDocs } from "firebase/firestore";
-import HeaderComponent from "../../components/HeaderComponent";
 import { useState } from "react";
 import firestore from "../../firebase/firestoreInit";
+import MarketHeader from "../../components/MarketHeader";
 
 const productCol = collection(firestore, "ProductList");
 
@@ -16,13 +16,13 @@ export const getStaticProps = async () => {
 
 const ProductList = ({ productList }) => {
   const [selectedCategory, setSelectedCategory] = useState("모두");
-  const [password, setPassword] = useState("");
+
   const CategoryBtn = (category) => {
     return (
       <button
         type="button"
         className={
-          selectedCategory == category ? "btn btn-dark" : "btn btn-light"
+          selectedCategory == category ? "btn btn-primary" : "btn btn-light"
         }
         onClick={() => {
           setSelectedCategory(category);
@@ -39,92 +39,15 @@ const ProductList = ({ productList }) => {
         <meta name="description" content="제 27회 한빛제 대파마켓 & 굿즈" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <HeaderComponent />
-      <div className="p-5 bg-primary text-light">
-        <div className="container">
-          <div className="d-flex gap-3 justify-content-between">
-            <p className="display-1 fw-bold">한빛마켓</p>
-            <button
-              type="button"
-              className="mt-2 btn btn-light h-25"
-              data-bs-toggle="modal"
-              data-bs-target="#adminLoginModal"
-            >
-              상품 업로드(관리자)
-            </button>
-            {/* 관리자 로그인 모달창 */}
-            <div
-              className="modal fade text-dark fw-bold"
-              id="adminLoginModal"
-              tabIndex="-1"
-              aria-labelledby="adminLoginModalLabel"
-              aria-hidden="true"
-            >
-              <div className="modal-dialog">
-                <div className="modal-content">
-                  <div className="modal-header">
-                    <h5 className="modal-title" id="adminLoginModalLabel">
-                      관리자 로그인
-                    </h5>
-                    <button
-                      type="button"
-                      className="btn-close"
-                      data-bs-dismiss="modal"
-                      aria-label="Close"
-                    ></button>
-                  </div>
-                  <div className="modal-body">
-                    <input
-                      type="password"
-                      className="form-control form-control-lg"
-                      id="비밀번호"
-                      placeholder="비밀번호"
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
-                    />
-                  </div>
-                  <div className="modal-footer">
-                    <button
-                      type="button"
-                      className="btn btn-secondary"
-                      data-bs-dismiss="modal"
-                    >
-                      취소
-                    </button>
-                    <Link
-                      href={password == "hanbit27auth" ? "/product/upload" : ""}
-                    >
-                      <a>
-                        <button
-                          type="button"
-                          className="btn btn-primary"
-                          data-bs-dismiss="modal"
-                          disabled={password == "hanbit27auth" ? false : true}
-                        >
-                          로그인
-                        </button>
-                      </a>
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <h3>
-            제고의 중고장터, 대파마켓
-            <br />& 다양한 온라인부스
-            <br />& 제 27회 한빛제만의 아름다운 굿즈들
-          </h3>
-          <div className="btn-group" role="group">
-            {CategoryBtn("모두")}
-            {CategoryBtn("대파마켓")}
-            {CategoryBtn("온라인부스")}
-            {CategoryBtn("굿즈")}
-            {CategoryBtn("기타")}
-          </div>
-        </div>
-      </div>
+      <MarketHeader />
       <div className="container">
+        <div className="my-3 d-flex gap-2">
+          {CategoryBtn("모두")}
+          {CategoryBtn("대파마켓")}
+          {CategoryBtn("온라인부스")}
+          {CategoryBtn("굿즈")}
+          {CategoryBtn("기타")}
+        </div>
         <div className={styles.gridContainer}>
           {productList.map((product, index) => {
             return (

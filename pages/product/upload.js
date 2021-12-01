@@ -9,6 +9,7 @@ import { collection, addDoc } from "firebase/firestore";
 import { useRouter } from "next/dist/client/router";
 import firestore from "../../firebase/firestoreInit";
 import storage from "../../firebase/storageInit";
+import MarketHeader from "../../components/MarketHeader";
 
 const ProductUpload = () => {
   const [password, setPassword] = useState("");
@@ -79,7 +80,7 @@ const ProductUpload = () => {
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <HeaderComponent />
+      <MarketHeader />
       <div className="container-fluid p-5 bg-secondary text-light">
         <div className="container">
           <h1 className="display-1 fw-bold">상품 업로드</h1>
@@ -93,7 +94,6 @@ const ProductUpload = () => {
           <input
             type="password"
             className="form-control form-control-lg"
-            id="비밀번호"
             placeholder="비밀번호"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
@@ -216,10 +216,7 @@ const ProductUpload = () => {
           <h3>옵션 추가하기</h3>
           <div className="container bg-secondary text-light border rounded p-3">
             <div>
-              <h4>
-                옵션명 (구매시 꼭 옵션 한개를 선택해야 하며, 여러개 선택은
-                불가능합니다.)
-              </h4>
+              <h4>옵션명 (옵션 1개 필수선택, 첫번째가 기본 옵션)</h4>
               <input
                 type="text"
                 className="form-control form-control-lg"

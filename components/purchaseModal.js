@@ -35,7 +35,7 @@ const PurchaseModal = ({
             <h5>학번</h5>
             <input
               type="text"
-              className="form-control form-control-lg"
+              className="form-control form-control-lg mb-2"
               placeholder="학번"
               value={studentId}
               onChange={(e) => setStudentId(e.target.value)}
@@ -43,7 +43,7 @@ const PurchaseModal = ({
             <h5>이름</h5>
             <input
               type="text"
-              className="form-control form-control-lg"
+              className="form-control form-control-lg mb-2"
               placeholder="이름"
               value={studentName}
               onChange={(e) => setStudentName(e.target.value)}
@@ -51,7 +51,7 @@ const PurchaseModal = ({
             <h5>전화번호</h5>
             <input
               type="text"
-              className="form-control form-control-lg"
+              className="form-control form-control-lg mb-2"
               placeholder="전화번호"
               value={studentPhone}
               onChange={(e) => setStudentPhone(e.target.value)}
@@ -70,7 +70,7 @@ const PurchaseModal = ({
               className="btn btn-primary"
               data-bs-dismiss="modal"
               disabled={
-                studentId == "" || setStudentName == "" || studentPhone == ""
+                studentId == "" || studentName == "" || studentPhone == ""
                   ? true
                   : false
               }

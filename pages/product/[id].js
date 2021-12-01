@@ -126,8 +126,11 @@ const Product = ({ preProductData }) => {
       studentId: studentId,
       studentName: studentName,
       studentPhone: studentPhone,
+      productId: productData.id,
       productName: productData.name,
       productCategory: productData.category,
+      productThumbUrl: productData.thumbUrl,
+      productDescImageUrlList: productData.descImageUrlList,
       orderedProductList: orderedProductList,
       finalPrice: finalPrice,
     };

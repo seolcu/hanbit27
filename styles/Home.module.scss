@@ -1,17 +1,16 @@
 // 모바일
 .mainOverlay {
   position: relative;
-  top: -40px;
   text-align: center;
   color: white;
-  height: 100vh;
+  height: calc(60vh - 4rem);
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   h1 {
     margin: 5px;
-    font-size: 30px;
+    font-size: 3rem;
     font-weight: 700;
     position: relative;
     animation-name: goingUp;
@@ -57,10 +56,16 @@
   }
 }
 
-@media only screen and (min-width: 600px) {
+@media only screen and (min-width: 768px) {
   // 패드
+  .mainOverlay {
+    height: calc(80vh - 4rem);
+  }
 }
 
-@media only screen and (min-width: 768px) {
+@media only screen and (min-width: 1024px) {
   // PC
+  .mainOverlay {
+    height: calc(100vh - 4rem);
+  }
 }

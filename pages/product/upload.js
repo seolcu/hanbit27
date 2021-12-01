@@ -136,7 +136,6 @@ const ProductUpload = () => {
           <select
             className="form-select"
             aria-label="Default select example"
-            value={category}
             onChange={(e) => setCategory(e.target.value)}
           >
             <option value="대파마켓">대파마켓</option>
@@ -157,7 +156,9 @@ const ProductUpload = () => {
           />
         </div>
         <div className="mt-3">
-          <h3>상품 설명 사진들 (여러장, ctrl 누른채로 순서대로 선택하기)</h3>
+          <h3>
+            상품 설명 사진들 (여러장(최소 1장), ctrl 누른채로 순서대로 선택하기)
+          </h3>
           <input
             className="form-control"
             type="file"

@@ -60,15 +60,6 @@ const ViewOrder = ({ preOrderList }) => {
     }
   };
 
-  async function updateFilteredList() {
-    // 새로고침
-    const newOrderList = await getOrderList();
-    setOrderList(newOrderList);
-    // 필터리스트 새로고침
-    const newFilteredOrderList = getFilteredOrderList(newOrderList);
-    setFilteredOrderList(newFilteredOrderList);
-  }
-
   return (
     <>
       <Head>
@@ -124,7 +115,13 @@ const ViewOrder = ({ preOrderList }) => {
             }
             className="btn btn-primary mt-3 fs-5"
             style={{ marginLeft: "auto", marginRight: "0", display: "block" }}
-            onClick={updateFilteredList}
+            onClick={async () => {
+              // 새로고침
+              const newOrderList = await getOrderList();
+              setOrderList(newOrderList);
+              // 필터리스트 새로고침
+              setFilteredOrderList(getFilteredOrderList(newOrderList));
+            }}
           >
             조회하기
           </button>
@@ -194,7 +191,11 @@ const ViewOrder = ({ preOrderList }) => {
                 await setDoc(productRef, productData);
                 // 주문 삭제
                 await deleteDoc(doc(firestore, "OrderList", oneOrder.orderId));
-                await updateFilteredList();
+                // 새로고침
+                const newOrderList = await getOrderList();
+                setOrderList(newOrderList);
+                // 필터리스트 새로고침
+                setFilteredOrderList(getFilteredOrderList(newOrderList));
                 // 상태수정
                 setDeletingState(false);
               }}

@@ -8,23 +8,19 @@ import { useEffect, useState } from "react";
 import { collection, getDocs } from "firebase/firestore";
 import maskKingInfoList from "../../public/data/maskKingInfoList";
 
-const MaskKing = () => {
+const voteRef = collection(firestore, "MaskKingVote");
+
+export const getStaticProps = async () => {
+  const preVoteCountList = (await getDocs(voteRef)).docs.map((snapshot) =>
+    snapshot.data(),
+  );
+  return { props: { preVoteCountList }, revalidate: 15 };
+};
+
+const MaskKing = ({ preVoteCountList }) => {
   // 투표수
-  const [voteCountList, setVoteCountList] = useState([]);
+  const [voteCountList, setVoteCountList] = useState(preVoteCountList);
 
-  // 투표 Firestore 설정
-  const voteRef = collection(firestore, "MaskKingVote");
-  const getVoteCountList = async () => {
-    const data = (await getDocs(voteRef)).docs.map((snapshot) =>
-      snapshot.data(),
-    );
-    setVoteCountList(data);
-  };
-
-  // 데이터 동기화
-  useEffect(() => {
-    getVoteCountList();
-  });
   return (
     <>
       <Head>

@@ -143,7 +143,17 @@ const ProductList = ({ productList }) => {
         <div className={styles.gridContainer}>
           {productList.map((product, index) => {
             return (
-              <div className="card p-0" key={index}>
+              <div
+                className="card p-0"
+                key={index}
+                style={
+                  selectedCategory == "모두"
+                    ? { display: "block" }
+                    : selectedCategory == product.category
+                    ? { display: "block" }
+                    : { display: "none" }
+                }
+              >
                 <Image
                   className="card-img-top"
                   src={
@@ -154,9 +164,10 @@ const ProductList = ({ productList }) => {
                   height={500}
                   quality={100}
                 />
-                <div className="card-body">
-                  <p className="h3 fw-bold">{product.name}</p>
-                  <p className="h4 text-primary">{product.defaultPrice}원</p>
+                <div className="card-body text-center">
+                  <h3 className="fw-bold">{product.name}</h3>
+                  <p className="fs-5 text-secondary">{product.category}</p>
+                  <h4 className="text-primary">{product.defaultPrice}원</h4>
                 </div>
               </div>
             );

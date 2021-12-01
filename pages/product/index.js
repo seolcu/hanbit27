@@ -162,7 +162,7 @@ const ProductList = ({ productList }) => {
                   alt="상품사진"
                   width={1000}
                   height={1000}
-                  quality={50}
+                  quality={20}
                   layout="intrinsic"
                 />
                 <div className="card-body text-center">

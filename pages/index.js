@@ -60,18 +60,6 @@ const Home = () => {
           </a>
         </Link>
       </div>
-      {/* <SubOverlay
-        BGColor="#081a40"
-        URL="/maskKing"
-        title="복면가왕"
-        desc={
-          <>
-            [멘트]
-            <br />
-            [멘트]
-          </>
-        }
-      /> */}
       <SubOverlay
         BGColor="#012326"
         URL="/product"

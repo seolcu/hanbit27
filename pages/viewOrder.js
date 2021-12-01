@@ -59,11 +59,9 @@ const ViewOrder = ({ preOrderList }) => {
   async function updateFilteredList() {
     // 새로고침
     const newOrderList = await getOrderList();
-    console.log(newOrderList);
     setOrderList(newOrderList);
     // 필터리스트 새로고침
     const newFilteredOrderList = getFilteredOrderList(newOrderList);
-    console.log(newFilteredOrderList);
     setFilteredOrderList(newFilteredOrderList);
   }
 
@@ -165,7 +163,6 @@ const ViewOrder = ({ preOrderList }) => {
                   productData.optionList[oneOption.optionId].optionStock +=
                     oneOption.quantity;
                 });
-                console.log("restored productData:", productData);
                 // 복구된 데이터 업로드
                 await setDoc(productRef, productData);
                 // 주문 삭제

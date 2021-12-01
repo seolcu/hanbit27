@@ -20,18 +20,23 @@ const ProductUpload = () => {
   const [optionStock, setOptionStock] = useState(1);
   const [optionList, setOptionList] = useState([]);
   const [optionPlusMinus, setOptionPlusMinus] = useState("+");
-  const [selectedThumbnail, setSelectedThumbnail] = useState("");
-  const [selectedFileList, setSelectedFileList] = useState("");
-  const [uploadingState, setUploadingState] = useState(false);
-  const [discState, setDiscState] = useState("");
 
+  // 리스트 아님
+  const [selectedThumbnail, setSelectedThumbnail] = useState("");
+
+  // 리스트
+  const [selectedFileList, setSelectedFileList] = useState("");
+
+  const [uploadingState, setUploadingState] = useState(false);
+
+  // 페이지이동
   const router = useRouter();
 
   // 참조: https://firebase.google.com/docs/storage/web/upload-files
-  const uploadImage = (i) => {
+  const uploadImage = (image) => {
     return new Promise((resolve, reject) => {
-      const storageRef = ref(storage, `images/${selectedFileList[i].name}`);
-      const uploadTask = uploadBytesResumable(storageRef, selectedFileList[i]);
+      const storageRef = ref(storage, `images/${image.name}`);
+      const uploadTask = uploadBytesResumable(storageRef, image);
       uploadTask.on(
         "state_changed",
         (snapshot) => {
@@ -135,7 +140,7 @@ const ProductUpload = () => {
             type="file"
             id="formFile"
             accept="image/*"
-            onChange={(e) => setSelectedThumbnail(e.target.files)}
+            onChange={(e) => setSelectedThumbnail(e.target.files[0])}
           />
         </div>
         <div className="mt-3">
@@ -294,10 +299,10 @@ const ProductUpload = () => {
             disabled={uploadingState}
             onClick={async (e) => {
               setUploadingState(true);
-              const thumbUrl = await uploadImage(0);
+              const thumbUrl = await uploadImage(selectedThumbnail);
               let imageUrlList = [];
               for (let i = 0; i < selectedFileList.length; i++) {
-                const imageUrlRes = await uploadImage(i);
+                const imageUrlRes = await uploadImage(selectedFileList[i]);
                 imageUrlList.push(imageUrlRes);
               }
               console.log("imageUrlList:", imageUrlList);

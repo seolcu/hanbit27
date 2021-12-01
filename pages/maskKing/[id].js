@@ -6,6 +6,7 @@ import { useRouter } from "next/router";
 import maskKingInfoList from "../../public/data/maskKingInfoList";
 import HeaderComponent from "../../components/HeaderComponent";
 import db from "../../fireStoreInit";
+import { collection, getDocs } from "firebase/firestore";
 
 export const getStaticPaths = async () => {
   const paths = maskKingInfoList.map((maskKingInfo) => ({

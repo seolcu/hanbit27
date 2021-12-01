@@ -49,11 +49,6 @@ const Home = () => {
         <h1 style={{ marginTop: "2.5rem" }}>To the Big Dipper.</h1>
         <h1>: 북두칠성으로.</h1>
         <h1>2021. 12. 23.</h1>
-        <Link href="/maskKing">
-          <a>
-            <h2>복면가왕</h2>
-          </a>
-        </Link>
         <Link href="/product">
           <a>
             <h2>한빛마켓</h2>
@@ -65,7 +60,7 @@ const Home = () => {
           </a>
         </Link>
       </div>
-      <SubOverlay
+      {/* <SubOverlay
         BGColor="#081a40"
         URL="/maskKing"
         title="복면가왕"
@@ -76,7 +71,7 @@ const Home = () => {
             [멘트]
           </>
         }
-      />
+      /> */}
       <SubOverlay
         BGColor="#012326"
         URL="/product"
@@ -86,19 +81,19 @@ const Home = () => {
             제고의 중고장터 대파마켓,
             <br />
             다양한 온라인 부스들과
-            <br />제 27회 한빛제만의 아름다운 굿즈들 보러가기
+            <br />제 27회 한빛제만의 굿즈들 보러가기
           </>
         }
       />
       <SubOverlay
-        BGColor="#010A26"
+        BGColor="#081a40"
         URL="/viewOrder"
         title="주문조회"
         desc={
           <>
             한빛마켓에서 구매하신 제품을
             <br />
-            학번과 이름, 전화번호로 조회해 보아요.
+            학번과 이름, 전화번호로 조회해 보아요
           </>
         }
       />

@@ -105,6 +105,9 @@ const Product = ({ preProductData }) => {
   const [studentId, setStudentId] = useState(Cookies.get("studentId"));
   const [studentName, setStudentName] = useState(Cookies.get("studentName"));
   const [studentPhone, setStudentPhone] = useState(Cookies.get("studentPhone"));
+  const [depositorName, setDepositorName] = useState(
+    Cookies.get("depositorName"),
+  );
 
   const changeOptionStock = async () => {
     let newProductData = productData;
@@ -126,12 +129,15 @@ const Product = ({ preProductData }) => {
     Cookies.set("studentId", studentId);
     Cookies.set("studentName", studentName);
     Cookies.set("studentPhone", studentPhone);
+    Cookies.set("depositorName", depositorName);
     await changeOptionStock();
     const orderResult = {
       orderId: "",
+      orderStatus: "pending",
       studentId: studentId,
       studentName: studentName,
       studentPhone: studentPhone,
+      depositorName: depositorName,
       productId: productData.id,
       productName: productData.name,
       productCategory: productData.category,
@@ -173,6 +179,8 @@ const Product = ({ preProductData }) => {
           setStudentName={setStudentName}
           studentPhone={studentPhone}
           setStudentPhone={setStudentPhone}
+          depositorName={depositorName}
+          setDepositorName={setDepositorName}
           onClickHandler={purchaseModalOnClickHandler}
         />
         <div className={`container py-4 ${styles.mainContainer}`}>

@@ -7,6 +7,8 @@ const PurchaseModal = ({
   setStudentName,
   studentPhone,
   setStudentPhone,
+  depositorName,
+  setDepositorName,
   // onClickHandler는 화살표함수 X
   onClickHandler,
 }) => {
@@ -55,6 +57,14 @@ const PurchaseModal = ({
               placeholder="전화번호"
               value={studentPhone}
               onChange={(e) => setStudentPhone(e.target.value)}
+            />
+            <h5>입금자명</h5>
+            <input
+              type="text"
+              className="form-control form-control-lg mb-2"
+              placeholder="입금자명"
+              value={depositorName}
+              onChange={(e) => setDepositorName(e.target.value)}
             />
           </div>
           <div className="modal-footer">

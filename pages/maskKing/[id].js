@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import maskKingInfoList from "../../public/data/maskKingInfoList";
 import HeaderComponent from "../../components/HeaderComponent";
-import db from "../../fireStoreInit";
+import db from "../../firebase/fireStoreInit";
 import {
   collection,
   onSnapshot,

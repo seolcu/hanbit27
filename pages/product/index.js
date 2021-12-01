@@ -5,7 +5,7 @@ import Link from "next/link";
 import { collection, getDocs } from "firebase/firestore";
 import HeaderComponent from "../../components/HeaderComponent";
 import { useState } from "react";
-import db from "../../fireStoreInit";
+import db from "../../firebase/fireStoreInit";
 
 export const getStaticProps = async () => {
   const productCol = collection(db, "ProductList");

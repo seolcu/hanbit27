@@ -285,6 +285,7 @@ const Product = ({ preProductData }) => {
                 className="btn btn-primary fs-4 fw-bold"
                 data-bs-toggle="modal"
                 data-bs-target="#purchaseModal"
+                disabled={orderedProductList.length == 0 ? true : false}
               >
                 구매하기
               </button>

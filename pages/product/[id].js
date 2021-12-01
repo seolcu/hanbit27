@@ -8,8 +8,10 @@ import HeaderComponent from "../../components/HeaderComponent";
 import { useEffect, useState } from "react";
 import firestore from "../../firebase/firestoreInit";
 import { useRouter } from "next/router";
+import PurchaseModal from "../../components/purchaseModal";
 
 const productCol = collection(firestore, "ProductList");
+const orderCol = collection(firestore, "OrderList");
 
 export async function getStaticPaths() {
   const preProductDataList = (await getDocs(productCol)).docs.map((doc) =>
@@ -92,12 +94,22 @@ const Product = ({ preProductData }) => {
     setFinalPrice(finalPriceSnapshot);
   }
 
-  const orderResult = {
-    productName: productData.name,
-    productCategory: productData.category,
-    orderedProductList: orderedProductList,
-    finalPrice: finalPrice,
-  };
+  const [studentId, setStudentId] = useState("");
+  const [studentName, setStudentName] = useState("");
+  const [studentPhone, setStudentPhone] = useState("");
+
+  function purchaseModalOnClickHandler() {
+    const orderResult = {
+      studentId: studentId,
+      studentName: studentName,
+      studentPhone: studentPhone,
+      productName: productData.name,
+      productCategory: productData.category,
+      orderedProductList: orderedProductList,
+      finalPrice: finalPrice,
+    };
+    console.log(orderResult);
+  }
 
   if (router.isFallback) {
     return (
@@ -114,6 +126,15 @@ const Product = ({ preProductData }) => {
           <link rel="icon" href="/favicon.ico" />
         </Head>
         <HeaderComponent />
+        <PurchaseModal
+          studentId={studentId}
+          setStudentId={setStudentId}
+          studentName={studentName}
+          setStudentName={setStudentName}
+          studentPhone={studentPhone}
+          setStudentPhone={setStudentPhone}
+          onClickHandler={purchaseModalOnClickHandler}
+        />
         <div className={`container py-4 ${styles.mainContainer}`}>
           <div className="container">
             <img
@@ -229,7 +250,13 @@ const Product = ({ preProductData }) => {
                   </button>
                 </a>
               </Link>
-              <button className="btn btn-primary fs-4 fw-bold">구매하기</button>
+              <button
+                className="btn btn-primary fs-4 fw-bold"
+                data-bs-toggle="modal"
+                data-bs-target="#purchaseModal"
+              >
+                구매하기
+              </button>
             </div>
           </div>
         </div>

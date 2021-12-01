@@ -1,21 +1,28 @@
 import { useState } from "react";
 
-const LoginModal = ({ onClickHandler }) => {
+const PurchaseModal = ({
+  studentId,
+  setStudentId,
+  studentName,
+  setStudentName,
+  studentPhone,
+  setStudentPhone,
   // onClickHandler는 화살표함수 X
-  const [password, setPassword] = useState("");
+  onClickHandler,
+}) => {
   return (
     <div
       className="modal fade text-dark fw-bold"
-      id="adminLoginModal"
+      id="purchaseModal"
       tabIndex="-1"
-      aria-labelledby="adminLoginModalLabel"
+      aria-labelledby="purchaseModalLabel"
       aria-hidden="true"
     >
       <div className="modal-dialog">
         <div className="modal-content">
           <div className="modal-header">
             <h5 className="modal-title" id="adminLoginModalLabel">
-              관리자 로그인
+              주문자 정보 입력 (축제 후 파기됩니다)
             </h5>
             <button
               type="button"
@@ -25,12 +32,29 @@ const LoginModal = ({ onClickHandler }) => {
             ></button>
           </div>
           <div className="modal-body">
+            <h5>학번</h5>
             <input
-              type="password"
+              type="text"
               className="form-control form-control-lg"
-              placeholder="비밀번호"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              placeholder="학번"
+              value={studentId}
+              onChange={(e) => setStudentId(e.target.value)}
+            />
+            <h5>이름</h5>
+            <input
+              type="text"
+              className="form-control form-control-lg"
+              placeholder="이름"
+              value={studentName}
+              onChange={(e) => setStudentName(e.target.value)}
+            />
+            <h5>전화번호</h5>
+            <input
+              type="text"
+              className="form-control form-control-lg"
+              placeholder="전화번호"
+              value={studentPhone}
+              onChange={(e) => setStudentPhone(e.target.value)}
             />
           </div>
           <div className="modal-footer">
@@ -45,11 +69,15 @@ const LoginModal = ({ onClickHandler }) => {
               type="button"
               className="btn btn-primary"
               data-bs-dismiss="modal"
-              disabled={password == "hanbit27auth" ? false : true}
+              disabled={
+                studentId == "" || setStudentName == "" || studentPhone == ""
+                  ? true
+                  : false
+              }
               // 화살표함수 X
               onClick={onClickHandler}
             >
-              로그인
+              주문하기
             </button>
           </div>
         </div>
@@ -58,4 +86,4 @@ const LoginModal = ({ onClickHandler }) => {
   );
 };
 
-export default LoginModal;
+export default PurchaseModal;

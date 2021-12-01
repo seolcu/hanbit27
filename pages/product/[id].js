@@ -190,10 +190,9 @@ const Product = ({ preProductData }) => {
           setDepositorName={setDepositorName}
           onClickHandler={purchaseModalOnClickHandler}
         />
-        <div className={`container py-4 ${styles.mainContainer}`}>
+        <div className={`container py-4 px-0 ${styles.mainContainer}`}>
           <div className="container">
             <img
-              className="img-thumbnail"
               src={productData.thumbUrl}
               alt="상품 썸네일"
               style={{ width: "100%", height: "auto" }}

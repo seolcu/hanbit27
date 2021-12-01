@@ -10,6 +10,7 @@ import {
   doc,
   addDoc,
   getDoc,
+  Timestamp,
 } from "firebase/firestore";
 import HeaderComponent from "../../components/HeaderComponent";
 import { useEffect, useState } from "react";
@@ -137,6 +138,8 @@ const Product = ({ preProductData }) => {
     const orderResult = {
       orderId: "",
       orderStatus: "pending",
+      orderHours: new Date().getHours(),
+      orderMinutes: new Date().getMinutes(),
       studentId: studentId,
       studentName: studentName,
       studentPhone: studentPhone,

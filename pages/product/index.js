@@ -143,34 +143,38 @@ const ProductList = ({ productList }) => {
         <div className={styles.gridContainer}>
           {productList.map((product, index) => {
             return (
-              <div
-                className="card p-0"
-                key={index}
-                style={
-                  selectedCategory == "모두"
-                    ? { display: "block" }
-                    : selectedCategory == product.category
-                    ? { display: "block" }
-                    : { display: "none" }
-                }
-              >
-                <Image
-                  className="card-img-top"
-                  src={
-                    product.imageUrlList[0] || "/image/noImagePlaceHolder.png"
-                  }
-                  alt="상품사진"
-                  width={1000}
-                  height={1000}
-                  quality={20}
-                  layout="intrinsic"
-                />
-                <div className="card-body text-center">
-                  <h3 className="fw-bold">{product.name}</h3>
-                  <p className="fs-5 text-secondary">{product.category}</p>
-                  <h4 className="text-primary">{product.defaultPrice}원</h4>
-                </div>
-              </div>
+              <Link href={`/product/${index}`} key={index}>
+                <a>
+                  <div
+                    className="card p-0"
+                    style={
+                      selectedCategory == "모두"
+                        ? { display: "block" }
+                        : selectedCategory == product.category
+                        ? { display: "block" }
+                        : { display: "none" }
+                    }
+                  >
+                    <Image
+                      className="card-img-top"
+                      src={
+                        product.imageUrlList[0] ||
+                        "/image/noImagePlaceHolder.png"
+                      }
+                      alt="상품사진"
+                      width={1000}
+                      height={1000}
+                      quality={20}
+                      layout="intrinsic"
+                    />
+                    <div className="card-body text-center">
+                      <h3 className="fw-bold">{product.name}</h3>
+                      <p className="fs-5 text-secondary">{product.category}</p>
+                      <h4 className="text-primary">{product.defaultPrice}원</h4>
+                    </div>
+                  </div>
+                </a>
+              </Link>
             );
           })}
         </div>

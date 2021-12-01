@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import Head from "next/head";
 import Image from "next/image";
 import styles from "../../styles/Product.module.scss";
@@ -105,20 +106,20 @@ const Product = ({ id, preProductData }) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <MarketHeader />
-      <div className="container py-3 row">
-        <Image
-          className="img-thumbnail col-6"
-          src={productData.thumbUrl}
-          alt="상품 썸네일"
-          width={100}
-          height={100}
-        />
-        <div className="col-6">
+      <div className={`container py-4 ${styles.mainContainer}`}>
+        <div className="container">
+          <img
+            className="img-thumbnail"
+            src={productData.thumbUrl}
+            alt="상품 썸네일"
+            style={{ width: "100%", height: "auto" }}
+          />
+        </div>
+        <div className={`container py-3 ${styles.rightContainer}`}>
           <h1 className="display-3 fw-bold">{productData.name}</h1>
           <h2 className="text-primary">{productData.defaultPrice}원</h2>
           <select
             className="form-select"
-            onClick={async () => refreshProductData()}
             onChange={(e) => {
               if (e.target.value !== "placeholder") {
                 increaseOption(e.target.value);
@@ -145,10 +146,7 @@ const Product = ({ id, preProductData }) => {
               );
             })}
           </select>
-          <table
-            className="table border table-secondary fs-5 fw-normal mt-3"
-            onClick={() => refreshProductData()}
-          >
+          <table className="table border table-secondary fs-5 fw-normal mt-3">
             <thead>
               <tr>
                 <th scope="col">옵션명</th>
@@ -230,9 +228,12 @@ const Product = ({ id, preProductData }) => {
       <div className="container" style={{ position: "relative" }}>
         {productData.descImageUrlList.map((url, index) => {
           return (
-            <div className="d-block" key={Math.random()}>
-              <Image src={url} alt="세부사진" width={100} height={100} />
-            </div>
+            <img
+              src={url}
+              alt="세부사진"
+              key={index}
+              style={{ width: "100%", height: "auto" }}
+            />
           );
         })}
       </div>

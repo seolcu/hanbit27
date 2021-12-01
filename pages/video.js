@@ -13,6 +13,18 @@ const VideoPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <HeaderComponent />
+      <div className="container-fulid p-5 bg-danger text-light">
+        <div className="container">
+          <h1 className="display-1 fw-bold">공연 영상</h1>
+          <h3>
+            축제는 역시 공연!
+            <br />
+            [팀명 리스트 순서대로]의
+            <br />
+            화려한 공연 영상들 보러가기
+          </h3>
+        </div>
+      </div>
     </>
   );
 };

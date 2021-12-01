@@ -54,13 +54,13 @@ const ProductUpload = () => {
         },
         (error) => {
           // Handle unsuccessful uploads
-          console.log(`Error uploading file ${i}: ${error}`);
+          console.log(`Error uploading file ${image.name}: ${error}`);
         },
         () => {
           // Handle successful uploads on complete
           // For instance, get the download URL: https://firebasestorage.googleapis.com/...
           getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-            console.log(`File ${i} available at`, downloadURL);
+            console.log(`File ${image.name} available at`, downloadURL);
             resolve(downloadURL);
           });
         },
@@ -144,9 +144,7 @@ const ProductUpload = () => {
           />
         </div>
         <div className="mt-3">
-          <h3>
-            상품 설명 사진들 (여러장(최소 1장), ctrl 누른채로 순서대로 선택하기)
-          </h3>
+          <h3>상품 설명 사진들 (여러장, ctrl 누른채로 순서대로 선택하기)</h3>
           <input
             className="form-control"
             type="file"
@@ -299,7 +297,10 @@ const ProductUpload = () => {
             disabled={uploadingState}
             onClick={async (e) => {
               setUploadingState(true);
-              const thumbUrl = await uploadImage(selectedThumbnail);
+              let thumbUrl = "/image/noImagePlaceHolder.png";
+              if (selectedFileList) {
+                thumbUrl = await uploadImage(selectedThumbnail);
+              }
               let imageUrlList = [];
               for (let i = 0; i < selectedFileList.length; i++) {
                 const imageUrlRes = await uploadImage(selectedFileList[i]);

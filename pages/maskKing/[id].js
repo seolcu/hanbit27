@@ -72,18 +72,20 @@ const MaskKingSpecificPage = ({ id }) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <HeaderComponent />
-      <div className="container-fluid m-5">
-        <div className={`row ${styles.outerContainer}`}>
+      <div className="container p-5">
+        <div className={`row`}>
           <video controls className="col-lg-8 p-0">
             <source src={maskKingInfo.videoSrc} type="video/mp4" />
           </video>
           <div className="col-lg-4 p-0">
-            <ul className="fs-3">
+            <div className="fs-2">
               {messages.map((message) => (
-                <li key={message.id}>{message.text}</li>
+                <p key={message.id} className="m-0">
+                  {message.text}
+                </p>
               ))}
-            </ul>
-            <form onSubmit={handleOnSubmit}>
+            </div>
+            <form onSubmit={handleOnSubmit} className="m-0">
               <input
                 type="text"
                 value={newMessage}

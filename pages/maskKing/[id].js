@@ -5,17 +5,9 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import maskKingInfoList from "../../public/data/maskKingInfoList";
 import HeaderComponent from "../../components/HeaderComponent";
-import firestore from "../../firebase/firestoreInit";
-import {
-  collection,
-  onSnapshot,
-  query,
-  orderBy,
-  limit,
-  addDoc,
-  serverTimestamp,
-} from "firebase/firestore";
 import { useEffect, useState } from "react";
+import database from "../../firebase/databaseInit";
+import { ref, set, onValue, serverTimestamp, get } from "firebase/database";
 
 export const getStaticPaths = async () => {
   const paths = maskKingInfoList.map((maskKingInfo) => ({
@@ -31,33 +23,37 @@ export const getStaticProps = async ({ params }) => {
 
 const MaskKingSpecificPage = ({ id }) => {
   const maskKingInfo = maskKingInfoList[parseInt(id) - 1];
-
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
 
-  const chatCol = collection(firestore, `VideoChat${id}`);
-  const chatQuery = query(chatCol, orderBy("createdAt"), limit(100));
+  const chatRef = ref(database, "chat");
 
-  useEffect(() => {
-    const unsub = onSnapshot(chatQuery, (querySnapshot) => {
-      const data = querySnapshot.docs.map((doc) => ({
-        ...doc.data(),
-        id: doc.id,
-      }));
+  // 초기 값 불러오기
+  get(chatRef).then((snapshot) => {
+    if (snapshot.exists()) {
+      setMessages(snapshot.val());
+    }
+  });
+
+  // 값 동기화
+  onValue(chatRef, (snapshot) => {
+    const data = snapshot.val();
+    if (data == null) {
       setMessages(data);
-    });
+    }
+  });
 
-    return unsub;
-  }, [chatQuery]);
-
-  const handleOnSubmit = async (e) => {
+  // 업로드 시
+  const handleOnSubmit = (e) => {
     e.preventDefault();
     const trimmedMessage = newMessage.trim();
     if (trimmedMessage) {
-      await addDoc(chatCol, {
+      let messagesSampleList = messages;
+      messagesSampleList.push({
         text: trimmedMessage,
         createdAt: serverTimestamp(),
       });
+      set(chatRef, messagesSampleList);
       setNewMessage("");
     }
   };
@@ -79,11 +75,13 @@ const MaskKingSpecificPage = ({ id }) => {
           </video>
           <div className="col-lg-4 p-0 d-block">
             <div className={`overflow-auto ${styles.messageContainer}`}>
-              {messages.map((message) => (
-                <div key={message.id} className="fs-5">
-                  {message.text}
-                </div>
-              ))}
+              {messages
+                ? messages.map((message, index) => (
+                    <div key={index} className="fs-5">
+                      {message.text}
+                    </div>
+                  ))
+                : ""}
             </div>
             <form onSubmit={handleOnSubmit} className={`${styles.messageForm}`}>
               <input

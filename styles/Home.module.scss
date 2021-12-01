@@ -9,8 +9,8 @@
   justify-content: center;
   align-items: center;
   h1 {
-    margin: 5px;
-    font-size: 3rem;
+    margin: 0.5rem;
+    font-size: 4rem;
     font-weight: 700;
     position: relative;
     animation-name: goingUp;
@@ -18,34 +18,34 @@
     opacity: 1;
     @keyframes goingUp {
       0% {
-        top: 50px;
+        top: 5rem;
         opacity: 0;
       }
       100% {
-        top: 0px;
+        top: 0;
         opacity: 1;
       }
     }
   }
   h2 {
-    font-size: 18px;
+    font-size: 2rem;
     font-weight: 400;
-    margin: 5px;
+    margin: 0.5rem;
     position: relative;
     animation-name: goingUp;
     animation-duration: 2s;
     opacity: 1;
     @keyframes goingUp {
       0% {
-        top: 50px;
+        top: 5rem;
         opacity: 0;
       }
       50% {
-        top: 50px;
+        top: 5rem;
         opacity: 0;
       }
       100% {
-        top: 0px;
+        top: 0;
         opacity: 1;
       }
     }

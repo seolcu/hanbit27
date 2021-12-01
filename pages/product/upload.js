@@ -11,9 +11,8 @@ const ProductUpload = () => {
   const [defaultPrice, setDefaultPrice] = useState(0);
   const [optionName, setOptionName] = useState("");
   const [optionPrice, setOptionPrice] = useState(0);
-  const [optionList, setOptionList] = useState([
-    { optionName: "기본옵션", optionPrice: 0 },
-  ]);
+  const [optionStock, setOptionStock] = useState(1);
+  const [optionList, setOptionList] = useState([]);
   return (
     <>
       <Head>
@@ -114,6 +113,17 @@ const ProductUpload = () => {
                 onChange={(e) => setOptionPrice(e.target.value)}
               />
             </div>
+            <div className="mt-3">
+              <h4>현재 재고</h4>
+              <input
+                type="number"
+                className="form-control form-control-lg"
+                id="현재 재고"
+                placeholder="현재 재고"
+                value={optionStock}
+                onChange={(e) => setOptionStock(e.target.value)}
+              />
+            </div>
             <button
               className="mt-3 btn btn-light"
               onClick={() => {
@@ -121,10 +131,12 @@ const ProductUpload = () => {
                 newOptionList.push({
                   optionName: optionName,
                   optionPrice: optionPrice,
+                  optionStock: optionStock,
                 });
                 setOptionList(newOptionList);
                 setOptionName("");
                 setOptionPrice(0);
+                setOptionStock(1);
               }}
             >
               옵션 추가하기
@@ -139,6 +151,7 @@ const ProductUpload = () => {
               <th scope="col">#</th>
               <th scope="col">옵션명</th>
               <th scope="col">가격변동</th>
+              <th scope="col">현재 재고</th>
               <th scope="col">선택시 합계</th>
               <th scope="col">삭제</th>
             </tr>
@@ -150,6 +163,7 @@ const ProductUpload = () => {
                   <th scope="col">{index}</th>
                   <th scope="col">{oneOption.optionName}</th>
                   <th scope="col">{oneOption.optionPrice}</th>
+                  <th scope="col">{oneOption.optionStock}</th>
                   <th scope="col">
                     {parseInt(defaultPrice) + parseInt(oneOption.optionPrice)}
                   </th>

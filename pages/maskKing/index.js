@@ -24,24 +24,11 @@ const MaskKing = () => {
       <div className="container-fluid p-5 bg-danger text-light">
         <div className="container">
           <h1 className="display-1 fw-bold">복면가왕 예선전</h1>
-          {/* <h3>
-            [멘트]
-            <br />
-            [멘트]
-            <br />
-            [멘트]
-          </h3> */}
           <div className="d-flex align-items-center gap-3">
-            {/* <Link href="/maskKing/voteResult">
-              <a>
-                <button className="btn btn-light fs-5">투표 현황</button>
-              </a>
-            </Link> */}
             <h2 className="m-0 fs-4">
-              {voteState == "true" ? (
+              {voteState ? (
                 <>
-                  <MdCheck />
-                  투표함
+                  <MdCheck />#{voteState} 투표함
                 </>
               ) : (
                 <>

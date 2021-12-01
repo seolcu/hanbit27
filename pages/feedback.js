@@ -6,7 +6,7 @@ import HeaderComponent from "../components/HeaderComponent";
 
 const FeedbackPage = () => {
   return (
-    <div>
+    <>
       <Head>
         <title>고객센터</title>
         <meta name="description" content="제 27회 한빛제 고객센터" />
@@ -15,7 +15,7 @@ const FeedbackPage = () => {
       <HeaderComponent />
       <h1>고객센터</h1>
       <input type="text" />
-    </div>
+    </>
   );
 };
 export default FeedbackPage;

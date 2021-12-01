@@ -137,7 +137,7 @@ const Product = ({ preProductData }) => {
     const orderResult = {
       orderId: "",
       // 입금 확인중, 입금 확인됨, 배송중, 배송완료
-      orderStatus: "pending",
+      orderStatus: "입금 확인중",
       orderHours: new Date().getHours(),
       orderMinutes: new Date().getMinutes(),
       studentId: studentId,
@@ -197,7 +197,11 @@ const Product = ({ preProductData }) => {
           </div>
           <div className={`container py-3 ${styles.rightContainer}`}>
             <h1 className="display-3 fw-bold">{productData.name}</h1>
-            <p className="fs-5 text-secondary">{productData.category}</p>
+            <p className="fs-5 text-secondary">
+              {productData.category}
+              <br />
+              상품ID: {productData.id}
+            </p>
             <h2 className="text-primary">{productData.defaultPrice}원</h2>
             <select
               className="form-select"

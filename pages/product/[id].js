@@ -7,7 +7,6 @@ import HeaderComponent from "../../components/HeaderComponent";
 import { useEffect, useState } from "react";
 import firestore from "../../firebase/firestoreInit";
 import MarketHeader from "../../components/MarketHeader";
-import { async } from "@firebase/util";
 
 const productCol = collection(firestore, "ProductList");
 
@@ -51,15 +50,19 @@ const Product = ({ id, preProductData }) => {
   const increaseOption = (index) => {
     const snapshot = [...selectedOptionList];
     const preValue = selectedOptionList[index];
-    snapshot.splice(index, 1, preValue + 1);
-    setSelectedOptionList(snapshot);
+    if (preValue < productData.optionList[index].optionStock) {
+      snapshot.splice(index, 1, preValue + 1);
+      setSelectedOptionList(snapshot);
+    }
   };
 
   const decreaseOption = (index) => {
     const snapshot = [...selectedOptionList];
     const preValue = selectedOptionList[index];
-    snapshot.splice(index, 1, preValue - 1);
-    setSelectedOptionList(snapshot);
+    if (preValue > 0) {
+      snapshot.splice(index, 1, preValue - 1);
+      setSelectedOptionList(snapshot);
+    }
   };
 
   const changeOption = (index, value) => {
@@ -110,20 +113,15 @@ const Product = ({ id, preProductData }) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <MarketHeader />
-      <div className={`container py-4 ${styles.mainContainer}`}>
-        <div className="container">
-          <Image
-            className="img-thumbnail"
-            src={productData.thumbUrl}
-            alt="상품 썸네일"
-            width={1000}
-            height={1000}
-            layout="responsive"
-            objectFit={"contain"}
-            quality={100}
-          />
-        </div>
-        <div className={`container py-3 ${styles.rightContainer}`}>
+      <div className="container py-3 row">
+        <Image
+          className="img-thumbnail col-6"
+          src={productData.thumbUrl}
+          alt="상품 썸네일"
+          width={100}
+          height={100}
+        />
+        <div className="col-6">
           <h1 className="display-3 fw-bold">{productData.name}</h1>
           <h2 className="text-primary">{productData.defaultPrice}원</h2>
           <select
@@ -139,7 +137,11 @@ const Product = ({ id, preProductData }) => {
             <option value="placeholder">옵션 선택</option>
             {productData.optionList.map((oneOption, index) => {
               return (
-                <option key={index} value={index}>
+                <option
+                  key={index}
+                  value={index}
+                  disabled={oneOption.optionStock == 0 ? true : false}
+                >
                   {oneOption.optionName}{" "}
                   {oneOption.optionPrice > 0
                     ? `(+${oneOption.optionPrice})`
@@ -221,17 +223,27 @@ const Product = ({ id, preProductData }) => {
             <h3 className="fw-bold">총 상품 금액</h3>
             <h3 className="fw-bold">{finalPrice}원</h3>
           </div>
-          <div className="d-flex gap-2">
-            <button className="btn btn-secondary fs-4 fw-bold">나가기</button>
+          <div className="d-flex gap-2 justify-content-end">
+            <Link href="/product">
+              <a>
+                <button className="btn btn-secondary fs-4 fw-bold">
+                  나가기
+                </button>
+              </a>
+            </Link>
             <button className="btn btn-primary fs-4 fw-bold">구매하기</button>
           </div>
         </div>
       </div>
-      {productData.descImageUrlList.map((url, index) => {
-        <div className="container" style={{ position: "relative" }}>
-          <Image src={url} alt="세부사진" layout="fill" />
-        </div>;
-      })}
+      <div className="container" style={{ position: "relative" }}>
+        {productData.descImageUrlList.map((url, index) => {
+          return (
+            <div className="d-block" key={Math.random()}>
+              <Image src={url} alt="세부사진" width={100} height={100} />
+            </div>
+          );
+        })}
+      </div>
     </>
   );
 };

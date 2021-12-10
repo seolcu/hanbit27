@@ -3,7 +3,7 @@
   position: relative;
   text-align: center;
   color: white;
-  height: calc(85vh - 4rem);
+  height: calc(100vh - 4rem);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -108,14 +108,8 @@
 
 @media only screen and (min-width: 768px) {
   // 패드
-  .mainOverlay {
-    height: calc(85vh - 4rem);
-  }
 }
 
 @media only screen and (min-width: 1024px) {
   // PC
-  .mainOverlay {
-    height: calc(100vh - 4rem);
-  }
 }

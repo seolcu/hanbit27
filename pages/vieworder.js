@@ -8,18 +8,21 @@ const ViewOrder = () => {
   return (
     <>
       <Head>
-        <title>주문조회</title>
+        <title>주문 조회하기</title>
         <meta name="description" content="주문 조회하기" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <HeaderComponent />
-      <h1>주문 조회하기</h1>
-      <form>
-        <input type="text" placeholder="주문번호"></input>
-        <br />
-        <input type="text" placeholder="전화번호"></input>
-      </form>
-      <button>조회하기</button>
+      <div className="container-fluid p-5 bg-warning text-light">
+        <div className="container">
+          <h1 className="display-1 fw-bold">주문 조회하기</h1>
+          <h3>
+            한빛마켓에서 구매하신 제품을
+            <br />
+            학번과 이름, 전화번호로 조회해 보아요.
+          </h3>
+        </div>
+      </div>
     </>
   );
 };

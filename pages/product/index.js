@@ -28,16 +28,17 @@ const ProductList = ({ productList }) => {
   return (
     <>
       <Head>
-        <title>대파마켓 & 굿즈</title>
+        <title>한빛마켓</title>
         <meta name="description" content="제 27회 한빛제 대파마켓 & 굿즈" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <HeaderComponent />
-      <div className="p-5 bg-light">
+      <div className="p-5 bg-primary text-light">
         <div className="container">
-          <p className="display-1 fw-bold">대파마켓 & 굿즈</p>
+          <p className="display-1 fw-bold">한빛마켓</p>
           <h3>
             제고의 중고장터, 대파마켓
+            <br />& 다양한 온라인부스
             <br />& 제 27회 한빛제만의 아름다운 굿즈들
           </h3>
           <div className="d-flex gap-1">
@@ -56,26 +57,29 @@ const ProductList = ({ productList }) => {
           </div>
         </div>
       </div>
-      <div className="row">
-        {productList.map((product, index) => {
-          return (
-            <div className="card col-6" key={index}>
-              <Image
-                src={
-                  "https://firebasestorage.googleapis.com/v0/b/hanbit27-b2a04.appspot.com/o/821b92d616639ecfda49526554e9d693.jpg?alt=media&token=f0df3cf4-4bb6-49bf-9eef-9722c23b82b8"
-                }
-                alt="상품사진"
-                width={500}
-                height={500}
-                quality={100}
-              />
-              <div className="card-body">
-                <p className="h3 fw-bold">{product.이름}</p>
-                <p className="h4 text-primary">{product.가격}원</p>
+      <div className="container">
+        <div className={styles.gridContainer}>
+          {productList.map((product, index) => {
+            return (
+              <div className="card p-0" key={index}>
+                <Image
+                  className="card-img-top"
+                  src={
+                    "https://firebasestorage.googleapis.com/v0/b/hanbit27-b2a04.appspot.com/o/821b92d616639ecfda49526554e9d693.jpg?alt=media&token=f0df3cf4-4bb6-49bf-9eef-9722c23b82b8"
+                  }
+                  alt="상품사진"
+                  width={500}
+                  height={500}
+                  quality={100}
+                />
+                <div className="card-body">
+                  <p className="h3 fw-bold">{product.이름}</p>
+                  <p className="h4 text-primary">{product.가격}원</p>
+                </div>
               </div>
-            </div>
-          );
-        })}
+            );
+          })}
+        </div>
       </div>
     </>
   );

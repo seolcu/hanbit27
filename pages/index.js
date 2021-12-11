@@ -32,7 +32,7 @@ const Home = () => {
         <h1>2021. 12. 23.</h1>
         <Link href="/product">
           <a>
-            <h2>대파마켓 & 굿즈</h2>
+            <h2>대파마켓 & 온라인부스 & 굿즈</h2>
           </a>
         </Link>
         <Link href="/video">
@@ -52,45 +52,49 @@ const Home = () => {
         </Link>
       </div>
       <div
-        className="container p-5 text-light"
+        className="container-fluid p-5 text-light"
         style={{ background: "#012326" }}
       >
-        <p className="display-2 fw-bold">대파마켓 & 굿즈</p>
-        <p className="h3">
-          제고의 중고장터 대파마켓과,
-          <br />제 27회 한빛제만의 아름다운 굿즈들 보러가기
-        </p>
-        <Link href="/product">
-          <a>
-            <button
-              className="btn text-light"
-              style={{ background: "#273d59" }}
-            >
-              대파마켓 바로가기
-            </button>
-          </a>
-        </Link>
+        <div className="container">
+          <p className="display-3 fw-bold">대파마켓 & 굿즈</p>
+          <p className="h3">
+            제고의 중고장터 대파마켓과,
+            <br />제 27회 한빛제만의 아름다운 굿즈들 보러가기
+          </p>
+          <Link href="/product">
+            <a>
+              <button
+                className="btn text-light"
+                style={{ background: "#273d59" }}
+              >
+                대파마켓 바로가기
+              </button>
+            </a>
+          </Link>
+        </div>
       </div>
       <div
-        className="container p-5 text-light"
+        className="container-fluid p-5 text-light"
         style={{ background: "#081a40" }}
       >
-        <p className="display-2 fw-bold">한빛제 공연 영상</p>
-        <p className="h3">
-          축제는 역시 공연!
-          <br />
-          화려한 공연 영상들 보러가기
-        </p>
-        <Link href="/video">
-          <a>
-            <button
-              className="btn text-light"
-              style={{ background: "#273d59" }}
-            >
-              공연 영상 보러가기
-            </button>
-          </a>
-        </Link>
+        <div className="container">
+          <p className="display-3 fw-bold">한빛제 공연 영상</p>
+          <p className="h3">
+            축제는 역시 공연!
+            <br />
+            화려한 공연 영상들 보러가기
+          </p>
+          <Link href="/video">
+            <a>
+              <button
+                className="btn text-light"
+                style={{ background: "#273d59" }}
+              >
+                공연 영상 보러가기
+              </button>
+            </a>
+          </Link>
+        </div>
       </div>
     </>
   );

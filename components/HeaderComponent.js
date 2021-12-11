@@ -16,6 +16,11 @@ const HeaderComponent = () => {
               </Link>
             </li>
             <li className="nav-item">
+              <Link href="/maskking">
+                <a className="nav-link active">복면가왕</a>
+              </Link>
+            </li>
+            <li className="nav-item">
               <Link href="/video">
                 <a className="nav-link active">공연영상</a>
               </Link>

@@ -28,8 +28,8 @@ const Home = () => {
           quality={60}
         />
         <Image alt="Big Dipper" src={bigDipperImg} width={300} height={260} />
-        <h1 style={{ marginTop: "2.5rem" }}>To the Big Dipper,</h1>
-        <h1>북두칠성으로.</h1>
+        <h1 style={{ marginTop: "2.5rem" }}>To the Big Dipper.</h1>
+        <h1>2021. 12. 23.</h1>
         <Link href="/product">
           <a>
             <h2>대파마켓 & 굿즈</h2>
@@ -51,28 +51,44 @@ const Home = () => {
           </a>
         </Link>
       </div>
-      <div className={styles.marketOverlay}>
-        <h2>대파마켓 & 굿즈</h2>
-        <h3>
+      <div
+        className="container p-5 text-light"
+        style={{ background: "#012326" }}
+      >
+        <p className="display-2 fw-bold">대파마켓 & 굿즈</p>
+        <p className="h3">
           제고의 중고장터 대파마켓과,
           <br />제 27회 한빛제만의 아름다운 굿즈들 보러가기
-        </h3>
+        </p>
         <Link href="/product">
           <a>
-            <button>대파마켓 바로가기</button>
+            <button
+              className="btn text-light"
+              style={{ background: "#273d59" }}
+            >
+              대파마켓 바로가기
+            </button>
           </a>
         </Link>
       </div>
-      <div className={styles.videoOverlay}>
-        <h2>한빛제 공연 영상</h2>
-        <h3>
+      <div
+        className="container p-5 text-light"
+        style={{ background: "#081a40" }}
+      >
+        <p className="display-2 fw-bold">한빛제 공연 영상</p>
+        <p className="h3">
           축제는 역시 공연!
           <br />
           화려한 공연 영상들 보러가기
-        </h3>
+        </p>
         <Link href="/video">
           <a>
-            <button>공연 영상 보러가기</button>
+            <button
+              className="btn text-light"
+              style={{ background: "#273d59" }}
+            >
+              공연 영상 보러가기
+            </button>
           </a>
         </Link>
       </div>

@@ -33,42 +33,46 @@ const ProductList = ({ productList }) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <HeaderComponent />
-      <div className={styles.titleOverlay}>
-        <h1 className={styles.title}>대파마켓 & 굿즈</h1>
-        <h2 className={styles.subtitle}>
-          제고의 중고장터, 대파마켓
-          <br />& 제 27회 한빛제만의 아름다운 굿즈들
-        </h2>
-        <div className={styles.category}>
-          <button type="button" className="btn btn-light">
-            모두
-          </button>
-          <button type="button" className="btn btn-light">
-            의류
-          </button>
-          <button type="button" className="btn btn-light">
-            교재
-          </button>
-          <button type="button" className="btn btn-light">
-            굿즈
-          </button>
+      <div className="p-5 bg-light">
+        <div className="container">
+          <p className="display-1 fw-bold">대파마켓 & 굿즈</p>
+          <h3>
+            제고의 중고장터, 대파마켓
+            <br />& 제 27회 한빛제만의 아름다운 굿즈들
+          </h3>
+          <div className="d-flex gap-1">
+            <button type="button" className="btn btn-light">
+              모두
+            </button>
+            <button type="button" className="btn btn-light">
+              의류
+            </button>
+            <button type="button" className="btn btn-light">
+              교재
+            </button>
+            <button type="button" className="btn btn-light">
+              굿즈
+            </button>
+          </div>
         </div>
       </div>
-      <div className={styles.gridContainer}>
+      <div className="row">
         {productList.map((product, index) => {
           return (
-            <div className={styles.productCard} key={index}>
+            <div className="card col-6" key={index}>
               <Image
                 src={
-                  "https://firebasestorage.googleapis.com/v0/b/hanbit27-b2a04.appspot.com/o/%EC%8A%A4%ED%81%AC%EB%A6%B0.png?alt=media&token=56e0f6ac-0112-45d4-8cc1-51f4d96780d0"
+                  "https://firebasestorage.googleapis.com/v0/b/hanbit27-b2a04.appspot.com/o/821b92d616639ecfda49526554e9d693.jpg?alt=media&token=f0df3cf4-4bb6-49bf-9eef-9722c23b82b8"
                 }
                 alt="상품사진"
-                width={400}
-                height={400}
-                layout="responsive"
+                width={500}
+                height={500}
+                quality={100}
               />
-              <h2>{product.이름}</h2>
-              <h3>{product.가격}원</h3>
+              <div className="card-body">
+                <p className="h3 fw-bold">{product.이름}</p>
+                <p className="h4 text-primary">{product.가격}원</p>
+              </div>
             </div>
           );
         })}

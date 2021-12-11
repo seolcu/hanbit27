@@ -41,19 +41,28 @@ const ProductList = ({ productList }) => {
             <br />& 다양한 온라인부스
             <br />& 제 27회 한빛제만의 아름다운 굿즈들
           </h3>
-          <div className="d-flex gap-1">
-            <button type="button" className="btn btn-light">
-              모두
-            </button>
-            <button type="button" className="btn btn-light">
-              의류
-            </button>
-            <button type="button" className="btn btn-light">
-              교재
-            </button>
-            <button type="button" className="btn btn-light">
-              굿즈
-            </button>
+          <div className="d-flex justify-content-between">
+            <div className="d-flex gap-1">
+              <button type="button" className="btn btn-light">
+                모두
+              </button>
+              <button type="button" className="btn btn-light">
+                의류
+              </button>
+              <button type="button" className="btn btn-light">
+                교재
+              </button>
+              <button type="button" className="btn btn-light">
+                굿즈
+              </button>
+            </div>
+            <Link href="/product/upload">
+              <a>
+                <button className="btn btn-light">
+                  상품 업로드하기(관리자)
+                </button>
+              </a>
+            </Link>
           </div>
         </div>
       </div>

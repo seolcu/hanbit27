@@ -20,11 +20,11 @@ const HeaderComponent = () => {
                 <a className="nav-link active">복면가왕</a>
               </Link>
             </li>
-            <li className="nav-item">
+            {/* <li className="nav-item">
               <Link href="/video">
                 <a className="nav-link active">공연영상</a>
               </Link>
-            </li>
+            </li> */}
             <li className="nav-item">
               <Link href="/vieworder">
                 <a className="nav-link active">주문조회</a>

@@ -186,7 +186,7 @@ const ProductUpload = () => {
           </tbody>
         </table>
         <hr />
-        <div className="d-flex mb-5 gap-2">
+        <div className="d-flex mb-5 gap-2 justify-content-end">
           <Link href="/product">
             <a>
               <button className="btn btn-danger">취소하기</button>

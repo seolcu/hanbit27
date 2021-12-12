@@ -5,8 +5,9 @@ import Link from "next/link";
 import { initializeApp } from "firebase/app";
 import { getFirestore, collection, getDocs } from "firebase/firestore/lite";
 import HeaderComponent from "../../components/HeaderComponent";
+import { useState } from "react";
 
-export const getServerSideProps = async () => {
+export const getStaticProps = async () => {
   const firebaseConfig = {
     apiKey: "AIzaSyCUfi7nR-NNy07bL9jr9gbxfZaFv58_7I8",
     authDomain: "hanbit27-b2a04.firebaseapp.com",
@@ -25,6 +26,22 @@ export const getServerSideProps = async () => {
 
 const ProductList = ({ productList }) => {
   console.log(productList);
+  const [selectedCategory, setSelectedCategory] = useState("모두");
+  const CategoryBtn = (category) => {
+    return (
+      <button
+        type="button"
+        className={
+          selectedCategory == category ? "btn btn-dark" : "btn btn-light"
+        }
+        onClick={() => {
+          setSelectedCategory(category);
+        }}
+      >
+        {category}
+      </button>
+    );
+  };
   return (
     <>
       <Head>
@@ -43,18 +60,10 @@ const ProductList = ({ productList }) => {
           </h3>
           <div className="d-flex justify-content-between">
             <div className="d-flex gap-1">
-              <button type="button" className="btn btn-light">
-                모두
-              </button>
-              <button type="button" className="btn btn-light">
-                의류
-              </button>
-              <button type="button" className="btn btn-light">
-                교재
-              </button>
-              <button type="button" className="btn btn-light">
-                굿즈
-              </button>
+              {CategoryBtn("모두")}
+              {CategoryBtn("대파마켓")}
+              {CategoryBtn("온라인부스")}
+              {CategoryBtn("굿즈")}
             </div>
             <Link href="/product/upload">
               <a>

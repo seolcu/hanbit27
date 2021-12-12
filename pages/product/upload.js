@@ -72,6 +72,7 @@ const ProductUpload = () => {
             <option value="대파마켓">대파마켓</option>
             <option value="온라인부스">온라인부스</option>
             <option value="굿즈">굿즈</option>
+            <option value="기타">기타</option>
           </select>
         </div>
         <div className="mt-3">

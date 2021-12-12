@@ -66,6 +66,16 @@ const ProductUpload = () => {
             onChange={(e) => setDefaultPrice(e.target.value)}
           />
         </div>
+        <div className="mt-3">
+          <h3>사진 추가하기 (여러장 선택 가능)</h3>
+          <input
+            className="form-control"
+            type="file"
+            id="formFileMultiple"
+            accept="image/*"
+            multiple
+          />
+        </div>
 
         <div className="mt-3">
           <h3>옵션 추가하기</h3>
@@ -96,7 +106,7 @@ const ProductUpload = () => {
               />
             </div>
             <button
-              className="mt-3 btn btn-primary"
+              className="mt-3 btn btn-light"
               onClick={() => {
                 let newOptionList = [...optionList];
                 newOptionList.push({
@@ -152,6 +162,15 @@ const ProductUpload = () => {
             })}
           </tbody>
         </table>
+        <hr />
+        <div className="d-flex gap-2">
+          <Link href="/product">
+            <a>
+              <button className="btn btn-danger">취소하기</button>
+            </a>
+          </Link>
+          <button className="btn btn-primary">업로드하기</button>
+        </div>
       </div>
     </>
   );

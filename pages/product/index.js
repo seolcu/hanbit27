@@ -7,7 +7,7 @@ import { getFirestore, collection, getDocs } from "firebase/firestore/lite";
 import HeaderComponent from "../../components/HeaderComponent";
 import { useState } from "react";
 
-export const getStaticProps = async () => {
+export const getServerSideProps = async () => {
   const firebaseConfig = {
     apiKey: "AIzaSyCUfi7nR-NNy07bL9jr9gbxfZaFv58_7I8",
     authDomain: "hanbit27-b2a04.firebaseapp.com",
@@ -67,9 +67,7 @@ const ProductList = ({ productList }) => {
             </div>
             <Link href="/product/upload">
               <a>
-                <button className="btn btn-light">
-                  상품 업로드하기(관리자)
-                </button>
+                <button className="btn btn-light">업로드(관리자)</button>
               </a>
             </Link>
           </div>

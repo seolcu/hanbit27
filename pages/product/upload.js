@@ -4,6 +4,13 @@ import styles from "../../styles/ProductUpload.module.scss";
 import Link from "next/link";
 import HeaderComponent from "../../components/HeaderComponent";
 import { useState } from "react";
+import { initializeApp } from "firebase/app";
+import {
+  getFirestore,
+  collection,
+  getDocs,
+  addDoc,
+} from "firebase/firestore/lite";
 
 const ProductUpload = () => {
   const [password, setPassword] = useState("");
@@ -13,6 +20,18 @@ const ProductUpload = () => {
   const [optionPrice, setOptionPrice] = useState(0);
   const [optionStock, setOptionStock] = useState(1);
   const [optionList, setOptionList] = useState([]);
+
+  // firebase 설정
+  const firebaseConfig = {
+    apiKey: "AIzaSyCUfi7nR-NNy07bL9jr9gbxfZaFv58_7I8",
+    authDomain: "hanbit27-b2a04.firebaseapp.com",
+    projectId: "hanbit27-b2a04",
+    storageBucket: "hanbit27-b2a04.appspot.com",
+    messagingSenderId: "214043574262",
+    appId: "1:214043574262:web:c266001a679ca1068811d7",
+  };
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
   return (
     <>
       <Head>
@@ -192,7 +211,23 @@ const ProductUpload = () => {
               <button className="btn btn-danger">취소하기</button>
             </a>
           </Link>
-          <button className="btn btn-primary">업로드하기</button>
+          <Link href="/product">
+            <a>
+              <button
+                className="btn btn-primary"
+                onClick={async () => {
+                  const res = await addDoc(collection(db, "ProductList"), {
+                    name: name,
+                    defaultPrice: defaultPrice,
+                    optionList: optionList,
+                  });
+                  console.log(res);
+                }}
+              >
+                업로드하기
+              </button>
+            </a>
+          </Link>
         </div>
       </div>
     </>

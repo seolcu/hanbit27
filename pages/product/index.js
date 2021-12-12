@@ -155,8 +155,8 @@ const ProductList = ({ productList }) => {
                   quality={100}
                 />
                 <div className="card-body">
-                  <p className="h3 fw-bold">{product.이름}</p>
-                  <p className="h4 text-primary">{product.가격}원</p>
+                  <p className="h3 fw-bold">{product.name}</p>
+                  <p className="h4 text-primary">{product.defaultPrice}원</p>
                 </div>
               </div>
             );

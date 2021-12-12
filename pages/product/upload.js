@@ -16,6 +16,7 @@ const ProductUpload = () => {
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
   const [defaultPrice, setDefaultPrice] = useState(0);
+  const [category, setCategory] = useState("대파마켓");
   const [optionName, setOptionName] = useState("");
   const [optionPrice, setOptionPrice] = useState(0);
   const [optionStock, setOptionStock] = useState(1);
@@ -86,7 +87,12 @@ const ProductUpload = () => {
         </div>
         <div className="mt-3">
           <h3>카테고리</h3>
-          <select className="form-select" aria-label="Default select example">
+          <select
+            className="form-select"
+            aria-label="Default select example"
+            value={category}
+            onChange={(e) => setCategory(e.target.value)}
+          >
             <option value="대파마켓">대파마켓</option>
             <option value="온라인부스">온라인부스</option>
             <option value="굿즈">굿즈</option>
@@ -219,6 +225,7 @@ const ProductUpload = () => {
                   const res = await addDoc(collection(db, "ProductList"), {
                     name: name,
                     defaultPrice: defaultPrice,
+                    category: category,
                     optionList: optionList,
                   });
                   console.log(res);

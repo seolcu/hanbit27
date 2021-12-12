@@ -70,13 +70,38 @@ const Home = () => {
                 className="btn text-light"
                 style={{ background: "#273d59" }}
               >
-                대파마켓 바로가기
+                한빛마켓 바로가기
               </button>
             </a>
           </Link>
         </div>
       </div>
       <div
+        className="container-fluid p-5 text-light"
+        style={{ background: "#081a40" }}
+      >
+        <div className="container">
+          <p className="display-3 fw-bold">복면가왕</p>
+          <p className="h3">
+            [멘트]
+            <br />
+            [멘트]
+            <br />
+            [멘트]
+          </p>
+          <Link href="/maskking">
+            <a>
+              <button
+                className="btn text-light"
+                style={{ background: "#273d59" }}
+              >
+                복면가왕 보러가기
+              </button>
+            </a>
+          </Link>
+        </div>
+      </div>
+      {/* <div
         className="container-fluid p-5 text-light"
         style={{ background: "#081a40" }}
       >
@@ -94,6 +119,29 @@ const Home = () => {
                 style={{ background: "#273d59" }}
               >
                 공연 영상 보러가기
+              </button>
+            </a>
+          </Link>
+        </div>
+      </div> */}
+      <div
+        className="container-fluid p-5 text-light"
+        style={{ background: "#010A26" }}
+      >
+        <div className="container">
+          <p className="display-3 fw-bold">주문조회</p>
+          <p className="h3">
+            한빛마켓에서 구매하신 제품을
+            <br />
+            학번과 이름, 전화번호로 조회해 보아요.
+          </p>
+          <Link href="/maskking">
+            <a>
+              <button
+                className="btn text-light"
+                style={{ background: "#273d59" }}
+              >
+                주문 조회하기
               </button>
             </a>
           </Link>

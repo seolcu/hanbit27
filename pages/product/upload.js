@@ -70,10 +70,6 @@ const ProductUpload = () => {
           // For instance, get the download URL: https://firebasestorage.googleapis.com/...
           getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
             console.log(`File ${i} available at`, downloadURL);
-            // let newImageUrlList = [...imageUrlList];
-            // newImageUrlList.push(downloadURL);
-            // setImageUrlList(newImageUrlList);
-            // console.log("imageUrlList:", imageUrlList);
             resolve(downloadURL);
           });
         },

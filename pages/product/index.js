@@ -156,7 +156,9 @@ const ProductList = ({ productList }) => {
               >
                 <Image
                   className="card-img-top"
-                  src={product.imageUrlList[0] || "/favicon.ico"}
+                  src={
+                    product.imageUrlList[0] || "/image/noImagePlaceHolder.png"
+                  }
                   alt="상품사진"
                   width={1000}
                   height={1000}

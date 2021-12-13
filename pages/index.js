@@ -135,7 +135,7 @@ const Home = () => {
             <br />
             학번과 이름, 전화번호로 조회해 보아요.
           </p>
-          <Link href="/maskking">
+          <Link href="/vieworder">
             <a>
               <button
                 className="btn text-light"

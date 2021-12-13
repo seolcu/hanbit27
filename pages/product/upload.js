@@ -140,6 +140,7 @@ const ProductUpload = () => {
             <option value="대파마켓">대파마켓</option>
             <option value="온라인부스">온라인부스</option>
             <option value="굿즈">굿즈</option>
+            <option value="미정">미정</option>
             <option value="기타">기타</option>
           </select>
         </div>
@@ -204,6 +205,7 @@ const ProductUpload = () => {
                 id="가격 변동"
                 placeholder="가격 변동"
                 value={optionPrice}
+                // 절댓값으로 들어감
                 onChange={(e) => setOptionPrice(parseInt(e.target.value))}
                 min={0}
               />
@@ -259,17 +261,10 @@ const ProductUpload = () => {
                 <tr key={index}>
                   <th scope="col">{index}</th>
                   <th scope="col">{oneOption.optionName}</th>
-                  <th scope="col">
-                    {optionPlusMinus == "+"
-                      ? oneOption.optionPrice
-                      : -oneOption.optionPrice}
-                  </th>
+                  {/* 그대로 */}
+                  <th scope="col">{oneOption.optionPrice}</th>
                   <th scope="col">{oneOption.optionStock}</th>
-                  <th scope="col">
-                    {optionPlusMinus == "+"
-                      ? defaultPrice + oneOption.optionPrice
-                      : defaultPrice - oneOption.optionPrice}
-                  </th>
+                  <th scope="col">{defaultPrice + oneOption.optionPrice}</th>
                   <th scope="col">
                     <span
                       style={{ color: "red" }}
@@ -326,7 +321,7 @@ const ProductUpload = () => {
               router.push("/product");
             }}
           >
-            {uploadingState == true ? "로딩중..." : "업로드하기"}
+            {uploadingState == true ? "업로드 중..." : "업로드"}
           </button>
         </div>
       </div>

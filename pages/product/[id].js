@@ -51,19 +51,51 @@ const Product = ({ productList }) => {
   const router = useRouter();
   const { id } = router.query;
   const productInfo = productList[id];
+  const [selectedOption, setSelectedOption] = useState(
+    productInfo.optionList[0],
+  );
+  console.log(productInfo);
 
   return (
     <>
       <Head>
-        <title>{productInfo.name}</title>
+        <title>한빛마켓 - {productInfo.name}</title>
         <meta name="description" content="제 27회 한빛제 대파마켓 & 굿즈" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <HeaderComponent />
-      <div className="container d-flex">
-        <div>이미지</div>
-        <div>
-          <h1></h1>
+      <div className={`container py-4 ${styles.mainContainer}`}>
+        <div className="container">
+          <Image
+            className="rounded"
+            src={productInfo.thumbUrl}
+            alt="상품 썸네일"
+            width={1000}
+            height={1000}
+            quality={100}
+          />
+        </div>
+        <div className={`container m-5 ${styles.rightContainer}`}>
+          <h1 className="display-3 fw-bold">{productInfo.name}</h1>
+          <h2 className="text-primary">{productInfo.defaultPrice}원</h2>
+          <select
+            className="form-select"
+            value={selectedOption}
+            onChange={(e) => setSelectedOption(e.target.value)}
+          >
+            {productInfo.optionList.map((oneOption, index) => {
+              return (
+                <option key={index} value={oneOption}>
+                  {oneOption.optionName}{" "}
+                  {oneOption.optionPrice > 0
+                    ? `(+${oneOption.optionPrice})`
+                    : oneOption.optionPrice < 0
+                    ? `(${oneOption.optionPrice})`
+                    : ""}
+                </option>
+              );
+            })}
+          </select>
         </div>
       </div>
     </>

@@ -25,7 +25,6 @@ export const getServerSideProps = async () => {
 };
 
 const ProductList = ({ productList }) => {
-  console.log(productList);
   const [selectedCategory, setSelectedCategory] = useState("모두");
   const [password, setPassword] = useState("");
   const CategoryBtn = (category) => {
@@ -158,9 +157,10 @@ const ProductList = ({ productList }) => {
                   className="card-img-top"
                   src={product.imageUrlList[0] || "/favicon.ico"}
                   alt="상품사진"
-                  width={500}
-                  height={500}
-                  quality={100}
+                  width={1000}
+                  height={1000}
+                  quality={70}
+                  layout="intrinsic"
                 />
                 <div className="card-body text-center">
                   <h3 className="fw-bold">{product.name}</h3>

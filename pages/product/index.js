@@ -7,7 +7,7 @@ import { getFirestore, collection, getDocs } from "firebase/firestore/lite";
 import HeaderComponent from "../../components/HeaderComponent";
 import { useState } from "react";
 
-export const getServerSideProps = async () => {
+export const getStaticProps = async () => {
   const firebaseConfig = {
     apiKey: "AIzaSyCUfi7nR-NNy07bL9jr9gbxfZaFv58_7I8",
     authDomain: "hanbit27-b2a04.firebaseapp.com",
@@ -21,7 +21,7 @@ export const getServerSideProps = async () => {
   const productCol = collection(db, "ProductList");
   const productSnapshot = await getDocs(productCol);
   const productList = productSnapshot.docs.map((doc) => doc.data());
-  return { props: { productList } };
+  return { props: { productList }, revalidate: 15 };
 };
 
 const ProductList = ({ productList }) => {

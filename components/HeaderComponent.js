@@ -11,7 +11,7 @@ const HeaderComponent = () => {
           </Link>
           <ul className="navbar-nav h5">
             <li className="nav-item">
-              <Link href="/maskking">
+              <Link href="/maskKing">
                 <a className="nav-link active">복면가왕</a>
               </Link>
             </li>
@@ -21,7 +21,7 @@ const HeaderComponent = () => {
               </Link>
             </li>
             <li className="nav-item">
-              <Link href="/vieworder">
+              <Link href="/viewOrder">
                 <a className="nav-link active">주문조회</a>
               </Link>
             </li>

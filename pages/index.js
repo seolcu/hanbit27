@@ -49,7 +49,7 @@ const Home = () => {
         <h1 style={{ marginTop: "2.5rem" }}>To the Big Dipper.</h1>
         <h1>: 북두칠성으로.</h1>
         <h1>2021. 12. 23.</h1>
-        <Link href="/maskking">
+        <Link href="/maskKing">
           <a>
             <h2>복면가왕</h2>
           </a>
@@ -59,7 +59,7 @@ const Home = () => {
             <h2>한빛마켓</h2>
           </a>
         </Link>
-        <Link href="/vieworder">
+        <Link href="/viewOrder">
           <a>
             <h2>주문 조회</h2>
           </a>
@@ -67,7 +67,7 @@ const Home = () => {
       </div>
       <SubOverlay
         BGColor="#081a40"
-        URL="/maskking"
+        URL="/maskKing"
         title="복면가왕"
         desc={
           <>
@@ -92,7 +92,7 @@ const Home = () => {
       />
       <SubOverlay
         BGColor="#010A26"
-        URL="/vieworder"
+        URL="/viewOrder"
         title="주문조회"
         desc={
           <>

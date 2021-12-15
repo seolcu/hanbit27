@@ -13,11 +13,11 @@ const SubOverlay = ({ BGColor, URL, title, desc }) => {
       style={{ background: BGColor }}
     >
       <div className="container">
-        <Link href={URL}>
-          <a>
-            <p className="display-3">{title}</p>
-          </a>
-        </Link>
+        <p className="display-3">
+          <Link href={URL}>
+            <a>{title}</a>
+          </Link>
+        </p>
         <p className="h3">{desc}</p>
       </div>
     </div>

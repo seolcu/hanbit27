@@ -16,10 +16,20 @@ class MyDocument extends Document {
             href="https://fonts.gstatic.com"
             crossOrigin="true"
           />
+
+          {/* 고딕A1 */}
           <link
             href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@300;400;700&display=swap"
             rel="stylesheet"
           />
+          <link rel="preconnect" href="https://fonts.googleapis.com" />
+          <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin />
+
+          {/* 주아체 */}
+          <link
+            href="https://fonts.googleapis.com/css2?family=Jua&display=swap"
+            rel="stylesheet"
+          ></link>
         </Head>
         <body>
           <Main />

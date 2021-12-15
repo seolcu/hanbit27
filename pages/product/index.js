@@ -154,15 +154,19 @@ const ProductList = ({ productList }) => {
                   }
                 >
                   <div className="card p-0">
-                    <Image
-                      className="card-img-top"
-                      src={product.thumbUrl || "/image/noImagePlaceHolder.png"}
-                      alt="상품사진"
-                      width={1000}
-                      height={1000}
-                      quality={20}
-                      layout="intrinsic"
-                    />
+                    <div className="card-img-top">
+                      <Image
+                        src={
+                          product.thumbUrl || "/image/noImagePlaceHolder.png"
+                        }
+                        alt="상품사진"
+                        width={1000}
+                        height={1000}
+                        layout="responsive"
+                        objectFit={"cover"}
+                        quality={50}
+                      />
+                    </div>
                     <div className="card-body text-center">
                       <h3 className="fw-bold">{product.name}</h3>
                       <p className="fs-5 text-secondary">{product.category}</p>

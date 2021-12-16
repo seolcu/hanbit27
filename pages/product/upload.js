@@ -4,15 +4,15 @@ import styles from "../../styles/ProductUpload.module.scss";
 import Link from "next/link";
 import HeaderComponent from "../../components/HeaderComponent";
 import { useState } from "react";
-import { initializeApp } from "firebase/app";
 import {
   getStorage,
   ref,
   uploadBytesResumable,
   getDownloadURL,
 } from "firebase/storage";
-import { getFirestore, collection, addDoc } from "firebase/firestore/lite";
+import { collection, addDoc } from "firebase/firestore";
 import { useRouter } from "next/dist/client/router";
+import db from "../../fireStoreInit";
 
 const ProductUpload = () => {
   const [password, setPassword] = useState("");
@@ -32,16 +32,7 @@ const ProductUpload = () => {
   const router = useRouter();
 
   // firebase 설정
-  const firebaseConfig = {
-    apiKey: "AIzaSyCUfi7nR-NNy07bL9jr9gbxfZaFv58_7I8",
-    authDomain: "hanbit27-b2a04.firebaseapp.com",
-    projectId: "hanbit27-b2a04",
-    storageBucket: "hanbit27-b2a04.appspot.com",
-    messagingSenderId: "214043574262",
-    appId: "1:214043574262:web:c266001a679ca1068811d7",
-  };
-  const app = initializeApp(firebaseConfig);
-  const db = getFirestore(app);
+
   const storage = getStorage(app);
 
   // 참조: https://firebase.google.com/docs/storage/web/upload-files

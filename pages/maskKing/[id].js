@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import maskKingInfoList from "../../public/data/maskKingInfoList";
 import HeaderComponent from "../../components/HeaderComponent";
+import db from "../../fireStoreInit";
 
 export const getStaticPaths = async () => {
   const paths = maskKingInfoList.map((maskKingInfo) => ({
@@ -17,10 +18,15 @@ export const getStaticProps = async ({ params }) => {
   return { props: {} };
 };
 
-const MaskKingSpecificPage = () => {
+const MaskKingSpecificPage = async () => {
   const router = useRouter();
   const { id } = router.query;
   const maskKingInfo = maskKingInfoList[parseInt(id) - 1];
+
+  const chatCol = collection(db, "VideoChat");
+  const chatDoc = collection(chatCol, id);
+  const chatSnapshot = await getDocs(chatDoc);
+  const chatList = chatSnapshot.docs.map((doc) => doc.data());
 
   return (
     <>
@@ -33,7 +39,13 @@ const MaskKingSpecificPage = () => {
       </Head>
       <HeaderComponent />
       <div className={styles.outerContainer}>
-        <div className={styles.mainContainer}></div>
+        <div className={styles.mainContainer}>
+          <video controls>
+            <source src={maskKingInfo.videoSrc} type="video/mp4" />
+          </video>
+          <div>댓글</div>
+        </div>
+        <div className={styles.recommendBar}>추천영상</div>
       </div>
     </>
   );

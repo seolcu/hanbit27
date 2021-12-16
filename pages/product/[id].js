@@ -6,7 +6,7 @@ import { collection, getDocs } from "firebase/firestore";
 import HeaderComponent from "../../components/HeaderComponent";
 import { useState } from "react";
 import { useRouter } from "next/router";
-import db from "../../fireStoreInit";
+import db from "../../firebase/fireStoreInit";
 
 export async function getStaticPaths() {
   const productCol = collection(db, "ProductList");

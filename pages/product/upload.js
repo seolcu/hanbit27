@@ -7,8 +7,8 @@ import { useState } from "react";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { collection, addDoc } from "firebase/firestore";
 import { useRouter } from "next/dist/client/router";
-import db from "../../fireStoreInit";
-import storage from "../../storageInit";
+import db from "../../firebase/fireStoreInit";
+import storage from "../../firebase/storageInit";
 
 const ProductUpload = () => {
   const [password, setPassword] = useState("");

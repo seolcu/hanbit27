@@ -9,9 +9,10 @@ import db from "../../fireStoreInit";
 import { collection, getDocs } from "firebase/firestore";
 
 export const getStaticPaths = async () => {
-  const paths = maskKingInfoList.map((maskKingInfo) => ({
-    params: { id: maskKingInfo.num },
-  }));
+  let paths = [];
+  maskKingInfoList.forEach((maskKingInfo) => {
+    paths.push({ params: { id: maskKingInfo.num } });
+  });
   return { paths, fallback: false };
 };
 
@@ -19,14 +20,12 @@ export const getStaticProps = async ({ params }) => {
   return { props: {} };
 };
 
-const MaskKingSpecificPage = async () => {
+const MaskKingSpecificPage = async ({}) => {
   const router = useRouter();
   const { id } = router.query;
   const maskKingInfo = maskKingInfoList[parseInt(id) - 1];
-
   const chatCol = collection(db, "VideoChat");
-  const chatDoc = collection(chatCol, id);
-  const chatSnapshot = await getDocs(chatDoc);
+  const chatSnapshot = await getDocs(chatCol);
   const chatList = chatSnapshot.docs.map((doc) => doc.data());
 
   return (

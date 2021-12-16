@@ -6,10 +6,10 @@ import { collection, getDocs } from "firebase/firestore";
 import HeaderComponent from "../../components/HeaderComponent";
 import { useState } from "react";
 import { useRouter } from "next/router";
-import db from "../../firebase/fireStoreInit";
+import firestore from "../../firebase/firestoreInit";
 
 export async function getStaticPaths() {
-  const productCol = collection(db, "ProductList");
+  const productCol = collection(firestore, "ProductList");
   const productSnapshot = await getDocs(productCol);
   const productList = productSnapshot.docs.map((doc) => doc.data());
 
@@ -21,7 +21,7 @@ export async function getStaticPaths() {
 }
 
 export const getStaticProps = async ({ params }) => {
-  const productCol = collection(db, "ProductList");
+  const productCol = collection(firestore, "ProductList");
   const productSnapshot = await getDocs(productCol);
   const productList = productSnapshot.docs.map((doc) => doc.data());
   return { props: { productList }, revalidate: 15 };

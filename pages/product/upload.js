@@ -7,7 +7,7 @@ import { useState } from "react";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { collection, addDoc } from "firebase/firestore";
 import { useRouter } from "next/dist/client/router";
-import db from "../../firebase/fireStoreInit";
+import firestore from "../../firebase/firestoreInit";
 import storage from "../../firebase/storageInit";
 
 const ProductUpload = () => {
@@ -317,7 +317,7 @@ const ProductUpload = () => {
               };
               console.log("resultData:", resultData);
               const res = await addDoc(
-                collection(db, "ProductList"),
+                collection(firestore, "ProductList"),
                 resultData,
               );
               console.log(res);

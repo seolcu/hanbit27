@@ -5,10 +5,10 @@ import Link from "next/link";
 import { collection, getDocs } from "firebase/firestore";
 import HeaderComponent from "../../components/HeaderComponent";
 import { useState } from "react";
-import db from "../../firebase/fireStoreInit";
+import firestore from "../../firebase/firestoreInit";
 
 export const getStaticProps = async () => {
-  const productCol = collection(db, "ProductList");
+  const productCol = collection(firestore, "ProductList");
   const productSnapshot = await getDocs(productCol);
   const productList = productSnapshot.docs.map((doc) => doc.data());
   return { props: { productList }, revalidate: 15 };

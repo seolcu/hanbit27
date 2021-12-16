@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import maskKingInfoList from "../../public/data/maskKingInfoList";
 import HeaderComponent from "../../components/HeaderComponent";
-import db from "../../firebase/fireStoreInit";
+import firestore from "../../firebase/firestoreInit";
 import {
   collection,
   onSnapshot,
@@ -35,7 +35,7 @@ const MaskKingSpecificPage = ({ id }) => {
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
 
-  const chatCol = collection(db, `VideoChat${id}`);
+  const chatCol = collection(firestore, `VideoChat${id}`);
   const chatQuery = query(chatCol, orderBy("createdAt"), limit(100));
 
   useEffect(() => {

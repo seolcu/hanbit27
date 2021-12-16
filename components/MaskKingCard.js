@@ -1,11 +1,12 @@
 import Image from "next/image";
 import Link from "next/link";
+import styles from "./MaskKingCard.module.scss";
 
 const MaskKingCard = ({ num, name, music, artist, thumbSrc }) => {
   return (
     <Link href={`/maskKing/${num}`}>
-      <a>
-        <div className="">
+      <a className={styles.a}>
+        <div className="mb-3">
           <div>
             <Image
               src={thumbSrc}
@@ -20,12 +21,14 @@ const MaskKingCard = ({ num, name, music, artist, thumbSrc }) => {
           </div>
         </div>
         <div className="text-start">
-          <h1 className="display-4 fw-bold">
-            #{num} {name}
+          <h1 className="display-5 fw-bold">
+            <u>
+              #{num} {name}
+            </u>
           </h1>
-          <h3>
+          <h2>
             {music} - {artist}
-          </h3>
+          </h2>
         </div>
       </a>
     </Link>

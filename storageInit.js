@@ -2,12 +2,13 @@ import { initializeApp } from "firebase/app";
 import { getStorage } from "firebase/storage";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCUfi7nR-NNy07bL9jr9gbxfZaFv58_7I8",
-  authDomain: "hanbit27-b2a04.firebaseapp.com",
-  projectId: "hanbit27-b2a04",
-  storageBucket: "hanbit27-b2a04.appspot.com",
-  messagingSenderId: "214043574262",
-  appId: "1:214043574262:web:c266001a679ca1068811d7",
+  apiKey: "AIzaSyBSQUw2J_Nz2Td8u4zbEgsYwy3car8mkVA",
+  authDomain: "hanbit27-9f927.firebaseapp.com",
+  projectId: "hanbit27-9f927",
+  storageBucket: "hanbit27-9f927.appspot.com",
+  messagingSenderId: "984091181751",
+  appId: "1:984091181751:web:88182610eab43f785e4332",
+  measurementId: "G-REBSRPKHJK",
 };
 const firebaseApp = initializeApp(firebaseConfig);
 const storage = getStorage();

@@ -5,7 +5,7 @@ const MaskKingCard = ({ num, name, music, artist, thumbSrc }) => {
   return (
     <Link href={`/maskKing/${num}`}>
       <a>
-        <div className="card p-0 mt-2">
+        <div className="card p-0 mt-2 mx-5">
           <div className="card-img-top">
             <Image
               src={thumbSrc}

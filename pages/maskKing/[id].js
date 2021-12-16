@@ -6,27 +6,25 @@ import { useRouter } from "next/router";
 import maskKingInfoList from "../../public/data/maskKingInfoList";
 import HeaderComponent from "../../components/HeaderComponent";
 import db from "../../fireStoreInit";
-import { collection, getDocs } from "firebase/firestore";
+import { doc, getDoc } from "firebase/firestore";
 
 export const getStaticPaths = async () => {
-  let paths = [];
-  maskKingInfoList.forEach((maskKingInfo) => {
-    paths.push({ params: { id: maskKingInfo.num } });
-  });
+  const paths = maskKingInfoList.map((maskKingInfo) => ({
+    params: { id: maskKingInfo.num },
+  }));
   return { paths, fallback: false };
 };
 
 export const getStaticProps = async ({ params }) => {
-  return { props: {} };
+  const id = params.id;
+  const chatDoc = doc(db, "VideoChat", params.id);
+  const chatSnapshot = await getDoc(chatDoc);
+  const chatData = chatSnapshot.data();
+  return { props: { id, chatData } };
 };
 
-const MaskKingSpecificPage = async ({}) => {
-  const router = useRouter();
-  const { id } = router.query;
+const MaskKingSpecificPage = ({ id, chatData }) => {
   const maskKingInfo = maskKingInfoList[parseInt(id) - 1];
-  const chatCol = collection(db, "VideoChat");
-  const chatSnapshot = await getDocs(chatCol);
-  const chatList = chatSnapshot.docs.map((doc) => doc.data());
 
   return (
     <>
@@ -38,14 +36,14 @@ const MaskKingSpecificPage = async ({}) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <HeaderComponent />
-      <div className={styles.outerContainer}>
-        <div className={styles.mainContainer}>
-          <video controls>
+      <div className="container-fluid p-0">
+        <div className={`row ${styles.outerContainer}`}>
+          <video controls className="col-lg-8 p-0 m-5">
             <source src={maskKingInfo.videoSrc} type="video/mp4" />
           </video>
-          <div>댓글</div>
+          <div className="col-lg-4 p-0">댓글</div>
         </div>
-        <div className={styles.recommendBar}>추천영상</div>
+        <div className={`${styles.recommendBar}`}>추천영상</div>
       </div>
     </>
   );

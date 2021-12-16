@@ -4,15 +4,11 @@ import styles from "../../styles/ProductUpload.module.scss";
 import Link from "next/link";
 import HeaderComponent from "../../components/HeaderComponent";
 import { useState } from "react";
-import {
-  getStorage,
-  ref,
-  uploadBytesResumable,
-  getDownloadURL,
-} from "firebase/storage";
+import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { collection, addDoc } from "firebase/firestore";
 import { useRouter } from "next/dist/client/router";
 import db from "../../fireStoreInit";
+import storage from "../../storageInit";
 
 const ProductUpload = () => {
   const [password, setPassword] = useState("");
@@ -30,10 +26,6 @@ const ProductUpload = () => {
   const [discState, setDiscState] = useState("");
 
   const router = useRouter();
-
-  // firebase 설정
-
-  const storage = getStorage(app);
 
   // 참조: https://firebase.google.com/docs/storage/web/upload-files
   const uploadImage = (i) => {

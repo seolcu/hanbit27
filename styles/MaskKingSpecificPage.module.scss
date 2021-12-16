@@ -3,6 +3,20 @@
   margin: 0;
 }
 
+.messageContainer {
+  border: 2px solid #000;
+  margin: 0 0 5px 0;
+  border-radius: 5px;
+  height: 30vh;
+}
+
+.messageForm {
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
+  margin-bottom: auto;
+}
+
 @media only screen and (min-width: 768px) {
   // 패드
 }

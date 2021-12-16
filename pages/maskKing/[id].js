@@ -77,23 +77,29 @@ const MaskKingSpecificPage = ({ id }) => {
           <video controls className="col-lg-8 p-0">
             <source src={maskKingInfo.videoSrc} type="video/mp4" />
           </video>
-          <div className="col-lg-4 p-0">
-            <div className="fs-2">
+          <div className="col-lg-4 p-0 d-block">
+            <div className={`overflow-auto ${styles.messageContainer}`}>
               {messages.map((message) => (
-                <p key={message.id} className="m-0">
+                <div key={message.id} className="fs-5">
                   {message.text}
-                </p>
+                </div>
               ))}
             </div>
-            <form onSubmit={handleOnSubmit} className="m-0">
+            <form onSubmit={handleOnSubmit} className={`${styles.messageForm}`}>
               <input
                 type="text"
+                className="form-control"
                 value={newMessage}
                 onChange={(e) => setNewMessage(e.target.value)}
-                placeholder="댓글을 입력하세요"
+                placeholder="댓글 입력"
               />
-              <button type="submit" disabled={!newMessage}>
-                Send
+              <button
+                type="submit"
+                className="btn btn-primary"
+                style={{ minWidth: "70px" }}
+                disabled={!newMessage}
+              >
+                보내기
               </button>
             </form>
           </div>

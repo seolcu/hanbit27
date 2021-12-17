@@ -29,11 +29,17 @@ const MaskKingSpecificPage = ({ id }) => {
   const chatRef = ref(database, "chat");
 
   // 초기 값 불러오기
-  get(chatRef).then((snapshot) => {
-    if (snapshot.exists()) {
-      setMessages(snapshot.val());
-    }
-  });
+  get(chatRef)
+    .then((snapshot) => {
+      if (snapshot.exists()) {
+        setMessages(snapshot.val());
+      } else {
+        console.log("No data available");
+      }
+    })
+    .catch((error) => {
+      console.error(error);
+    });
 
   // 값 동기화
   onValue(chatRef, (snapshot) => {

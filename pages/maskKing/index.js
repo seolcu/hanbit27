@@ -21,23 +21,30 @@ const MaskKing = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <HeaderComponent />
-      <div className="container-fluid p-5 bg-danger text-light">
-        <div className="container">
-          <h1 className="display-1 fw-bold">복면가왕 예선전</h1>
-          <div className="d-flex align-items-center gap-3">
-            <h2 className="m-0 fs-4">
-              {voteState ? (
-                <>
-                  <MdCheck />#{voteState} 투표함
-                </>
-              ) : (
-                <>
-                  <MdClose />
-                  투표 안함
-                </>
-              )}
-            </h2>
-          </div>
+      <div
+        style={{ position: "relative", width: "100%", paddingBottom: "20%" }}
+      >
+        <Image
+          src={"/image/banner.png"}
+          alt="배너"
+          layout="fill"
+          objectFit="cover"
+        />
+      </div>
+      <div className="container mt-2">
+        <div className="d-flex align-items-center gap-3">
+          <h1 className="m-0 fw-bold">
+            {voteState ? (
+              <>
+                <MdCheck />#{voteState} 투표함
+              </>
+            ) : (
+              <>
+                <MdClose />
+                투표 안함
+              </>
+            )}
+          </h1>
         </div>
       </div>
       <div className="container">

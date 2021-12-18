@@ -5,7 +5,12 @@ import Link from "next/link";
 import maskKingInfoList from "../../public/data/maskKingInfoList";
 import HeaderComponent from "../../components/HeaderComponent";
 import firestore from "../../firebase/firestoreInit";
-import { MdThumbUpOffAlt, MdMusicNote, MdThumbUpAlt } from "react-icons/md";
+import {
+  MdThumbUpOffAlt,
+  MdMusicNote,
+  MdThumbUpAlt,
+  MdCheck,
+} from "react-icons/md";
 import { useEffect, useState } from "react";
 import { doc, getDoc, setDoc } from "firebase/firestore";
 import Cookies from "js-cookie";
@@ -122,7 +127,7 @@ const MaskKingSpecificPage = ({ id }) => {
             </div>
           </div>
         </div>
-        <div className="mt-1 d-flex justify-content-center gap-2">
+        <div className="mt-1 d-flex justify-content-center align-items-center gap-2">
           <Link href="/maskKing">
             <a>
               <button className="btn btn-secondary fs-3">둘러보기</button>
@@ -130,6 +135,7 @@ const MaskKingSpecificPage = ({ id }) => {
           </Link>
           <button
             className="btn btn-primary fs-3"
+            style={voteState ? { display: "none" } : { display: "block" }}
             onClick={async () => {
               if (voteState !== "true") {
                 await setDoc(voteDoc, {
@@ -137,15 +143,17 @@ const MaskKingSpecificPage = ({ id }) => {
                 });
                 Cookies.set(voteCookieName, id);
                 setVoteState(id);
-              } else {
-                router.push("/maskKing/voteResult");
               }
             }}
           >
-            {voteState
-              ? `#${voteState} 투표함`
-              : `#${maskKingInfo.num} 투표하기`}
+            #{maskKingInfo.num} 투표하기
           </button>
+          <h3
+            className="m-0"
+            style={voteState ? { display: "block" } : { display: "none" }}
+          >
+            <MdCheck />#{voteState} 투표함
+          </h3>
         </div>
       </div>
     </>

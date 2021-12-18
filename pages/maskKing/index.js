@@ -5,8 +5,14 @@ import Link from "next/link";
 import HeaderComponent from "../../components/HeaderComponent";
 import MaskKingCard from "../../components/MaskKingCard";
 import maskKingInfoList from "../../public/data/maskKingInfoList";
+import { useState } from "react";
+import Cookies from "js-cookie";
+import { MdCheck, MdClose } from "react-icons/md";
 
 const MaskKing = () => {
+  // 투표 쿠키설정
+  const voteCookieName = "voted";
+  const [voteState, setVoteState] = useState(Cookies.get(voteCookieName));
   return (
     <>
       <Head>
@@ -25,6 +31,26 @@ const MaskKing = () => {
             <br />
             [멘트]
           </h3> */}
+          <div className="d-flex align-items-center gap-3">
+            <Link href="/maskKing/voteResult">
+              <a>
+                <button className="btn btn-light fs-5">투표 현황</button>
+              </a>
+            </Link>
+            <h2 className="m-0 fs-4">
+              {voteState == "true" ? (
+                <>
+                  <MdCheck />
+                  투표함
+                </>
+              ) : (
+                <>
+                  <MdClose />
+                  투표 안함
+                </>
+              )}
+            </h2>
+          </div>
         </div>
       </div>
       <div className="container">

@@ -4,7 +4,6 @@ const maskKingInfoList = [
     name: "김상우",
     music: "느린심장박동",
     artist: "래원",
-    title: "김상우의 느린심장박동",
     desc: (
       <>
         김상우의 기깔나는 느린심장박동!
@@ -20,7 +19,6 @@ const maskKingInfoList = [
     name: "김상우",
     music: "느린심장박동",
     artist: "래원",
-    title: "김상우의 느린심장박동",
     desc: (
       <>
         김상우의 기깔나는 느린심장박동!
@@ -36,7 +34,6 @@ const maskKingInfoList = [
     name: "김상우",
     music: "느린심장박동",
     artist: "래원",
-    title: "김상우의 느린심장박동",
     desc: (
       <>
         김상우의 기깔나는 느린심장박동!
@@ -52,7 +49,6 @@ const maskKingInfoList = [
     name: "김상우",
     music: "느린심장박동",
     artist: "래원",
-    title: "김상우의 느린심장박동",
     desc: (
       <>
         김상우의 기깔나는 느린심장박동!
@@ -68,7 +64,6 @@ const maskKingInfoList = [
     name: "김상우",
     music: "느린심장박동",
     artist: "래원",
-    title: "김상우의 느린심장박동",
     desc: (
       <>
         김상우의 기깔나는 느린심장박동!
@@ -84,7 +79,6 @@ const maskKingInfoList = [
     name: "김상우",
     music: "느린심장박동",
     artist: "래원",
-    title: "김상우의 느린심장박동",
     desc: (
       <>
         김상우의 기깔나는 느린심장박동!

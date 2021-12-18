@@ -1,93 +1,57 @@
 const maskKingInfoList = [
   {
     num: "1",
-    name: "김상우",
-    music: "느린심장박동",
-    artist: "래원",
-    desc: (
-      <>
-        김상우의 기깔나는 느린심장박동!
-        <br />
-        그의 엄청난 플로우를 따라잡을 자는 누구일까?
-      </>
-    ),
-    thumbSrc: "/image/noImagePlaceHolder.png",
-    videoSrc: "/video/sample.mp4",
+    name: "게자리",
+    music: "안녕",
+    artist: "김재환",
+    desc: "Mask of Cancer",
+    thumbSrc: "/image/cancer.png",
+    videoSrc: "/video/cancer.mp4",
   },
   {
     num: "2",
-    name: "김상우",
-    music: "느린심장박동",
-    artist: "래원",
-    desc: (
-      <>
-        김상우의 기깔나는 느린심장박동!
-        <br />
-        그의 엄청난 플로우를 따라잡을 자는 누구일까?
-      </>
-    ),
-    thumbSrc: "/image/noImagePlaceHolder.png",
-    videoSrc: "/video/sample.mp4",
+    name: "물병자리",
+    music: "초록빛",
+    artist: "폴킴",
+    desc: "Mask of Aquarius",
+    thumbSrc: "/image/aquarius.png",
+    videoSrc: "/video/aquarius.mp4",
   },
   {
     num: "3",
-    name: "김상우",
-    music: "느린심장박동",
-    artist: "래원",
-    desc: (
-      <>
-        김상우의 기깔나는 느린심장박동!
-        <br />
-        그의 엄청난 플로우를 따라잡을 자는 누구일까?
-      </>
-    ),
-    thumbSrc: "/image/noImagePlaceHolder.png",
-    videoSrc: "/video/sample.mp4",
+    name: "사자자리",
+    music: "비밀번호 486",
+    artist: "윤하",
+    desc: "Mask of Leo",
+    thumbSrc: "/image/leo.png",
+    videoSrc: "/video/leo.mp4",
   },
   {
     num: "4",
-    name: "김상우",
-    music: "느린심장박동",
-    artist: "래원",
-    desc: (
-      <>
-        김상우의 기깔나는 느린심장박동!
-        <br />
-        그의 엄청난 플로우를 따라잡을 자는 누구일까?
-      </>
-    ),
-    thumbSrc: "/image/noImagePlaceHolder.png",
-    videoSrc: "/video/sample.mp4",
+    name: "양자리",
+    music: "밤새 (취향저격 그녀 X 카더가든)",
+    artist: "카더가든",
+    desc: "Mask of Aries",
+    thumbSrc: "/image/aries.png",
+    videoSrc: "/video/aries.mp4",
   },
   {
     num: "5",
-    name: "김상우",
-    music: "느린심장박동",
-    artist: "래원",
-    desc: (
-      <>
-        김상우의 기깔나는 느린심장박동!
-        <br />
-        그의 엄청난 플로우를 따라잡을 자는 누구일까?
-      </>
-    ),
-    thumbSrc: "/image/noImagePlaceHolder.png",
-    videoSrc: "/video/sample.mp4",
+    name: "염소자리",
+    music: "응급실",
+    artist: "izi",
+    desc: "Mask of Capricorn",
+    thumbSrc: "/image/capricorn.png",
+    videoSrc: "/video/capricorn.mp4",
   },
   {
     num: "6",
-    name: "김상우",
-    music: "느린심장박동",
-    artist: "래원",
-    desc: (
-      <>
-        김상우의 기깔나는 느린심장박동!
-        <br />
-        그의 엄청난 플로우를 따라잡을 자는 누구일까?
-      </>
-    ),
-    thumbSrc: "/image/noImagePlaceHolder.png",
-    videoSrc: "/video/sample.mp4",
+    name: "황소자리",
+    music: "안녕",
+    artist: "폴킴",
+    desc: "Mask of Taurus",
+    thumbSrc: "/image/taurus.png",
+    videoSrc: "/video/taurus.mp4",
   },
 ];
 

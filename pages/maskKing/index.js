@@ -32,11 +32,11 @@ const MaskKing = () => {
             [멘트]
           </h3> */}
           <div className="d-flex align-items-center gap-3">
-            <Link href="/maskKing/voteResult">
+            {/* <Link href="/maskKing/voteResult">
               <a>
                 <button className="btn btn-light fs-5">투표 현황</button>
               </a>
-            </Link>
+            </Link> */}
             <h2 className="m-0 fs-4">
               {voteState == "true" ? (
                 <>

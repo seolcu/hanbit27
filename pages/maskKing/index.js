@@ -3,16 +3,28 @@ import Image from "next/image";
 import styles from "../../styles/MaskKing.module.scss";
 import Link from "next/link";
 import HeaderComponent from "../../components/HeaderComponent";
-import MaskKingCard from "../../components/MaskKingCard";
+import firestore from "../../firebase/firestoreInit";
+import { useEffect, useState } from "react";
+import { collection, getDocs } from "firebase/firestore";
 import maskKingInfoList from "../../public/data/maskKingInfoList";
-import { useState } from "react";
-import Cookies from "js-cookie";
-import { MdCheck, MdClose } from "react-icons/md";
 
 const MaskKing = () => {
-  // 투표 쿠키설정
-  const voteCookieName = "voted";
-  const [voteState, setVoteState] = useState(Cookies.get(voteCookieName));
+  // 투표수
+  const [voteCountList, setVoteCountList] = useState([]);
+
+  // 투표 Firestore 설정
+  const voteRef = collection(firestore, "MaskKingVote");
+  const getVoteCountList = async () => {
+    const data = (await getDocs(voteRef)).docs.map((snapshot) =>
+      snapshot.data(),
+    );
+    setVoteCountList(data);
+  };
+
+  // 데이터 동기화
+  useEffect(() => {
+    getVoteCountList();
+  });
   return (
     <>
       <Head>
@@ -31,37 +43,16 @@ const MaskKing = () => {
           objectFit="cover"
         />
       </div>
-      <div className="container mt-2">
-        <div className="d-flex align-items-center gap-3">
-          <h1 className="m-0 fw-bold">
-            {voteState ? (
-              <>
-                <MdCheck />#{voteState} 투표함
-              </>
-            ) : (
-              <>
-                <MdClose />
-                투표 안함
-              </>
-            )}
-          </h1>
-        </div>
-      </div>
       <div className="container">
-        <div className={`mt-4 ${styles.gridContainer}`}>
-          {maskKingInfoList.map((maskKingInfo, index) => {
-            return (
-              <MaskKingCard
-                num={maskKingInfo.num}
-                name={maskKingInfo.name}
-                music={maskKingInfo.music}
-                artist={maskKingInfo.artist}
-                thumbSrc={maskKingInfo.thumbSrc}
-                key={index}
-              />
-            );
-          })}
-        </div>
+        {voteCountList.map((data, index) => {
+          return (
+            <>
+              <h3>
+                #{index + 1} {maskKingInfoList[index].name} {data.count}
+              </h3>
+            </>
+          );
+        })}
       </div>
     </>
   );

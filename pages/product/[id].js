@@ -31,12 +31,12 @@ export const getStaticProps = async ({ params }) => {
 };
 
 const Product = ({ id, preProductData }) => {
-  const [productInfo, setProductInfo] = useState(preProductData);
+  const [productData, setProductInfo] = useState(preProductData);
 
   return (
     <>
       <Head>
-        <title>한빛마켓 - {productInfo.name}</title>
+        <title>한빛마켓 - {productData.name}</title>
         <meta name="description" content="제 27회 한빛제 대파마켓 & 굿즈" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
@@ -45,7 +45,7 @@ const Product = ({ id, preProductData }) => {
         <div className="container">
           <Image
             className="img-thumbnail"
-            src={productInfo.thumbUrl}
+            src={productData.thumbUrl}
             alt="상품 썸네일"
             width={1000}
             height={1000}
@@ -55,13 +55,13 @@ const Product = ({ id, preProductData }) => {
           />
         </div>
         <div className={`container py-3 ${styles.rightContainer}`}>
-          <h1 className="display-3 fw-bold">{productInfo.name}</h1>
-          <h2 className="text-primary">{productInfo.defaultPrice}원</h2>
+          <h1 className="display-3 fw-bold">{productData.name}</h1>
+          <h2 className="text-primary">{productData.defaultPrice}원</h2>
           <select
             className="form-select"
             onChange={(e) => setSelectedOption(e.target.value)}
           >
-            {productInfo.optionList.map((oneOption, index) => {
+            {productData.optionList.map((oneOption, index) => {
               return (
                 <option key={index} value={oneOption} defaultValue={index == 0}>
                   {oneOption.optionName}{" "}

@@ -32,6 +32,7 @@ export const getStaticProps = async ({ params }) => {
 
 const Product = ({ id, preProductData }) => {
   const [productData, setProductInfo] = useState(preProductData);
+  const [selectedOptionId, setSelectedOptionId] = useState(0);
 
   return (
     <>
@@ -59,11 +60,12 @@ const Product = ({ id, preProductData }) => {
           <h2 className="text-primary">{productData.defaultPrice}원</h2>
           <select
             className="form-select"
-            onChange={(e) => setSelectedOption(e.target.value)}
+            value={selectedOptionId}
+            onChange={(e) => setSelectedOptionId(e.target.value)}
           >
             {productData.optionList.map((oneOption, index) => {
               return (
-                <option key={index} value={oneOption} defaultValue={index == 0}>
+                <option key={index} value={index}>
                   {oneOption.optionName}{" "}
                   {oneOption.optionPrice > 0
                     ? `(+${oneOption.optionPrice})`

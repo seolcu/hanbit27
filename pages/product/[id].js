@@ -4,37 +4,34 @@ import styles from "../../styles/Product.module.scss";
 import Link from "next/link";
 import { collection, getDocs } from "firebase/firestore";
 import HeaderComponent from "../../components/HeaderComponent";
-import { useState } from "react";
-import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 import firestore from "../../firebase/firestoreInit";
 
+const productCol = collection(firestore, "ProductList");
+
 export async function getStaticPaths() {
-  const productCol = collection(firestore, "ProductList");
-  const productSnapshot = await getDocs(productCol);
-  const productList = productSnapshot.docs.map((doc) => doc.data());
+  const preProductDataList = (await getDocs(productCol)).docs.map((doc) =>
+    doc.data(),
+  );
 
   let paths = [];
-  for (let i = 0; i < productList.length; i++) {
+  for (let i = 0; i < preProductDataList.length; i++) {
     paths.push({ params: { id: i.toString() } });
   }
   return { paths, fallback: false };
 }
 
 export const getStaticProps = async ({ params }) => {
-  const productCol = collection(firestore, "ProductList");
-  const productSnapshot = await getDocs(productCol);
-  const productList = productSnapshot.docs.map((doc) => doc.data());
-  return { props: { productList }, revalidate: 15 };
+  const id = params.id;
+  const preProductDataList = (await getDocs(productCol)).docs.map((doc) =>
+    doc.data(),
+  );
+  const preProductData = preProductDataList[id];
+  return { props: { id, preProductData }, revalidate: 10 };
 };
 
-const Product = ({ productList }) => {
-  const router = useRouter();
-  const { id } = router.query;
-  const productInfo = productList[id];
-  const [selectedOption, setSelectedOption] = useState(
-    productInfo.optionList[0],
-  );
-  console.log(productInfo);
+const Product = ({ id, preProductData }) => {
+  const [productInfo, setProductInfo] = useState(preProductData);
 
   return (
     <>
@@ -53,7 +50,7 @@ const Product = ({ productList }) => {
             width={1000}
             height={1000}
             layout="responsive"
-            objectFit={"cover"}
+            objectFit={"contain"}
             quality={100}
           />
         </div>

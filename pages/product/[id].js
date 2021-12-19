@@ -7,6 +7,7 @@ import HeaderComponent from "../../components/HeaderComponent";
 import { useEffect, useState } from "react";
 import firestore from "../../firebase/firestoreInit";
 import MarketHeader from "../../components/MarketHeader";
+import { async } from "@firebase/util";
 
 const productCol = collection(firestore, "ProductList");
 
@@ -32,7 +33,17 @@ export const getStaticProps = async ({ params }) => {
 };
 
 const Product = ({ id, preProductData }) => {
-  const [productData, setProductInfo] = useState(preProductData);
+  const [productData, setProductData] = useState(preProductData);
+
+  const refreshProductData = async () => {
+    const productDataList = (await getDocs(productCol)).docs.map((snapshot) =>
+      snapshot.data(),
+    );
+    setProductData(productDataList[id]);
+    console.log("data refreshed");
+  };
+
+  // 선택 상품 리스트 만둘기
   const snapshot = [];
   for (let i = 0; i < productData.optionList.length; i++) snapshot.push(0);
   const [selectedOptionList, setSelectedOptionList] = useState(snapshot);
@@ -83,8 +94,15 @@ const Product = ({ id, preProductData }) => {
           <h2 className="text-primary">{productData.defaultPrice}원</h2>
           <select
             className="form-select"
-            onChange={(e) => increaseOption(e.target.value)}
+            onClick={async () => refreshProductData()}
+            onChange={(e) => {
+              if (e.target.value !== "placeholder") {
+                increaseOption(e.target.value);
+                e.target.value = "placeholder";
+              }
+            }}
           >
+            <option value="placeholder">옵션 선택</option>
             {productData.optionList.map((oneOption, index) => {
               return (
                 <option key={index} value={index}>

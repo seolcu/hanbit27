@@ -216,7 +216,7 @@ const ProductUpload = () => {
           <h3>옵션 추가하기</h3>
           <div className="container bg-secondary text-light border rounded p-3">
             <div>
-              <h4>옵션명 (옵션 1개 필수선택, 첫번째가 기본 옵션)</h4>
+              <h4>옵션명 (옵션 1개 필수선택, 여러개 선택 불가)</h4>
               <input
                 type="text"
                 className="form-control form-control-lg"

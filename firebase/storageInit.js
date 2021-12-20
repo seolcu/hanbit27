@@ -1,16 +1,16 @@
 import { initializeApp } from "firebase/app";
 import { getStorage } from "firebase/storage";
 
-// seolcu001
 const firebaseConfig = {
-  apiKey: "AIzaSyBSQUw2J_Nz2Td8u4zbEgsYwy3car8mkVA",
-  authDomain: "hanbit27-9f927.firebaseapp.com",
-  databaseURL: "https://hanbit27-9f927-default-rtdb.firebaseio.com",
-  projectId: "hanbit27-9f927",
-  storageBucket: "hanbit27-9f927.appspot.com",
-  messagingSenderId: "984091181751",
-  appId: "1:984091181751:web:88182610eab43f785e4332",
-  measurementId: "G-REBSRPKHJK",
+  apiKey: "AIzaSyDKut2rohO8_saVAOdkG8luqKq4NCDNcb0",
+  authDomain: "hanbit27-ef641.firebaseapp.com",
+  databaseURL:
+    "https://hanbit27-ef641-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "hanbit27-ef641",
+  storageBucket: "hanbit27-ef641.appspot.com",
+  messagingSenderId: "84779829568",
+  appId: "1:84779829568:web:194d36024e6d1b3b8192a5",
+  measurementId: "G-4B1TEXG8ME",
 };
 const firebaseApp = initializeApp(firebaseConfig);
 const storage = getStorage(firebaseApp);

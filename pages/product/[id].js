@@ -9,7 +9,7 @@ import { useEffect, useState } from "react";
 import firestore from "../../firebase/firestoreInit";
 import { useRouter } from "next/router";
 import PurchaseModal from "../../components/purchaseModal";
-import { async } from "@firebase/util";
+import Cookies from "js-cookie";
 
 const productCol = collection(firestore, "ProductList");
 const orderCol = collection(firestore, "OrderList");
@@ -96,9 +96,9 @@ const Product = ({ preProductData }) => {
     setFinalPrice(finalPriceSnapshot);
   }
 
-  const [studentId, setStudentId] = useState("");
-  const [studentName, setStudentName] = useState("");
-  const [studentPhone, setStudentPhone] = useState("");
+  const [studentId, setStudentId] = useState(Cookies.get("studentId"));
+  const [studentName, setStudentName] = useState(Cookies.get("studentName"));
+  const [studentPhone, setStudentPhone] = useState(Cookies.get("studentPhone"));
 
   const changeOptionStock = async () => {
     let newProductData = productData;
@@ -117,6 +117,9 @@ const Product = ({ preProductData }) => {
   };
 
   async function purchaseModalOnClickHandler() {
+    Cookies.set("studentId", studentId);
+    Cookies.set("studentName", studentName);
+    Cookies.set("studentPhone", studentPhone);
     await changeOptionStock();
     const orderResult = {
       orderId: "",

@@ -3,7 +3,7 @@ import Head from "next/head";
 import Image from "next/image";
 import styles from "../../styles/Product.module.scss";
 import Link from "next/link";
-import { collection, getDocs, setDoc, doc } from "firebase/firestore";
+import { collection, getDocs, setDoc, doc, addDoc } from "firebase/firestore";
 import HeaderComponent from "../../components/HeaderComponent";
 import { useEffect, useState } from "react";
 import firestore from "../../firebase/firestoreInit";
@@ -100,6 +100,22 @@ const Product = ({ preProductData }) => {
   const [studentName, setStudentName] = useState("");
   const [studentPhone, setStudentPhone] = useState("");
 
+  const changeOptionStock = async () => {
+    let newProductData = productData;
+    orderedProductList.map((orderedProduct, index) => {
+      const currentStock = parseInt(
+        newProductData.optionList[orderedProduct.optionId].optionStock,
+      );
+      newProductData.optionList[orderedProduct.optionId].optionStock =
+        currentStock - parseInt(orderedProduct.quantity);
+    });
+    console.log("changed ProductData:", newProductData);
+    await setDoc(
+      doc(firestore, "ProductList", newProductData.id),
+      newProductData,
+    );
+  };
+
   async function purchaseModalOnClickHandler() {
     await changeOptionStock();
     const orderResult = {
@@ -120,23 +136,8 @@ const Product = ({ preProductData }) => {
     orderResult.orderId = docId;
     console.log(orderResult);
     await setDoc(doc(firestore, "OrderList", docId), orderResult);
+    router.push("/viewOrder");
   }
-
-  const changeOptionStock = async () => {
-    let newProductData = productData;
-    orderedProductList.map((orderedProduct, index) => {
-      const currentStock = parseInt(
-        newProductData.optionList[orderedProduct.optionId].optionStock,
-      );
-      newProductData.optionList[orderedProduct.optionId].optionStock =
-        currentStock - parseInt(orderedProduct.quantity);
-    });
-    console.log("changed ProductData:", newProductData);
-    await setDoc(
-      doc(firestore, "ProductList", newProductData.id),
-      newProductData,
-    );
-  };
 
   if (router.isFallback) {
     return (

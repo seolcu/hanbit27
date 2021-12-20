@@ -8,6 +8,7 @@ import HeaderComponent from "../../components/HeaderComponent";
 import { useEffect, useState } from "react";
 import firestore from "../../firebase/firestoreInit";
 import MarketHeader from "../../components/MarketHeader";
+import { useRouter } from "next/router";
 
 const productCol = collection(firestore, "ProductList");
 
@@ -20,19 +21,20 @@ export async function getStaticPaths() {
   for (let i = 0; i < preProductDataList.length; i++) {
     paths.push({ params: { id: i.toString() } });
   }
-  return { paths, fallback: false };
+  return { paths, fallback: "blocking" };
 }
 
 export const getStaticProps = async ({ params }) => {
-  const id = params.id;
   const preProductDataList = (await getDocs(productCol)).docs.map((doc) =>
     doc.data(),
   );
-  const preProductData = preProductDataList[id];
-  return { props: { id, preProductData }, revalidate: 15 };
+  const preProductData = preProductDataList[params.id];
+  return { props: { preProductData }, revalidate: 5 };
 };
 
-const Product = ({ id, preProductData }) => {
+const Product = ({ preProductData }) => {
+  const router = useRouter();
+
   const [productData, setProductData] = useState(preProductData);
 
   // 선택 상품 리스트 만둘기
@@ -98,147 +100,155 @@ const Product = ({ id, preProductData }) => {
     finalPrice: finalPrice,
   };
 
-  return (
-    <>
-      <Head>
-        <title>한빛마켓 - {productData.name}</title>
-        <meta name="description" content="제 27회 한빛제 대파마켓 & 굿즈" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-      <MarketHeader />
-      <div className={`container py-4 ${styles.mainContainer}`}>
-        <div className="container">
-          <img
-            className="img-thumbnail"
-            src={productData.thumbUrl}
-            alt="상품 썸네일"
-            style={{ width: "100%", height: "auto" }}
-          />
-        </div>
-        <div className={`container py-3 ${styles.rightContainer}`}>
-          <h1 className="display-3 fw-bold">{productData.name}</h1>
-          <h2 className="text-primary">{productData.defaultPrice}원</h2>
-          <select
-            className="form-select"
-            onChange={(e) => {
-              if (e.target.value !== "placeholder") {
-                increaseOption(e.target.value);
-                e.target.value = "placeholder";
-              }
-            }}
-          >
-            <option value="placeholder">옵션 선택</option>
-            {productData.optionList.map((oneOption, index) => {
-              return (
-                <option
-                  key={index}
-                  value={index}
-                  disabled={oneOption.optionStock == 0 ? true : false}
-                >
-                  {oneOption.optionName}{" "}
-                  {oneOption.optionPrice > 0
-                    ? `(+${oneOption.optionPrice})`
-                    : oneOption.optionPrice < 0
-                    ? `(${oneOption.optionPrice})`
-                    : ""}{" "}
-                  [재고: {oneOption.optionStock}]
-                </option>
-              );
-            })}
-          </select>
-          <table className="table border table-secondary fs-5 fw-normal mt-3">
-            <thead>
-              <tr>
-                <th scope="col">옵션명</th>
-                <th scope="col">개수</th>
-                <th scope="col">가격</th>
-                <th scope="col">삭제</th>
-              </tr>
-            </thead>
-            <tbody>
-              {selectedOptionList.map((quantity, index) => {
-                const currentOption = productData.optionList[index];
-                return (
-                  <tr
-                    key={index}
-                    style={
-                      quantity == 0
-                        ? { display: "none" }
-                        : { display: undefined }
-                    }
-                  >
-                    <th scope="col">{currentOption.optionName}</th>
-                    <th scope="col">
-                      <div className="d-flex align-items-center">
-                        <button
-                          className="btn btn-light"
-                          onClick={() => {
-                            if (quantity !== 1) {
-                              decreaseOption(index);
-                            }
-                          }}
-                        >
-                          -
-                        </button>
-                        <div className="btn btn-light">{quantity}</div>
-                        <button
-                          className="btn btn-light"
-                          onClick={() => {
-                            if (quantity !== currentOption.optionStock)
-                              increaseOption(index);
-                          }}
-                        >
-                          +
-                        </button>
-                      </div>
-                    </th>
-                    <th scope="col">
-                      {(parseInt(productData.defaultPrice) +
-                        parseInt(currentOption.optionPrice)) *
-                        quantity}
-                    </th>
-                    <th
-                      scope="col"
-                      className="text-danger"
-                      onClick={() => removeOption(index)}
-                    >
-                      ❌
-                    </th>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-          <div className="d-flex justify-content-between">
-            <h3 className="fw-bold">총 상품 금액</h3>
-            <h3 className="fw-bold">{finalPrice}원</h3>
-          </div>
-          <div className="d-flex gap-2 justify-content-end">
-            <Link href="/product">
-              <a>
-                <button className="btn btn-secondary fs-4 fw-bold">
-                  나가기
-                </button>
-              </a>
-            </Link>
-            <button className="btn btn-primary fs-4 fw-bold">구매하기</button>
-          </div>
-        </div>
-      </div>
-      <div className="container" style={{ position: "relative" }}>
-        {productData.descImageUrlList.map((url, index) => {
-          return (
+  if (router.isFallback) {
+    return (
+      <>
+        <div>loading...</div>
+      </>
+    );
+  } else {
+    return (
+      <>
+        <Head>
+          <title>한빛마켓 - {productData.name}</title>
+          <meta name="description" content="제 27회 한빛제 대파마켓 & 굿즈" />
+          <link rel="icon" href="/favicon.ico" />
+        </Head>
+        <MarketHeader />
+        <div className={`container py-4 ${styles.mainContainer}`}>
+          <div className="container">
             <img
-              src={url}
-              alt="세부사진"
-              key={index}
+              className="img-thumbnail"
+              src={productData.thumbUrl}
+              alt="상품 썸네일"
               style={{ width: "100%", height: "auto" }}
             />
-          );
-        })}
-      </div>
-    </>
-  );
+          </div>
+          <div className={`container py-3 ${styles.rightContainer}`}>
+            <h1 className="display-3 fw-bold">{productData.name}</h1>
+            <h2 className="text-primary">{productData.defaultPrice}원</h2>
+            <select
+              className="form-select"
+              onChange={(e) => {
+                if (e.target.value !== "placeholder") {
+                  increaseOption(e.target.value);
+                  e.target.value = "placeholder";
+                }
+              }}
+            >
+              <option value="placeholder">옵션 선택</option>
+              {productData.optionList.map((oneOption, index) => {
+                return (
+                  <option
+                    key={index}
+                    value={index}
+                    disabled={oneOption.optionStock == 0 ? true : false}
+                  >
+                    {oneOption.optionName}{" "}
+                    {oneOption.optionPrice > 0
+                      ? `(+${oneOption.optionPrice})`
+                      : oneOption.optionPrice < 0
+                      ? `(${oneOption.optionPrice})`
+                      : ""}{" "}
+                    [재고: {oneOption.optionStock}]
+                  </option>
+                );
+              })}
+            </select>
+            <table className="table border table-secondary fs-5 fw-normal mt-3">
+              <thead>
+                <tr>
+                  <th scope="col">옵션명</th>
+                  <th scope="col">개수</th>
+                  <th scope="col">가격</th>
+                  <th scope="col">삭제</th>
+                </tr>
+              </thead>
+              <tbody>
+                {selectedOptionList.map((quantity, index) => {
+                  const currentOption = productData.optionList[index];
+                  return (
+                    <tr
+                      key={index}
+                      style={
+                        quantity == 0
+                          ? { display: "none" }
+                          : { display: undefined }
+                      }
+                    >
+                      <th scope="col">{currentOption.optionName}</th>
+                      <th scope="col">
+                        <div className="d-flex align-items-center">
+                          <button
+                            className="btn btn-light"
+                            onClick={() => {
+                              if (quantity !== 1) {
+                                decreaseOption(index);
+                              }
+                            }}
+                          >
+                            -
+                          </button>
+                          <div className="btn btn-light">{quantity}</div>
+                          <button
+                            className="btn btn-light"
+                            onClick={() => {
+                              if (quantity !== currentOption.optionStock)
+                                increaseOption(index);
+                            }}
+                          >
+                            +
+                          </button>
+                        </div>
+                      </th>
+                      <th scope="col">
+                        {(parseInt(productData.defaultPrice) +
+                          parseInt(currentOption.optionPrice)) *
+                          quantity}
+                      </th>
+                      <th
+                        scope="col"
+                        className="text-danger"
+                        onClick={() => removeOption(index)}
+                      >
+                        ❌
+                      </th>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+            <div className="d-flex justify-content-between">
+              <h3 className="fw-bold">총 상품 금액</h3>
+              <h3 className="fw-bold">{finalPrice}원</h3>
+            </div>
+            <div className="d-flex gap-2 justify-content-end">
+              <Link href="/product">
+                <a>
+                  <button className="btn btn-secondary fs-4 fw-bold">
+                    나가기
+                  </button>
+                </a>
+              </Link>
+              <button className="btn btn-primary fs-4 fw-bold">구매하기</button>
+            </div>
+          </div>
+        </div>
+        <div className="container" style={{ position: "relative" }}>
+          {productData.descImageUrlList.map((url, index) => {
+            return (
+              <img
+                src={url}
+                alt="세부사진"
+                key={index}
+                style={{ width: "100%", height: "auto" }}
+              />
+            );
+          })}
+        </div>
+      </>
+    );
+  }
 };
 
 export default Product;

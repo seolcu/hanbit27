@@ -3,12 +3,13 @@ import Head from "next/head";
 import Image from "next/image";
 import styles from "../../styles/Product.module.scss";
 import Link from "next/link";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, setDoc, doc } from "firebase/firestore";
 import HeaderComponent from "../../components/HeaderComponent";
 import { useEffect, useState } from "react";
 import firestore from "../../firebase/firestoreInit";
 import { useRouter } from "next/router";
 import PurchaseModal from "../../components/purchaseModal";
+import { async } from "@firebase/util";
 
 const productCol = collection(firestore, "ProductList");
 const orderCol = collection(firestore, "OrderList");
@@ -77,6 +78,7 @@ const Product = ({ preProductData }) => {
   productData.optionList.map((oneOption, index) => {
     if (selectedOptionList[index] !== 0) {
       orderedProductList.push({
+        optionId: index,
         optionName: oneOption.optionName,
         price:
           parseInt(productData.defaultPrice) + parseInt(oneOption.optionPrice),
@@ -98,8 +100,10 @@ const Product = ({ preProductData }) => {
   const [studentName, setStudentName] = useState("");
   const [studentPhone, setStudentPhone] = useState("");
 
-  function purchaseModalOnClickHandler() {
+  async function purchaseModalOnClickHandler() {
+    await changeOptionStock();
     const orderResult = {
+      orderId: "",
       studentId: studentId,
       studentName: studentName,
       studentPhone: studentPhone,
@@ -108,8 +112,31 @@ const Product = ({ preProductData }) => {
       orderedProductList: orderedProductList,
       finalPrice: finalPrice,
     };
+    console.log("orderResult:", orderResult);
+    const docId = await addDoc(
+      collection(firestore, "OrderList"),
+      orderResult,
+    ).then((docRef) => docRef.id);
+    orderResult.orderId = docId;
     console.log(orderResult);
+    await setDoc(doc(firestore, "OrderList", docId), orderResult);
   }
+
+  const changeOptionStock = async () => {
+    let newProductData = productData;
+    orderedProductList.map((orderedProduct, index) => {
+      const currentStock = parseInt(
+        newProductData.optionList[orderedProduct.optionId].optionStock,
+      );
+      newProductData.optionList[orderedProduct.optionId].optionStock =
+        currentStock - parseInt(orderedProduct.quantity);
+    });
+    console.log("changed ProductData:", newProductData);
+    await setDoc(
+      doc(firestore, "ProductList", newProductData.id),
+      newProductData,
+    );
+  };
 
   if (router.isFallback) {
     return (

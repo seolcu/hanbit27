@@ -151,7 +151,6 @@ const Product = ({ id, preProductData }) => {
               );
             })}
           </select>
-          {selectedOptionList}
           <table
             className="table border table-secondary fs-5 fw-normal mt-3"
             onClick={() => refreshProductData()}

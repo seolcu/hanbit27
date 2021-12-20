@@ -29,7 +29,7 @@ export const getStaticProps = async ({ params }) => {
     doc.data(),
   );
   const preProductData = preProductDataList[id];
-  return { props: { id, preProductData }, revalidate: 10 };
+  return { props: { id, preProductData }, revalidate: 15 };
 };
 
 const Product = ({ id, preProductData }) => {

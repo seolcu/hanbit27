@@ -5,7 +5,14 @@ import Link from "next/link";
 import HeaderComponent from "../components/HeaderComponent";
 import { useEffect, useState } from "react";
 import Cookies from "js-cookie";
-import { collection, getDocs } from "firebase/firestore";
+import {
+  collection,
+  deleteDoc,
+  doc,
+  getDoc,
+  getDocs,
+  setDoc,
+} from "firebase/firestore";
 import firestore from "../firebase/firestoreInit";
 
 const orderCol = collection(firestore, "OrderList");
@@ -25,20 +32,39 @@ const ViewOrder = ({ preOrderList }) => {
   const [orderList, setOrderList] = useState(preOrderList);
   const [filteredOrderList, setFilteredOrderList] = useState([]);
 
-  function updateFilteredOrderList() {
-    console.log(orderList);
-    const snapshot = [];
-    orderList.forEach((oneOrder) => {
-      if (
-        oneOrder.studentId == studentId &&
-        oneOrder.studentName == studentName &&
-        oneOrder.studentPhone == studentPhone
-      ) {
-        snapshot.push(oneOrder);
-      }
-    });
-    setFilteredOrderList(snapshot);
-    console.log(snapshot);
+  const [deletingState, setDeletingState] = useState(false);
+
+  const getOrderList = async () => {
+    return (await getDocs(orderCol)).docs.map((snapshot) => snapshot.data());
+  };
+
+  const getFilteredOrderList = (orderList) => {
+    if (orderList == []) {
+      return [];
+    } else {
+      let snapshot = [];
+      orderList.forEach((oneOrder) => {
+        if (
+          oneOrder.studentId == studentId &&
+          oneOrder.studentName == studentName &&
+          oneOrder.studentPhone == studentPhone
+        ) {
+          snapshot.push(oneOrder);
+        }
+      });
+      return snapshot;
+    }
+  };
+
+  async function updateFilteredList() {
+    // 새로고침
+    const newOrderList = await getOrderList();
+    console.log(newOrderList);
+    setOrderList(newOrderList);
+    // 필터리스트 새로고침
+    const newFilteredOrderList = getFilteredOrderList(newOrderList);
+    console.log(newFilteredOrderList);
+    setFilteredOrderList(newFilteredOrderList);
   }
 
   return (
@@ -84,12 +110,7 @@ const ViewOrder = ({ preOrderList }) => {
                 : false
             }
             className="btn btn-primary mt-3 fs-5"
-            style={{
-              marginLeft: "auto",
-              marginRight: "0",
-              display: "block",
-            }}
-            onClick={updateFilteredOrderList}
+            onClick={updateFilteredList}
           >
             조회하기
           </button>
@@ -99,7 +120,7 @@ const ViewOrder = ({ preOrderList }) => {
         return (
           <div
             className="container rounded bg-light border my-3 p-3"
-            key={index}
+            key={Math.random()}
           >
             <div className="d-flex align-items-center">
               <h1 className="fw-bold m-0">{oneOrder.productName}</h1>
@@ -127,6 +148,35 @@ const ViewOrder = ({ preOrderList }) => {
                 })}
               </tbody>
             </table>
+            <button
+              className="btn btn-danger"
+              disabled={deletingState}
+              key={Math.random()}
+              onClick={async () => {
+                setDeletingState(true);
+                const productRef = doc(
+                  firestore,
+                  "ProductList",
+                  oneOrder.productId,
+                );
+                let productData = (await getDoc(productRef)).data();
+                oneOrder.orderedProductList.forEach((oneOption) => {
+                  // 상품 재고 원상복구
+                  productData.optionList[oneOption.optionId].optionStock +=
+                    oneOption.quantity;
+                });
+                console.log("restored productData:", productData);
+                // 복구된 데이터 업로드
+                await setDoc(productRef, productData);
+                // 주문 삭제
+                await deleteDoc(doc(firestore, "OrderList", oneOrder.orderId));
+                await updateFilteredList();
+                // 상태수정
+                setDeletingState(false);
+              }}
+            >
+              주문취소
+            </button>
           </div>
         );
       })}

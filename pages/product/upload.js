@@ -128,6 +128,7 @@ const ProductUpload = () => {
             src={thumbUrl}
             width={150}
             height={150}
+            objectFit="contain"
             // 강제 리렌더링
             key={Math.random()}
           />

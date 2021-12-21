@@ -70,7 +70,7 @@ const ProductList = ({ productList }) => {
         <div className={styles.gridContainer}>
           {productList.map((product, index) => {
             return (
-              <Link href={`/product/${index}`} key={index}>
+              <Link href={`/product/${product.id}`} key={index}>
                 <a
                   style={
                     selectedCategory == "모두"

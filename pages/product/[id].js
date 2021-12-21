@@ -3,7 +3,14 @@ import Head from "next/head";
 import Image from "next/image";
 import styles from "../../styles/Product.module.scss";
 import Link from "next/link";
-import { collection, getDocs, setDoc, doc, addDoc } from "firebase/firestore";
+import {
+  collection,
+  getDocs,
+  setDoc,
+  doc,
+  addDoc,
+  getDoc,
+} from "firebase/firestore";
 import HeaderComponent from "../../components/HeaderComponent";
 import { useEffect, useState } from "react";
 import firestore from "../../firebase/firestoreInit";
@@ -20,17 +27,16 @@ export async function getStaticPaths() {
   );
 
   let paths = [];
-  for (let i = 0; i < preProductDataList.length; i++) {
-    paths.push({ params: { id: i.toString() } });
-  }
+  preProductDataList.forEach((product) => {
+    paths.push({ params: { id: product.id } });
+  });
+
   return { paths, fallback: "blocking" };
 }
 
 export const getStaticProps = async ({ params }) => {
-  const preProductDataList = (await getDocs(productCol)).docs.map((doc) =>
-    doc.data(),
-  );
-  const preProductData = preProductDataList[params.id];
+  const productRef = doc(firestore, "ProductList", params.id);
+  const preProductData = (await getDoc(productRef)).data();
   return { props: { preProductData }, revalidate: 5 };
 };
 

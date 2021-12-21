@@ -19,6 +19,7 @@ const PurchaseModal = ({
       tabIndex="-1"
       aria-labelledby="purchaseModalLabel"
       aria-hidden="true"
+      data-bs-backdrop="static"
     >
       <div className="modal-dialog">
         <div className="modal-content">

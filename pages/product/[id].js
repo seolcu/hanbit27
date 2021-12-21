@@ -109,6 +109,8 @@ const Product = ({ preProductData }) => {
     Cookies.get("depositorName"),
   );
 
+  const [uploadingState, setUploadingState] = useState(false);
+
   const changeOptionStock = async () => {
     let newProductData = productData;
     orderedProductList.map((orderedProduct, index) => {
@@ -126,6 +128,7 @@ const Product = ({ preProductData }) => {
   };
 
   async function purchaseModalOnClickHandler() {
+    setUploadingState(true);
     Cookies.set("studentId", studentId);
     Cookies.set("studentName", studentName);
     Cookies.set("studentPhone", studentPhone);
@@ -294,8 +297,11 @@ const Product = ({ preProductData }) => {
             <div className="d-flex gap-2 justify-content-end">
               <Link href="/product">
                 <a>
-                  <button className="btn btn-secondary fs-4 fw-bold">
-                    나가기
+                  <button
+                    className="btn btn-secondary fs-4 fw-bold"
+                    disabled={uploadingState}
+                  >
+                    둘러보기
                   </button>
                 </a>
               </Link>
@@ -303,9 +309,13 @@ const Product = ({ preProductData }) => {
                 className="btn btn-primary fs-4 fw-bold"
                 data-bs-toggle="modal"
                 data-bs-target="#purchaseModal"
-                disabled={orderedProductList.length == 0 ? true : false}
+                disabled={
+                  orderedProductList.length == 0 || uploadingState == true
+                    ? true
+                    : false
+                }
               >
-                구매하기
+                {uploadingState ? "주문 진행중..." : "구매하기"}
               </button>
             </div>
           </div>

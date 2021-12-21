@@ -194,6 +194,7 @@ const Product = ({ preProductData }) => {
           </div>
           <div className={`container py-3 ${styles.rightContainer}`}>
             <h1 className="display-3 fw-bold">{productData.name}</h1>
+            <p className="fs-5 text-secondary">{productData.category}</p>
             <h2 className="text-primary">{productData.defaultPrice}원</h2>
             <select
               className="form-select"

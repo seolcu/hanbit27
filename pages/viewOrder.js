@@ -14,6 +14,7 @@ import {
   setDoc,
 } from "firebase/firestore";
 import firestore from "../firebase/firestoreInit";
+import { async } from "@firebase/util";
 
 const orderCol = collection(firestore, "OrderList");
 
@@ -37,6 +38,8 @@ const ViewOrder = ({ preOrderList }) => {
 
   const [deletingState, setDeletingState] = useState(false);
 
+  const [totalPrice, setTotalPrice] = useState(0);
+
   const getOrderList = async () => {
     return (await getDocs(orderCol)).docs.map((snapshot) => snapshot.data());
   };
@@ -58,6 +61,24 @@ const ViewOrder = ({ preOrderList }) => {
       });
       return snapshot;
     }
+  };
+
+  const getTotalPrice = (filteredOrderList) => {
+    let totalPrice = 0;
+    filteredOrderList.forEach((oneOrder) => {
+      totalPrice += oneOrder.finalPrice;
+    });
+    return totalPrice;
+  };
+
+  const handleOnRefresh = async () => {
+    // 새로고침
+    const newOrderList = await getOrderList();
+    const newFilteredOrderList = getFilteredOrderList(newOrderList);
+    const newTotalPrice = getTotalPrice(newFilteredOrderList);
+    setOrderList(newOrderList);
+    setFilteredOrderList(newFilteredOrderList);
+    setTotalPrice(newTotalPrice);
   };
 
   return (
@@ -116,11 +137,7 @@ const ViewOrder = ({ preOrderList }) => {
             className="btn btn-primary mt-3 fs-5"
             style={{ marginLeft: "auto", marginRight: "0", display: "block" }}
             onClick={async () => {
-              // 새로고침
-              const newOrderList = await getOrderList();
-              setOrderList(newOrderList);
-              // 필터리스트 새로고침
-              setFilteredOrderList(getFilteredOrderList(newOrderList));
+              await handleOnRefresh();
             }}
           >
             조회하기
@@ -129,87 +146,103 @@ const ViewOrder = ({ preOrderList }) => {
       </div>
 
       {/* 카드 */}
-      {filteredOrderList.map((oneOrder, index) => {
-        return (
-          <div
-            className="container rounded bg-light border my-3 p-3"
-            key={Math.random()}
-          >
-            <div className="d-flex align-items-center justify-content-between">
-              <h1 className="fw-bold m-0">{oneOrder.productName}</h1>
-              {/* 입금 확인중, 입금 확인됨, 배송중, 배송완료 */}
-              <h4 className="fw-bold">{oneOrder.orderStatus}</h4>
-            </div>
-            <p className="m-0 fs-5 text-secondary">
-              카테고리: {oneOrder.productCategory}
-              <br />
-              주문일시: {oneOrder.orderHours}시 {oneOrder.orderMinutes}분
-              <br />
-              주문번호: {oneOrder.orderId}
-            </p>
-            <table className="table border table-light fs-5 fw-normal mt-3">
-              <thead className="table-secondary">
-                <tr>
-                  <th scope="col">옵션명</th>
-                  <th scope="col">개수</th>
-                  <th scope="col">가격</th>
-                </tr>
-              </thead>
-              <tbody>
-                {oneOrder.orderedProductList.map((oneOption, index) => {
-                  return (
-                    <tr key={index}>
-                      <th scope="col">{oneOption.optionName}</th>
-                      <th scope="col">{oneOption.quantity}</th>
-                      <th scope="col">{oneOption.price}</th>
-                    </tr>
-                  );
-                })}
-              </tbody>
-              <tfoot className="table-info">
-                <tr>
-                  <th scope="col">합계</th>
-                  <th scope="col"></th>
-                  <th scope="col">{oneOrder.finalPrice}</th>
-                </tr>
-              </tfoot>
-            </table>
-            <button
-              className="btn btn-danger"
-              style={{ marginLeft: "auto", marginRight: "0", display: "block" }}
-              disabled={deletingState}
+      <div className="container bg-light p-5 mt-3 mb-5">
+        {filteredOrderList.map((oneOrder, index) => {
+          return (
+            <div
+              className="rounded border mb-3 p-3"
               key={Math.random()}
-              onClick={async () => {
-                setDeletingState(true);
-                const productRef = doc(
-                  firestore,
-                  "ProductList",
-                  oneOrder.productId,
-                );
-                let productData = (await getDoc(productRef)).data();
-                oneOrder.orderedProductList.forEach((oneOption) => {
-                  // 상품 재고 원상복구
-                  productData.optionList[oneOption.optionId].optionStock +=
-                    oneOption.quantity;
-                });
-                // 복구된 데이터 업로드
-                await setDoc(productRef, productData);
-                // 주문 삭제
-                await deleteDoc(doc(firestore, "OrderList", oneOrder.orderId));
-                // 새로고침
-                const newOrderList = await getOrderList();
-                setOrderList(newOrderList);
-                // 필터리스트 새로고침
-                setFilteredOrderList(getFilteredOrderList(newOrderList));
-                // 상태수정
-                setDeletingState(false);
-              }}
+              style={{ background: "var(--bs-gray-300)" }}
             >
-              주문취소
-            </button>
-          </div>
-        );
-      })}
+              <div className="d-flex align-items-center justify-content-between">
+                <Link href={`/product/${oneOrder.productId}`}>
+                  <a>
+                    <h1 className="fw-bold m-0">{oneOrder.productName}</h1>
+                  </a>
+                </Link>
+                {/* 입금 확인중, 입금 확인됨, 배송중, 배송완료 */}
+                <h4 className="fw-bold">{oneOrder.orderStatus}</h4>
+              </div>
+              <p className="m-0 fs-5">
+                카테고리: {oneOrder.productCategory}
+                <br />
+                주문일시: {oneOrder.orderHours}시 {oneOrder.orderMinutes}분
+                <br />
+                주문번호: {oneOrder.orderId}
+              </p>
+              <table className="table border table-light fs-5 fw-normal mt-3">
+                <thead className="table-secondary">
+                  <tr>
+                    <th scope="col">옵션명</th>
+                    <th scope="col">개수</th>
+                    <th scope="col">가격</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {oneOrder.orderedProductList.map((oneOption, index) => {
+                    return (
+                      <tr key={index}>
+                        <th scope="col">{oneOption.optionName}</th>
+                        <th scope="col">{oneOption.quantity}</th>
+                        <th scope="col">{oneOption.price}</th>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+                <tfoot className="table-info">
+                  <tr>
+                    <th scope="col">합계</th>
+                    <th scope="col"></th>
+                    <th scope="col">{oneOrder.finalPrice}</th>
+                  </tr>
+                </tfoot>
+              </table>
+              <button
+                className="btn btn-danger"
+                style={{
+                  marginLeft: "auto",
+                  marginRight: "0",
+                  display: "block",
+                }}
+                disabled={deletingState}
+                key={Math.random()}
+                onClick={async () => {
+                  setDeletingState(true);
+                  const productRef = doc(
+                    firestore,
+                    "ProductList",
+                    oneOrder.productId,
+                  );
+                  let productData = (await getDoc(productRef)).data();
+                  oneOrder.orderedProductList.forEach((oneOption) => {
+                    // 상품 재고 원상복구
+                    productData.optionList[oneOption.optionId].optionStock +=
+                      oneOption.quantity;
+                  });
+                  // 복구된 데이터 업로드
+                  await setDoc(productRef, productData);
+                  // 주문 삭제
+                  await deleteDoc(
+                    doc(firestore, "OrderList", oneOrder.orderId),
+                  );
+                  await handleOnRefresh();
+                  setDeletingState(false);
+                }}
+              >
+                주문취소
+              </button>
+            </div>
+          );
+        })}
+        <h1 className="text-end fw-bold mt-5">
+          총 구매금액: <span className="text-primary">{totalPrice}</span>
+        </h1>
+        <h2 className="text-end">
+          우리은행 1002361418314 김상우
+          <br />
+          오후 2시 전까지 입금 부탁드립니다
+        </h2>
+      </div>
     </>
   );
 };

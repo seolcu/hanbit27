@@ -49,7 +49,7 @@ const ProductList = ({ productList }) => {
       </Head>
       <HeaderComponent />
       <LoginModal onClickHandler={onClickHandler} />
-      <div className="container">
+      <div className="container mb-5">
         <div className="d-flex justify-content-between my-3">
           <div className="d-flex gap-2">
             {CategoryBtn("모두")}

@@ -54,11 +54,13 @@ const ManageOrderPage = () => {
         <div className="container">
           <h1 className="fw-bold display-1">주문 처리하기</h1>
           <div className="d-flex gap-2 mb-2">
-            <h3 className="m-0">정렬:</h3> {SortingBtn("입금자명")}
+            <h3 className="m-0">정렬:</h3>
+            {SortingBtn("입금자명")}
             {SortingBtn("학번")}
           </div>
           <div className="d-flex gap-2">
-            <h3 className="m-0">상태 분류:</h3> {ClassifyingBtn("모두")}
+            <h3 className="m-0">상태 분류:</h3>
+            {ClassifyingBtn("모두")}
             {ClassifyingBtn("입금 확인중")}
             {ClassifyingBtn("입금 확인됨")}
             {ClassifyingBtn("배송중")}

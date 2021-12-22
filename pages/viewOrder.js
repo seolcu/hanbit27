@@ -14,7 +14,8 @@ import {
   setDoc,
 } from "firebase/firestore";
 import firestore from "../firebase/firestoreInit";
-import { async } from "@firebase/util";
+import LoginModal from "../components/LoginModal";
+import { useRouter } from "next/dist/client/router";
 
 const orderCol = collection(firestore, "OrderList");
 
@@ -26,6 +27,8 @@ export const getServerSideProps = async () => {
 };
 
 const ViewOrder = ({ preOrderList }) => {
+  const router = useRouter();
+
   const [studentId, setStudentId] = useState(Cookies.get("studentId"));
   const [studentName, setStudentName] = useState(Cookies.get("studentName"));
   const [studentPhone, setStudentPhone] = useState(Cookies.get("studentPhone"));
@@ -81,6 +84,10 @@ const ViewOrder = ({ preOrderList }) => {
     setTotalPrice(newTotalPrice);
   };
 
+  function onClickHandler() {
+    router.push("/manageOrder");
+  }
+
   return (
     <>
       <Head>
@@ -91,7 +98,18 @@ const ViewOrder = ({ preOrderList }) => {
       <HeaderComponent />
       <div className="container-fluid p-3 bg-secondary text-light">
         <div className="container">
-          <h1 className="fw-bold">주문 조회하기</h1>
+          <div className="d-flex justify-content-between align-items-center">
+            <h1 className="fw-bold">주문 조회하기</h1>
+            <button
+              type="button"
+              className="btn btn-primary"
+              data-bs-toggle="modal"
+              data-bs-target="#adminLoginModal"
+            >
+              주문 관리하기 (관리자)
+            </button>
+            <LoginModal onClickHandler={onClickHandler} />
+          </div>
           <h3>학번</h3>
           <input
             type="text"

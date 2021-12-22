@@ -137,10 +137,15 @@ const ViewOrder = ({ preOrderList }) => {
           >
             <div className="d-flex align-items-center justify-content-between">
               <h1 className="fw-bold m-0">{oneOrder.productName}</h1>
+              {/* 입금 확인중, 입금 확인됨, 배송중, 배송완료 */}
               <h4 className="fw-bold">{oneOrder.orderStatus}</h4>
             </div>
             <p className="m-0 fs-5 text-secondary">
-              : {oneOrder.productCategory}
+              카테고리: {oneOrder.productCategory}
+              <br />
+              주문일시: {oneOrder.orderHours}시 {oneOrder.orderMinutes}분
+              <br />
+              주문번호: {oneOrder.orderId}
             </p>
             <table className="table border table-light fs-5 fw-normal mt-3">
               <thead className="table-secondary">

@@ -85,6 +85,18 @@ const Home = () => {
           </>
         }
       />
+      <SubOverlay
+        BGColor="#010A26"
+        URL="/support"
+        title="고객센터"
+        desc={
+          <>
+            도움이 필요하신가요?
+            <br />
+            고객센터에 문의하시면 도와드리겠습니다!
+          </>
+        }
+      />
     </>
   );
 };

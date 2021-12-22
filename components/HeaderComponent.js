@@ -20,6 +20,11 @@ const HeaderComponent = () => {
                 <a className="nav-link active">주문조회</a>
               </Link>
             </li>
+            <li className="nav-item">
+              <Link href="/support">
+                <a className="nav-link active">고객센터</a>
+              </Link>
+            </li>
           </ul>
         </div>
       </nav>

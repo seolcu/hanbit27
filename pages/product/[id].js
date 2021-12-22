@@ -323,7 +323,7 @@ const Product = ({ preProductData }) => {
             </div>
           </div>
         </div>
-        <div className="container" style={{ position: "relative" }}>
+        <div className="container mb-5 pb-5" style={{ position: "relative" }}>
           {productData.descImageUrlList.map((url, index) => {
             return (
               <img

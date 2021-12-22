@@ -20,6 +20,7 @@ import { useRouter } from "next/router";
 import PurchaseModal from "../../components/purchaseModal";
 import Cookies from "js-cookie";
 import LoginModal from "../../components/LoginModal";
+import ProductEditModal from "../../components/ProductEditModal";
 
 const productCol = collection(firestore, "ProductList");
 const orderCol = collection(firestore, "OrderList");
@@ -179,7 +180,7 @@ const Product = ({ preProductData }) => {
     return (
       <>
         <Head>
-          <title>한빛마켓 - {productData.name}</title>
+          <title>{productData.name}</title>
           <meta name="description" content="제 27회 한빛제 대파마켓 & 굿즈" />
           <link rel="icon" href="/favicon.ico" />
         </Head>
@@ -207,7 +208,14 @@ const Product = ({ preProductData }) => {
             <div className="d-flex justify-content-between align-items-center">
               <h1 className="display-3 fw-bold m-0">{productData.name}</h1>
               <div className="d-flex gap-1">
-                {/* <button className="btn btn-warning">수정</button> */}
+                <button
+                  className="btn btn-warning"
+                  data-bs-toggle="modal"
+                  data-bs-target="#productEditModal"
+                >
+                  수정
+                </button>
+                <ProductEditModal productData={productData} />
                 <button
                   className="btn btn-danger"
                   type="button"
@@ -338,7 +346,7 @@ const Product = ({ preProductData }) => {
                 data-bs-toggle="modal"
                 data-bs-target="#purchaseModal"
                 disabled={
-                  orderedProductList.length == 0 || uploadingState == true
+                  orderedProductList.length == 0 || uploadingState
                     ? true
                     : false
                 }

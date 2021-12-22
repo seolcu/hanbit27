@@ -28,6 +28,9 @@ const ViewOrder = ({ preOrderList }) => {
   const [studentId, setStudentId] = useState(Cookies.get("studentId"));
   const [studentName, setStudentName] = useState(Cookies.get("studentName"));
   const [studentPhone, setStudentPhone] = useState(Cookies.get("studentPhone"));
+  const [depositorName, setDepositorName] = useState(
+    Cookies.get("depositorName"),
+  );
 
   const [orderList, setOrderList] = useState(preOrderList);
   const [filteredOrderList, setFilteredOrderList] = useState([]);
@@ -47,7 +50,8 @@ const ViewOrder = ({ preOrderList }) => {
         if (
           oneOrder.studentId == studentId &&
           oneOrder.studentName == studentName &&
-          oneOrder.studentPhone == studentPhone
+          oneOrder.studentPhone == studentPhone &&
+          oneOrder.depositorName == depositorName
         ) {
           snapshot.push(oneOrder);
         }
@@ -100,34 +104,49 @@ const ViewOrder = ({ preOrderList }) => {
             value={studentPhone}
             onChange={(e) => setStudentPhone(e.target.value)}
           />
+          <h3>입금자명</h3>
+          <input
+            type="text"
+            className="form-control form-control-lg mb-2"
+            placeholder="입금자명"
+            value={depositorName}
+            onChange={(e) => setDepositorName(e.target.value)}
+          />
           <button
             type="button"
             disabled={
-              studentId == "" || studentName == "" || studentPhone == ""
+              studentId == "" ||
+              studentName == "" ||
+              studentPhone == "" ||
+              depositorName == ""
                 ? true
                 : false
             }
             className="btn btn-primary mt-3 fs-5"
+            style={{ marginLeft: "auto", marginRight: "0", display: "block" }}
             onClick={updateFilteredList}
           >
             조회하기
           </button>
         </div>
       </div>
+
+      {/* 카드 */}
       {filteredOrderList.map((oneOrder, index) => {
         return (
           <div
             className="container rounded bg-light border my-3 p-3"
             key={Math.random()}
           >
-            <div className="d-flex align-items-center">
+            <div className="d-flex align-items-center justify-content-between">
               <h1 className="fw-bold m-0">{oneOrder.productName}</h1>
-              <p className="m-0 fs-5 text-secondary">
-                : {oneOrder.productCategory}
-              </p>
+              <h4 className="fw-bold">{oneOrder.orderStatus}</h4>
             </div>
-            <table className="table border table-secondary fs-5 fw-normal mt-3">
-              <thead>
+            <p className="m-0 fs-5 text-secondary">
+              : {oneOrder.productCategory}
+            </p>
+            <table className="table border table-light fs-5 fw-normal mt-3">
+              <thead className="table-secondary">
                 <tr>
                   <th scope="col">옵션명</th>
                   <th scope="col">개수</th>
@@ -145,9 +164,17 @@ const ViewOrder = ({ preOrderList }) => {
                   );
                 })}
               </tbody>
+              <tfoot className="table-info">
+                <tr>
+                  <th scope="col">합계</th>
+                  <th scope="col"></th>
+                  <th scope="col">{oneOrder.finalPrice}</th>
+                </tr>
+              </tfoot>
             </table>
             <button
               className="btn btn-danger"
+              style={{ marginLeft: "auto", marginRight: "0", display: "block" }}
               disabled={deletingState}
               key={Math.random()}
               onClick={async () => {

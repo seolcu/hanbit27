@@ -136,7 +136,7 @@ const Product = ({ preProductData }) => {
     await changeOptionStock();
     const orderResult = {
       orderId: "",
-      // pending: 입금확인전, verified: 입금확인됨, delivering: 배송중, deliverd: 배송완료
+      // 입금 확인중, 입금 확인됨, 배송중, 배송완료
       orderStatus: "pending",
       orderHours: new Date().getHours(),
       orderMinutes: new Date().getMinutes(),

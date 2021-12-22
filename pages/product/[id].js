@@ -19,8 +19,6 @@ import firestore from "../../firebase/firestoreInit";
 import { useRouter } from "next/router";
 import PurchaseModal from "../../components/purchaseModal";
 import Cookies from "js-cookie";
-import LoginModal from "../../components/LoginModal";
-import ProductEditModal from "../../components/ProductEditModal";
 
 const productCol = collection(firestore, "ProductList");
 const orderCol = collection(firestore, "OrderList");

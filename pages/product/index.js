@@ -6,7 +6,6 @@ import { collection, getDocs } from "firebase/firestore";
 import { useState } from "react";
 import firestore from "../../firebase/firestoreInit";
 import { useRouter } from "next/router";
-import LoginModal from "../../components/LoginModal";
 import HeaderComponent from "../../components/HeaderComponent";
 
 const productCol = collection(firestore, "ProductList");

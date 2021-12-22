@@ -40,7 +40,7 @@ export async function getStaticPaths() {
 export const getStaticProps = async ({ params }) => {
   const productRef = doc(firestore, "ProductList", params.id);
   const preProductData = (await getDoc(productRef)).data();
-  return { props: { preProductData }, revalidate: 5 };
+  return { props: { preProductData }, revalidate: 1 };
 };
 
 const Product = ({ preProductData }) => {

@@ -44,7 +44,6 @@ const ProductUpload = () => {
     }).then((snapshot) => {
       return snapshot.data.data.image.url;
     });
-    console.log(url);
     return url;
   };
 
@@ -300,7 +299,6 @@ const ProductUpload = () => {
                       onClick={() => {
                         let newOptionList = [...optionList];
                         newOptionList.splice(index, 1);
-                        console.log(newOptionList);
                         setOptionList(newOptionList);
                       }}
                     >
@@ -345,7 +343,6 @@ const ProductUpload = () => {
                 resultData,
               ).then((docRef) => docRef.id);
               resultData.id = docId;
-              console.log(resultData);
               await setDoc(doc(firestore, "ProductList", docId), resultData);
               e.preventDefault();
               router.push("/product");

@@ -8,19 +8,19 @@ import bigDipperImg from "../public/image/big_dipper.png";
 
 const SubOverlay = ({ BGColor, URL, title, desc }) => {
   return (
-    <div
-      className={`container-fluid p-5 text-light ${styles.subOverlay}`}
-      style={{ background: BGColor }}
-    >
-      <div className="container">
-        <p className="display-3">
-          <Link href={URL}>
-            <a>{title}</a>
-          </Link>
-        </p>
-        <p className="h3">{desc}</p>
-      </div>
-    </div>
+    <Link href={URL}>
+      <a>
+        <div
+          className={`container-fluid p-5 text-light ${styles.subOverlay}`}
+          style={{ background: BGColor }}
+        >
+          <div className="container">
+            <p className="display-3">{title}</p>
+            <p className="h3">{desc}</p>
+          </div>
+        </div>
+      </a>
+    </Link>
   );
 };
 

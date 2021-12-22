@@ -207,7 +207,7 @@ const Product = ({ preProductData }) => {
           <div className={`container py-3 ${styles.rightContainer}`}>
             <div className="d-flex justify-content-between align-items-center">
               <h1 className="display-3 fw-bold m-0">{productData.name}</h1>
-              <div className="d-flex gap-1">
+              {/* <div className="d-flex gap-1">
                 <button
                   className="btn btn-warning"
                   data-bs-toggle="modal"
@@ -225,7 +225,7 @@ const Product = ({ preProductData }) => {
                   삭제
                 </button>
                 <LoginModal onClickHandler={onDeleteHandler} />
-              </div>
+              </div> */}
             </div>
             <p className="fs-5 text-secondary m-0">
               {productData.category}

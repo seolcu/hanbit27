@@ -100,7 +100,7 @@ const ViewOrder = ({ preOrderList }) => {
         <div className="container">
           <div className="d-flex justify-content-between align-items-center">
             <h1 className="fw-bold">주문 조회하기</h1>
-            <button
+            {/* <button
               type="button"
               className="btn btn-primary"
               data-bs-toggle="modal"
@@ -108,7 +108,7 @@ const ViewOrder = ({ preOrderList }) => {
             >
               주문 관리하기 (관리자)
             </button>
-            <LoginModal onClickHandler={onClickHandler} />
+            <LoginModal onClickHandler={onClickHandler} /> */}
           </div>
           <h3>학번</h3>
           <input

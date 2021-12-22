@@ -48,7 +48,7 @@ const ProductList = ({ productList }) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <HeaderComponent />
-      <LoginModal onClickHandler={onClickHandler} />
+      {/* <LoginModal onClickHandler={onClickHandler} /> */}
       <div className="container mb-5">
         <div className="d-flex justify-content-between my-3">
           <div className="d-flex gap-2">
@@ -58,14 +58,14 @@ const ProductList = ({ productList }) => {
             {CategoryBtn("굿즈")}
             {CategoryBtn("기타")}
           </div>
-          <button
+          {/* <button
             type="button"
             className="btn btn-primary"
             data-bs-toggle="modal"
             data-bs-target="#adminLoginModal"
           >
             업로드
-          </button>
+          </button> */}
         </div>
         <div className={styles.gridContainer}>
           {productList.map((product, index) => {

@@ -11,6 +11,7 @@ import {
   addDoc,
   getDoc,
   Timestamp,
+  deleteDoc,
 } from "firebase/firestore";
 import HeaderComponent from "../../components/HeaderComponent";
 import { useEffect, useState } from "react";
@@ -18,6 +19,7 @@ import firestore from "../../firebase/firestoreInit";
 import { useRouter } from "next/router";
 import PurchaseModal from "../../components/purchaseModal";
 import Cookies from "js-cookie";
+import LoginModal from "../../components/LoginModal";
 
 const productCol = collection(firestore, "ProductList");
 const orderCol = collection(firestore, "OrderList");
@@ -161,6 +163,12 @@ const Product = ({ preProductData }) => {
     router.push("/viewOrder");
   }
 
+  async function onDeleteHandler() {
+    setUploadingState(true);
+    await deleteDoc(doc(firestore, "ProductList", productData.id));
+    router.push("/product");
+  }
+
   if (router.isFallback) {
     return (
       <>
@@ -196,13 +204,29 @@ const Product = ({ preProductData }) => {
             />
           </div>
           <div className={`container py-3 ${styles.rightContainer}`}>
-            <h1 className="display-3 fw-bold">{productData.name}</h1>
-            <p className="fs-5 text-secondary">
+            <div className="d-flex justify-content-between align-items-center">
+              <h1 className="display-3 fw-bold m-0">{productData.name}</h1>
+              <div className="d-flex gap-1">
+                {/* <button className="btn btn-warning">수정</button> */}
+                <button
+                  className="btn btn-danger"
+                  type="button"
+                  data-bs-toggle="modal"
+                  data-bs-target="#adminLoginModal"
+                >
+                  삭제
+                </button>
+                <LoginModal onClickHandler={onDeleteHandler} />
+              </div>
+            </div>
+            <p className="fs-5 text-secondary m-0">
               {productData.category}
               <br />
               상품ID: {productData.id}
             </p>
-            <h2 className="text-primary">{productData.defaultPrice}원</h2>
+            <h2 className="text-primary fw-bold">
+              {productData.defaultPrice}원
+            </h2>
             <select
               className="form-select"
               onChange={(e) => {

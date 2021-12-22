@@ -121,7 +121,6 @@ const Product = ({ preProductData }) => {
       newProductData.optionList[orderedProduct.optionId].optionStock =
         currentStock - parseInt(orderedProduct.quantity);
     });
-    console.log("changed ProductData:", newProductData);
     await setDoc(
       doc(firestore, "ProductList", newProductData.id),
       newProductData,
@@ -153,13 +152,11 @@ const Product = ({ preProductData }) => {
       orderedProductList: orderedProductList,
       finalPrice: finalPrice,
     };
-    console.log("orderResult:", orderResult);
     const docId = await addDoc(
       collection(firestore, "OrderList"),
       orderResult,
     ).then((docRef) => docRef.id);
     orderResult.orderId = docId;
-    console.log(orderResult);
     await setDoc(doc(firestore, "OrderList", docId), orderResult);
     router.push("/viewOrder");
   }

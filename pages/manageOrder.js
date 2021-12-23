@@ -40,6 +40,8 @@ const ManageOrderPage = ({ preOrderList }) => {
             newSortedOrderList = sortByDepositorName(newOrderList);
           } else if (sorting == "학번") {
             newSortedOrderList = sortByStudentId(newOrderList);
+          } else if (sorting == "시간") {
+            newSortedOrderList = sortByTime(newOrderList);
           }
           setSortedOrderList(newSortedOrderList);
         }}
@@ -119,6 +121,29 @@ const ManageOrderPage = ({ preOrderList }) => {
     return sortedOrderList;
   };
 
+  const sortByTime = (orderList) => {
+    const sortedOrderList = orderList.sort(function (a, b) {
+      const aHours = parseInt(a.orderHours);
+      const bHours = parseInt(b.orderHours);
+      const aMinutes = parseInt(a.orderMinutes);
+      const bMinutes = parseInt(b.orderMinutes);
+      if (aHours > bHours) {
+        return 1;
+      } else if (aHours == bHours) {
+        if (aMinutes > bMinutes) {
+          return 1;
+        } else if (aMinutes == bMinutes) {
+          return 0;
+        } else if (aMinutes < bMinutes) {
+          return -1;
+        }
+      } else if (aHours < bHours) {
+        return -1;
+      }
+    });
+    return sortedOrderList;
+  };
+
   return (
     <>
       <Head>
@@ -138,6 +163,7 @@ const ManageOrderPage = ({ preOrderList }) => {
             <h3 className="m-0">정렬(필수):</h3>
             {SortingBtn("입금자명")}
             {SortingBtn("학번")}
+            {SortingBtn("시간")}
           </div>
           <div className="d-flex gap-2 mb-2">
             <h3 className="m-0">상태 분류:</h3>
@@ -205,6 +231,8 @@ const ManageOrderPage = ({ preOrderList }) => {
                 </h4>
               </div>
               <h5 className="m-0 fs-5">
+                전화번호: {oneOrder.studentPhone}
+                <br />
                 카테고리: {oneOrder.productCategory}
                 <br />
                 주문일시: {oneOrder.orderHours}시 {oneOrder.orderMinutes}분

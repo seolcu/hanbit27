@@ -17,6 +17,7 @@ export const getServerSideProps = async () => {
 const ManageOrderPage = ({ preOrderList }) => {
   const [sortBy, setSortBy] = useState("");
   const [classifyBy, setClassifyBy] = useState("모두");
+  const [category, setCategory] = useState("모두");
 
   const [orderList, setOrderList] = useState(preOrderList);
   const [sortedOrderList, setSortedOrderList] = useState([]);
@@ -63,6 +64,25 @@ const ManageOrderPage = ({ preOrderList }) => {
         }}
       >
         {classifying}
+      </button>
+    );
+  };
+
+  const CategoryBtn = (categoryProp) => {
+    return (
+      <button
+        type="button"
+        className={
+          category == categoryProp ? "btn btn-primary" : "btn btn-light"
+        }
+        onClick={async () => {
+          // 새로고침만 하면 됨, 분류는 CSS display에서만 수정
+          setCategory(categoryProp);
+          const newOrderList = await getOrderList();
+          setOrderList(newOrderList);
+        }}
+      >
+        {categoryProp}
       </button>
     );
   };
@@ -115,17 +135,25 @@ const ManageOrderPage = ({ preOrderList }) => {
         <div className="container">
           <h1 className="fw-bold display-1">주문 처리하기</h1>
           <div className="d-flex gap-2 mb-2">
-            <h3 className="m-0">정렬:</h3>
+            <h3 className="m-0">정렬(필수):</h3>
             {SortingBtn("입금자명")}
             {SortingBtn("학번")}
           </div>
-          <div className="d-flex gap-2">
+          <div className="d-flex gap-2 mb-2">
             <h3 className="m-0">상태 분류:</h3>
             {ClassifyingBtn("모두")}
             {ClassifyingBtn("입금 확인중")}
             {ClassifyingBtn("입금 확인됨")}
             {ClassifyingBtn("배송중")}
             {ClassifyingBtn("배송완료")}
+          </div>
+          <div className="d-flex gap-2">
+            <h3 className="m-0">카테고리:</h3>
+            {CategoryBtn("모두")}
+            {CategoryBtn("대파마켓")}
+            {CategoryBtn("온라인부스")}
+            {CategoryBtn("굿즈")}
+            {CategoryBtn("기타")}
           </div>
         </div>
       </div>
@@ -137,7 +165,8 @@ const ManageOrderPage = ({ preOrderList }) => {
               key={Math.random()}
               style={
                 ({ background: "var(--bs-gray-300)" },
-                classifyBy == "모두" || classifyBy == oneOrder.orderStatus
+                (classifyBy == "모두" || classifyBy == oneOrder.orderStatus) &&
+                (category == "모두" || category == oneOrder.productCategory)
                   ? { display: "block" }
                   : { display: "none" })
               }

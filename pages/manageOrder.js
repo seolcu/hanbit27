@@ -135,7 +135,12 @@ const ManageOrderPage = ({ preOrderList }) => {
             <div
               className="rounded border mb-3 p-3"
               key={Math.random()}
-              style={{ background: "var(--bs-gray-300)" }}
+              style={
+                ({ background: "var(--bs-gray-300)" },
+                classifyBy == "모두" || classifyBy == oneOrder.orderStatus
+                  ? { display: "block" }
+                  : { display: "none" })
+              }
             >
               <div className="d-flex align-items-center justify-content-between">
                 <h2 className="fw-bold m-0">

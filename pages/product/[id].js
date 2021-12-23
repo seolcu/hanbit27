@@ -17,7 +17,7 @@ import HeaderComponent from "../../components/HeaderComponent";
 import { useEffect, useState } from "react";
 import firestore from "../../firebase/firestoreInit";
 import { useRouter } from "next/router";
-import PurchaseModal from "../../components/purchaseModal";
+// import PurchaseModal from "../../components/purchaseModal";
 import Cookies from "js-cookie";
 import LoginModal from "../../components/LoginModal";
 import ProductEditModal from "../../components/ProductEditModal";
@@ -185,7 +185,7 @@ const Product = ({ preProductData }) => {
           <link rel="icon" href="/favicon.ico" />
         </Head>
         <HeaderComponent />
-        <PurchaseModal
+        {/* <PurchaseModal
           studentId={studentId}
           setStudentId={setStudentId}
           studentName={studentName}
@@ -195,7 +195,7 @@ const Product = ({ preProductData }) => {
           depositorName={depositorName}
           setDepositorName={setDepositorName}
           onClickHandler={purchaseModalOnClickHandler}
-        />
+        /> */}
         <div className={`container py-4 px-0 ${styles.mainContainer}`}>
           <div className="container">
             <img
@@ -343,15 +343,17 @@ const Product = ({ preProductData }) => {
               </Link>
               <button
                 className="btn btn-primary fs-4 fw-bold"
-                data-bs-toggle="modal"
-                data-bs-target="#purchaseModal"
-                disabled={
-                  orderedProductList.length == 0 || uploadingState
-                    ? true
-                    : false
-                }
+                // data-bs-toggle="modal"
+                // data-bs-target="#purchaseModal"
+                // disabled={
+                //   orderedProductList.length == 0 || uploadingState
+                //     ? true
+                //     : false
+                // }
+                disabled={true}
               >
-                {uploadingState ? "주문 진행중..." : "구매하기"}
+                {/* {uploadingState ? "주문 진행중..." : "구매하기"} */}
+                마감되었습니다.
               </button>
             </div>
           </div>

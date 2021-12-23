@@ -138,17 +138,16 @@ const ManageOrderPage = ({ preOrderList }) => {
               style={{ background: "var(--bs-gray-300)" }}
             >
               <div className="d-flex align-items-center justify-content-between">
-                <Link href={`/product/${oneOrder.productId}`}>
-                  <a>
-                    <h2 className="fw-bold m-0">
-                      입금자명: {oneOrder.depositorName}
-                      <br />
-                      받는사람: {oneOrder.studentId} {oneOrder.studentName}
-                      <br />
-                      상품명: {oneOrder.productName}
-                    </h2>
-                  </a>
-                </Link>
+                <h2 className="fw-bold m-0">
+                  입금자명: {oneOrder.depositorName}
+                  <br />
+                  받는사람: {oneOrder.studentId} {oneOrder.studentName}
+                  <br />
+                  상품명:
+                  <Link href={`/product/${oneOrder.productId}`}>
+                    <a>{oneOrder.productName}</a>
+                  </Link>
+                </h2>
                 {/* 입금 확인중, 입금 확인됨, 배송중, 배송완료 */}
                 <h4 className="fw-bold">
                   <select

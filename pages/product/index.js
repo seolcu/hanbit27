@@ -52,7 +52,7 @@ const ProductList = ({ productList }) => {
         <h1 className="text-center m-5">
           한빛마켓이 마감되었습니다!
           <br />
-          구매해주신 모든 분들 감사드립니다
+          구매해주신 모든 분들 감사드립니다.
         </h1>
         <div className="d-flex justify-content-between my-3">
           <div className="d-flex gap-2">
